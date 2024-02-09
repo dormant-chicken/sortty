@@ -69,4 +69,4 @@ In the example command above,
 
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
-[ algorithm ] uses the bubblesort algorithm, but availible algorithms are: bogosort, bubblesort
+[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort
