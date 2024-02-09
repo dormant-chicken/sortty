@@ -52,7 +52,7 @@ Enter the value types as follows:
 Example command:
 
 ```
-sortty 15 10 0 100 bubble
+sortty 15 10 0 100 bubblesort
 ```
 
 In the example command above,
