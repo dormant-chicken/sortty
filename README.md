@@ -33,4 +33,6 @@ sudo apt install python3 libncurses5 git
 After installing dependencies, clone this repository:
 ```
 git clone https://github.com/dormant-chicken/sorTTY
+cd sorTTY/
+chmod +x install.sh
 ```
