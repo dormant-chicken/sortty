@@ -9,19 +9,21 @@ sorTTY - visualize sorting algorithms in your terminal / TTY
 
 `ncurses`
 
+`git`
+
 Arch:
 ```
-sudo pacman -S python ncurses
+sudo pacman -S python ncurses git
 ```
 
 Fedora:
 ```
-sudo dnf install python ncurses
+sudo dnf install python ncurses git
 ```
 
 Debian:
 ```
-sudo apt install python3 libncurses5
+sudo apt install python3 libncurses5 git
 ```
 
 <br>
