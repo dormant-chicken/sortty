@@ -6,7 +6,10 @@ echo "Moving main.py from src into /usr/local/bin/"
 
 sudo cp src/main.py /usr/local/bin/sortty-bin/
 
-echo "moving sortty.sh from src into /usr/local/bin/"
+echo "Moving sortty.sh from src into /usr/local/bin/"
 
 sudo touch /usr/local/bin/sortty
 sudo cp src/sortty.sh /usr/local/bin/sortty
+
+echo "Making /usr/local/bin/sortty executable"
+sudo chmod +x /usr/local/bin/sortty
