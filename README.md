@@ -3,6 +3,10 @@ sorTTY - A program to visualize sorting algorithms in your terminal / TTY, writt
 
 <br>
 
+![bubblesort1](https://github.com/dormant-chicken/sorTTY/blob/main/assets/bubblesort1.png)
+![bogosort1](https://github.com/dormant-chicken/sorTTY/blob/main/assets/bogosort1.png)
+![sortty](https://github.com/dormant-chicken/sorTTY/blob/main/assets/sortty.png)
+
 ## Dependencies
 
 `python`
