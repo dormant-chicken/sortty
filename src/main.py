@@ -1,7 +1,7 @@
 import os, sys, curses, time, random, math
 from curses import wrapper
 
-def draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, array):
+def draw_array(stdscr, array_size, wait_delay, term_height, startx, array):
 
     stdscr.clear()
 
@@ -26,6 +26,7 @@ def is_array_sorted(array):
         i += 1
     return sorted
 
+# Bogosort
 def bogo_sort(stdscr, array_size, wait_delay, term_height, startx, array):
 
     sorted = False
@@ -35,8 +36,9 @@ def bogo_sort(stdscr, array_size, wait_delay, term_height, startx, array):
         if not sorted:
             random.shuffle(array)
             if wait_delay:
-                draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, array)
+                draw_array(stdscr, array_size, wait_delay, term_height, startx, array)
 
+# Bubblesort
 def bubble_sort(stdscr, array_size, wait_delay, term_height, startx, array):
     sorted = False
 
@@ -47,8 +49,9 @@ def bubble_sort(stdscr, array_size, wait_delay, term_height, startx, array):
                 sorted = False
                 array[i], array[i + 1] = array[i + 1], array[i]
                 if wait_delay:
-                    draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, array)
+                    draw_array(stdscr, array_size, wait_delay, term_height, startx, array)
 
+# Mergesort
 def merge_sort(stdscr, array_size, wait_delay, term_height, startx, arr, is_main):
 
     if len(arr) > 1:
@@ -68,12 +71,12 @@ def merge_sort(stdscr, array_size, wait_delay, term_height, startx, arr, is_main
                 arr[k] = left_arr[i]
                 i += 1
                 if is_main == True:
-                    draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, arr)
+                    draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
             else:
                 arr[k] = right_arr[j]
                 j += 1
                 if is_main == True:
-                    draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, arr)
+                    draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
             k += 1
 
         while i < len(left_arr):
@@ -81,23 +84,48 @@ def merge_sort(stdscr, array_size, wait_delay, term_height, startx, arr, is_main
             i += 1
             k += 1
             if is_main == True:
-                draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, arr)
+                draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
         
         while j < len(right_arr):
             arr[k] = right_arr[j]
             j += 1
             k += 1
             if is_main == True:
-                draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, arr)
+                draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
 
+# Insertion sort
 def insertion_sort(stdscr, array_size, wait_delay, term_height, startx, arr):
     for i in range(1, len(arr)):
         j = i
         while arr[j] < arr[j - 1] and j > 0:
             arr[j - 1], arr[j] = arr[j], arr[j - 1]
             j -= 1
-            draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, arr)
+            draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
 
+# Quicksort
+def quick_sort(stdscr, array_size, wait_delay, term_height, startx, arr, left, right):
+    if left < right:
+        partition_pos = partition(stdscr, array_size, wait_delay, term_height, startx, arr, left, right)
+        quick_sort(stdscr, array_size, wait_delay, term_height, startx, arr, left, partition_pos - 1)
+        quick_sort(stdscr, array_size, wait_delay, term_height, startx, arr, partition_pos + 1, right)
+
+def partition(stdscr, array_size, wait_delay, term_height, startx, arr, left, right):
+    i = left
+    j = right - 1
+    pivot = arr[right]
+
+    while i < j:
+        while i < right and arr[i] < pivot:
+            i += 1
+        while j > left and arr[j] >= pivot:
+            j -= 1
+        if i < j:
+            arr[i], arr[j] = arr[j], arr[i]
+            draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
+    if arr[i] > pivot:
+        arr[i], arr[right] = arr[right], arr[i]
+        draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
+    return i
 
 def main(stdscr):
     # Finds terminal info
@@ -128,6 +156,9 @@ def main(stdscr):
         temp = random.randint(1, array_range)
         array.append(temp)
 
+    # Draws the shuffled array before sorting
+    # Only if specified by wait_delay variable
+
     # Finds correct position to start drawing
     startx = math.floor(term_width / 2) - math.floor(array_size)
 
@@ -155,7 +186,7 @@ def main(stdscr):
     else:
         # Draw the array before sorting
         if wait_delay:
-            draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, array)
+            draw_array(stdscr, array_size, wait_delay, term_height, startx, array)
 
         # Starts performance timer
         start_time = time.perf_counter()
@@ -172,13 +203,16 @@ def main(stdscr):
 
         elif sys.argv[5] == "insertionsort":
             insertion_sort(stdscr, array_size, wait_delay, term_height, startx, array)
+            
+        elif sys.argv[5] == "quicksort":
+            quick_sort(stdscr, array_size, wait_delay, term_height, startx, array, 0, len(array) - 1)
         
         # Ends performance timer
         end_time = time.perf_counter()
 
         # Only draw at the end of sorting when wait_delay is on, otherwise it would just show the array being unsorted
         if not wait_delay:
-            draw_array(sorted, stdscr, array_size, wait_delay, term_height, startx, array)
+            draw_array(stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Shows that array is sorted and other info
         stdscr.addstr(0, 0, "Array sorted!")
