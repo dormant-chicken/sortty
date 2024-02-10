@@ -36,11 +36,22 @@ sudo apt install python3 libncurses5 git
 
 ## Installation
 
-After installing dependencies, clone this repository:
+After installing the needed dependencies, clone this repository:
+
 ```
 git clone https://github.com/dormant-chicken/sorTTY
 cd sorTTY/
 chmod +x install.sh
+```
+
+The command above also makes the install script executable
+
+<br>
+
+Finally, to install the program, type this command to run the install script:
+
+```
+./install.sh
 ```
 
 <br>
@@ -70,3 +81,6 @@ In the example command above,
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
 [ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort
+
+> [!NOTE]
+> If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ], as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead.
