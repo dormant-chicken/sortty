@@ -1,28 +1,16 @@
 import os, sys, curses, time, random, math
 from curses import wrapper
 
-def draw_array(sorted, stdscr, array_size, show_delay, array):
-    import math
-    term_size = os.get_terminal_size()
-    term_height = term_size.lines
-    term_width = term_size.columns
+def draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, array):
 
     stdscr.clear()
 
-    # If True, show array into and if it sorted
-    debug = False
-
-    startx = math.floor(term_width / 2) - math.floor(array_size)
-
+    # This draws the array onto the screen
     i = 0
     j = 0
     for i in range(len(array)):
         for j in range(array[i]):
             stdscr.addstr(term_height - 1 - j, startx + (i * 2), "#")
-
-    if debug:
-        stdscr.addstr(0, 0, str(array))
-        stdscr.addstr(1, 0, str(sorted))
 
     stdscr.refresh()
     if show_delay:
@@ -38,16 +26,18 @@ def is_array_sorted(array):
         i += 1
     return sorted
 
-def bogo_sort(stdscr, array_size, show_delay, array):
+def bogo_sort(stdscr, array_size, show_delay, term_height, startx, array):
+
     sorted = False
+
     while not sorted:
         sorted = is_array_sorted(array)
         if not sorted:
             random.shuffle(array)
             if show_delay:
-                draw_array(sorted, stdscr, array_size, show_delay, array)
+                draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, array)
 
-def bubble_sort(stdscr, array_size, show_delay, array):
+def bubble_sort(stdscr, array_size, show_delay, term_height, startx, array):
     sorted = False
 
     while not sorted:
@@ -57,7 +47,7 @@ def bubble_sort(stdscr, array_size, show_delay, array):
                 sorted = False
                 array[i], array[i + 1] = array[i + 1], array[i]
                 if show_delay:
-                    draw_array(sorted, stdscr, array_size, show_delay, array)
+                    draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, array)
 
 def main(stdscr):
     # Finds terminal info
@@ -76,13 +66,16 @@ def main(stdscr):
     array_range = int(sys.argv[2])
 
     # If True, instantly sort the array without drawing
-    show_delay = True
+    if int(sys.argv[4]) == 0:
+        show_delay = False
+    else:
+        show_delay = True
 
     # If True, makes the array size and range the highest possible that can fit on the screen
     fill_screen = int(sys.argv[3])
     
     if fill_screen == 1:
-        array_size = int(term_width / 2) - 2
+        array_size = int(term_width / 2) - 1
         array_range = term_height - 2
     
     # Fills the array with random integers
@@ -93,20 +86,31 @@ def main(stdscr):
 
     # Draws the shuffled array before sorting
     # Only if specified by show_delay variable
+
+    # Finds correct position to start drawing
+    startx = math.floor(term_width / 2) - math.floor(array_size)
+    
+    # Only draw at the end of sorting when show delay is on, otherwise it would just show the array being unsorted
     if show_delay:
-        draw_array(sorted, stdscr, array_size, show_delay, array)
+        draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, array)
 
+    # Sorting algorithms determined by bash script
     if sys.argv[5] == "bogosort":
-        bogo_sort(stdscr, array_size, show_delay, array)
-
+        bogo_sort(stdscr, array_size, show_delay, term_height, startx, array)
     elif sys.argv[5] == "bubblesort":
-        bubble_sort(stdscr, array_size, show_delay, array)
+        bubble_sort(stdscr, array_size, show_delay, term_height, startx, array)
 
     # If show_delay is True, redraw after sorting
     if not show_delay:
-        draw_array(sorted, stdscr, array_size, show_delay, array)
+        draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, array)
     
+    # Shows that array is sorted and other info
     stdscr.addstr(0, 0, "Array sorted!")
+    stdscr.addstr(2, 0, "Sorting information:")
+    stdscr.addstr(4, 0, "sorting algorithm: " + str(sys.argv[5]))
+    stdscr.addstr(5, 0, "array size: " + str(array_size))
+    stdscr.addstr(6, 0, "array range: " + str(array_range))
+    stdscr.addstr(8, 0, "Press any key to exit")
     
     # Waits for key press and stops program
     stdscr.getch()
