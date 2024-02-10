@@ -33,7 +33,7 @@ elif [ $1 == "-v" ] || [ $1 == "--version" ]; then
 
 # Checks if arguments are correct value type [ integer, integer, integer, integer, string ]
 elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && [[ $3 =~ ^[0-9]+$ ]] && [[ $4 =~ ^[0-9]+$ ]] && ([ $5 == "bogosort" ] || [ $5 == "bubblesort" ]); then
-  python3 main.py $1 $2 $3 $4 $5
+  python3 /usr/local/bin/sortty-bin/main.py $1 $2 $3 $4 $5
 
 # Any other possible arguments display help message
 else
