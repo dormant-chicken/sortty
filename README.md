@@ -92,6 +92,9 @@ In the example command above,
 > [!NOTE]
 > If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ], as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead.
 
+> [!WARNING]
+> I had trouble getting the mergesort algorithm to be drawn properly, due to how the code is structured, so it only show the items in the array being placed in the right place, but not being merged together. The algorithm still works, and it is still drawn, but the items in the array do not get merged, as seen [here](https://www.youtube.com/watch?v=ZRPoEKHXTJg).
+
 <br>
 
 ## Uninstalling
