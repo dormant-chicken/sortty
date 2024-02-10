@@ -9,6 +9,8 @@ sorTTY - A program to visualize sorting algorithms in your terminal / TTY, writt
 
 ## Dependencies
 
+These dependencies are needed:
+
 `python`
 
 `ncurses`
@@ -53,6 +55,11 @@ Finally, to install the program, type this command to run the install script:
 ```
 ./install.sh
 ```
+
+<br>
+
+> [!NOTE]
+> After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths
 
 <br>
 
