@@ -101,3 +101,9 @@ Run this command to remove the sorTTY binaries:
 ```
 sudo rm -rf -r /usr/local/bin/sortty-bin/ /usr/local/bin/sortty
 ```
+
+<br>
+
+## The Name
+
+The name is the word "sort", because this is a program to visualize sorting algorithms, plus the word "TTY", which is similar to a terminal. "sort" plus "TTY" equals "sorTTY"
