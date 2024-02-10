@@ -128,9 +128,6 @@ def main(stdscr):
         temp = random.randint(1, array_range)
         array.append(temp)
 
-    # Draws the shuffled array before sorting
-    # Only if specified by wait_delay variable
-
     # Finds correct position to start drawing
     startx = math.floor(term_width / 2) - math.floor(array_size)
 
