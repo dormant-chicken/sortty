@@ -9,7 +9,7 @@ help_message () {
     echo
     echo "Availible algorithms: bogosort, bubblesort"
     echo
-    echo "example: sortty 15 10 0 100 bubble"
+    echo "example: sortty 15 10 0 100 bubblesort"
     echo
     echo "[ array_size ] is 15, [ array_range ] is 10, [ fill ] is 0 (AKA False), [ wait_time ] waits 0.01 seconds before drawing, [ algorithm ] uses the bubblesort algorithm"
     echo
