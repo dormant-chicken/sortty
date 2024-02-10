@@ -40,7 +40,7 @@ help_advanced () {
   echo
   echo "[ fill ] is 0 (AKA False), meaning that the program will not ignore the values above and use the highest possible array size and array range, limited by the size of the screen."
   echo
-  echo "[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort"
+  echo "[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort"
   echo
   echo "Note: If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ], as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead."
   echo
@@ -64,8 +64,8 @@ elif [ $1 == "-v" ] || [ $1 == "--version" ]; then
   echo "$version"
 
 # Checks if arguments are correct value type [ integer, integer, integer, integer, string ]
-elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && [[ $3 =~ ^[0-9]+$ ]] && [[ $4 =~ ^[0-9]+$ ]] && ([ $5 == "bogosort" ] || [ $5 == "bubblesort" ]); then
-  python3 /usr/local/bin/sortty-bin/main.py $1 $2 $3 $4 $5
+elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && [[ $3 =~ ^[0-9]+$ ]] && [[ $4 =~ ^[0-9]+$ ]] && ([ $5 == "bogosort" ] || [ $5 == "bubblesort" ] || [ $5 == "mergesort" ]); then
+  python3 sort.py $1 $2 $3 $4 $5
 
 # Any other possible arguments display help message
 else
