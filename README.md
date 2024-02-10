@@ -84,3 +84,13 @@ In the example command above,
 
 > [!NOTE]
 > If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ], as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead.
+
+<br>
+
+## Uninstalling
+
+Run this command to remove the sorTTY binaries:
+
+```
+sudo rm -rf -r /usr/local/bin/sortty-bin/ /usr/local/bin/sortty
+```
