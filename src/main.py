@@ -49,6 +49,47 @@ def bubble_sort(stdscr, array_size, show_delay, term_height, startx, array):
                 if show_delay:
                     draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, array)
 
+def merge_sort(stdscr, array_size, show_delay, term_height, startx, arr, is_main):
+
+    if len(arr) > 1:
+        left_arr = arr[:len(arr)//2]
+        right_arr = arr[len(arr)//2:]
+
+        # recursion
+        merge_sort(stdscr, array_size, show_delay, term_height, startx, left_arr, False)
+        merge_sort(stdscr, array_size, show_delay, term_height, startx, right_arr, False)
+
+        # merge
+        i = 0
+        j = 0
+        k = 0
+        while i < len(left_arr) and j < len(right_arr):
+            if left_arr[i] < right_arr[j]:
+                arr[k] = left_arr[i]
+                i += 1
+                if is_main == True:
+                    draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, arr)
+            else:
+                arr[k] = right_arr[j]
+                j += 1
+                if is_main == True:
+                    draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, arr)
+            k += 1
+
+        while i < len(left_arr):
+            arr[k] = left_arr[i]
+            i += 1
+            k += 1
+            if is_main == True:
+                draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, arr)
+        
+        while j < len(right_arr):
+            arr[k] = right_arr[j]
+            j += 1
+            k += 1
+            if is_main == True:
+                draw_array(sorted, stdscr, array_size, show_delay, term_height, startx, arr)
+
 def main(stdscr):
     # Finds terminal info
     term_size = os.get_terminal_size()
@@ -99,6 +140,8 @@ def main(stdscr):
         bogo_sort(stdscr, array_size, show_delay, term_height, startx, array)
     elif sys.argv[5] == "bubblesort":
         bubble_sort(stdscr, array_size, show_delay, term_height, startx, array)
+    elif sys.argv[5] == "mergesort":
+        merge_sort(stdscr, array_size, show_delay, term_height, startx, array, True)
 
     # If show_delay is True, redraw after sorting
     if not show_delay:
