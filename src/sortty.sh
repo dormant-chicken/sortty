@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=v1.0-beta
+version=v1.0-stable
 
 help_message () {
   echo
