@@ -2,7 +2,6 @@ import os, sys, curses, time, random, math
 from curses import wrapper
 
 def draw_array(stdscr, array_size, wait_delay, term_height, startx, array):
-
     stdscr.clear()
 
     # This draws the array onto the screen
@@ -70,12 +69,12 @@ def merge_sort(stdscr, array_size, wait_delay, term_height, startx, arr, is_main
             if left_arr[i] < right_arr[j]:
                 arr[k] = left_arr[i]
                 i += 1
-                if is_main == True:
+                if is_main == True or wait_delay:
                     draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
             else:
                 arr[k] = right_arr[j]
                 j += 1
-                if is_main == True:
+                if is_main == True or wait_delay:
                     draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
             k += 1
 
@@ -83,14 +82,14 @@ def merge_sort(stdscr, array_size, wait_delay, term_height, startx, arr, is_main
             arr[k] = left_arr[i]
             i += 1
             k += 1
-            if is_main == True:
+            if is_main == True or wait_delay:
                 draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
         
         while j < len(right_arr):
             arr[k] = right_arr[j]
             j += 1
             k += 1
-            if is_main == True:
+            if is_main == True or wait_delay:
                 draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
 
 # Insertion sort
@@ -100,7 +99,8 @@ def insertion_sort(stdscr, array_size, wait_delay, term_height, startx, arr):
         while arr[j] < arr[j - 1] and j > 0:
             arr[j - 1], arr[j] = arr[j], arr[j - 1]
             j -= 1
-            draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
+            if wait_delay:
+                draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
 
 # Quicksort
 def quick_sort(stdscr, array_size, wait_delay, term_height, startx, arr, left, right):
@@ -121,10 +121,12 @@ def partition(stdscr, array_size, wait_delay, term_height, startx, arr, left, ri
             j -= 1
         if i < j:
             arr[i], arr[j] = arr[j], arr[i]
-            draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
+            if wait_delay:
+                draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
     if arr[i] > pivot:
         arr[i], arr[right] = arr[right], arr[i]
-        draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
+        if wait_delay:
+            draw_array(stdscr, array_size, wait_delay, term_height, startx, arr)
     return i
 
 def main(stdscr):
