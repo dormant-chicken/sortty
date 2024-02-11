@@ -56,7 +56,7 @@ elif [ $1 == "-v" ] || [ $1 == "--version" ]; then
   echo "$version"
 
 # Checks if arguments are correct value type [ integer, integer, integer, integer, string ]
-elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && ([ $3 == 0 ] || [ $3 == 1 ]) && ([ $4 == 0 ] || [ $4 == 1 ]) && ([ $5 == 0 ] || [ $5 == 1 ]) && [[ $6 =~ ^[0-9]+$ ]] && ([ $7 == "bogosort" ] || [ $7 == "bubblesort" ] || [ $7 == "mergesort" ] || [ $7 == "insertionsort" ] || [ $7 == "quicksort" ] || [ $7 == "gnomesort" ] || [ $7 == "heapsort" ]); then
+elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && ([ $3 == 0 ] || [ $3 == 1 ]) && ([ $4 == 0 ] || [ $4 == 1 ]) && ([ $5 == 0 ] || [ $5 == 1 ]) && [[ $6 =~ ^[0-9]+$ ]] && ([ $7 == "bogosort" ] || [ $7 == "bubblesort" ] || [ $7 == "mergesort" ] || [ $7 == "insertionsort" ] || [ $7 == "quicksort" ] || [ $7 == "gnomesort" ] || [ $7 == "heapsort" ] || [ $7 == "cocktailsort" ]); then
   python3 /usr/local/bin/sortty-bin/main.py $1 $2 $3 $4 $5 $6 $7
 
 # Any other possible arguments display help message
