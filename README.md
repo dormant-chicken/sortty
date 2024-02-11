@@ -36,39 +36,21 @@ sudo apt install python3 libncurses5 git
 
 <br>
 
-## Installation of git version
+## Installation
 
-After installing the needed dependencies, clone this repository:
+### Latest git
+
+After installing the needed dependencies, clone this repository to get the very latest git release:
 
 ```
 git clone https://github.com/dormant-chicken/sorTTY
-cd sorTTY/
-chmod +x install.sh
-```
-
-The command above also makes the install script executable
-
-<br>
-
-Finally, to install the program, type this command to run the install script:
-
-```
-./install.sh
 ```
 
 <br>
 
-After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths by typing:
+### Stable release
 
-```
-rm -r -f sorTTY/
-```
-
-<br>
-
-## Installation of stable release
-
-After installing dependencies, use wget to get the tar.gz file from the releases page:
+If you want the stable release, install the dependencies above and use wget to get the tar.gz file from the releases page:
 
 ```
 wget https://github.com/dormant-chicken/sorTTY/releases/download/v1.0-stable/sorTTY.tar.gz
@@ -96,6 +78,8 @@ rm sorTTY.tar.gz
 
 <br>
 
+## Last step of install
+
 Finally, change your directory into sorTTY/, make install.sh executable, and run install.sh:
 
 ```
@@ -106,26 +90,25 @@ chmod +x install.sh
 
 <br>
 
-After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths by typing:
+After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths:
 
 ```
+cd ..
 rm -r -f sorTTY/
 ```
+
+The command above also changes your directory to the parent directory of sorTTY/ with 'cd ..', which is the directory that it is located in, so that it can remove the directory
 
 <br>
 
 ## Usage
 
-`sortty [ array_size ] [ array_range] [ fill ] [ wait_time (milliseconds) ] [ algorithm ]`
-
-Enter the value types as follows:
-
-`sortty [ integer ] [ integer ] [ boolean integer (0 or 1) ] [ integer ] [ string ]`
+`sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]`
 
 Example command:
 
 ```
-sortty 15 10 0 100 bubblesort
+sortty 15 10 0 0 1 100 bubblesort
 ```
 
 In the example command above,
@@ -136,6 +119,10 @@ In the example command above,
 
 [ fill ] is 0 (AKA False), meaning that the program will not ignore the values above and use the highest possible array size and array range, limited by the size of the screen.
 
+[ reversed ] is 0 (AKA False), so the program will not sort from greatest to least, but least to greatest.
+
+[ show_info ] is 1 (AKA True), so the program will show the sorting information after sorting
+
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
 [ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort, insertionsort, and quicksort
@@ -145,7 +132,7 @@ In the example command above,
 > [!NOTE]
 > If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ], as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead.
 
-> [!WARNING]
+> [!NOTE]
 > I had trouble getting the mergesort algorithm to be drawn properly, because the mergesort function uses multiple arrays. The algorithm still works, and it is still drawn, but the items in the array do not get merged, as seen [here](https://www.youtube.com/watch?v=ZRPoEKHXTJg).
 
 <br>
