@@ -2,7 +2,7 @@ echo "Creating /usr/local/bin/sortty-bin/"
 
 sudo mkdir /usr/local/bin/sortty-bin/
 
-echo "Moving main.py from src into /usr/local/bin/"
+echo "Moving main.py from src into /usr/local/bin/sortty-bin/"
 
 sudo cp src/main.py /usr/local/bin/sortty-bin/
 
