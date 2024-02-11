@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=v1.0-stable
+version=v1.2-stable
 
 help_advanced () {
   # Displays sorTTY in big ascii letters using figlet
