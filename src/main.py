@@ -256,26 +256,27 @@ def main(stdscr):
         start_time = time.perf_counter()
 
         # Sorting algorithms determined by bash script
-        if sys.argv[7] == "bogosort":
-            bogo_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+        match sys.argv[7]:
+            case "bogosort":
+                bogo_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
 
-        elif sys.argv[7] == "bubblesort":
-            bubble_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+            case "bubblesort":
+                bubble_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
 
-        elif sys.argv[7] == "mergesort":
-            merge_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array, True)
+            case "mergesort":
+                merge_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array, True)
 
-        elif sys.argv[7] == "insertionsort":
-            insertion_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
-            
-        elif sys.argv[7] == "quicksort":
-            quick_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array, 0, len(array) - 1)
-            
-        elif sys.argv[7] == "gnomesort":
-            gnome_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
-        
-        elif sys.argv[7] == "heapsort":
-            heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+            case "insertionsort":
+                insertion_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
+            case "quicksort":
+                quick_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array, 0, len(array) - 1)
+
+            case "gnomesort":
+                gnome_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+                
+            case "heapsort":
+                heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
