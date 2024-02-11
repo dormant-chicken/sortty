@@ -18,23 +18,16 @@ def draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr
     if wait_delay:
         time.sleep(int(sys.argv[6]) / 1000)
 
-# Maybe merge this into the bogosort function if it is unused by other functions
-def is_array_sorted(array):
-    sorted = True
-    i = 1
-    while i < len(array):
-        if(array[i] < array[i - 1]):
-            sorted = False
-        i += 1
-    return sorted
-
 # Bogosort
 def bogo_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
 
     sorted = False
 
     while not sorted:
-        sorted = is_array_sorted(array)
+        sorted = True
+        for i in range(1, len(array)):
+            if(array[i] < array[i - 1]):
+                sorted = False
         if not sorted:
             random.shuffle(array)
             if wait_delay:
@@ -179,6 +172,7 @@ def heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N
 
         heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N, largest)
 
+# Cocktailsort
 def cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
     swapped = True
     start = 0
@@ -208,10 +202,11 @@ def cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, 
 
         start += 1
 
+# Selectionsort
 def selection_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
     for i in range(len(array)):
         min_idx = i
-        for j in range(i+1, len(array)):
+        for j in range(i + 1, len(array)):
             if array[min_idx] > array[j]:
                 min_idx = j
         array[i], array[min_idx] = array[min_idx], array[i]
@@ -271,18 +266,22 @@ def main(stdscr):
     stdscr.clear()
 
     # Quits program if terminal height too small for array_range
-    if (array_range + 2) > term_height:
+    if ((array_range + 2) > term_height) or term_height < 25:
         stdscr.addstr(0, 0, "terminal height too small for array range!")
-        stdscr.addstr(2, 0, "press any key to exit")
+        stdscr.addstr(2, 0, "required height: 25 cells terminal height: " + str(term_height))
+        stdscr.addstr(4, 0, "please resize your terminal and try again")
+        stdscr.addstr(6, 0, "press any key to exit")
         stdscr.getch()
         curses.endwin()
 
     # Same if terminal width too small for array_size
-    elif (array_size + 2) > term_width:
+    elif ((array_size + 2) > term_width) or term_width < 80:
         stdscr.addstr(0, 0, "terminal width too small for array size!")
-        stdscr.addstr(2, 0, "press any key to exit")
+        stdscr.addstr(2, 0, "required height: 80 cells terminal height: " + str(term_width))
+        stdscr.addstr(4, 0, "please resize your terminal and try again")
+        stdscr.addstr(6, 0, "press any key to exit")
         stdscr.getch()
-        stdscr.endwin
+        curses.endwin()
 
     # Otherwise, start main script
     else:
