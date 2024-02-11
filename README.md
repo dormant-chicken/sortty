@@ -19,6 +19,10 @@ These dependencies are needed:
 
 <br>
 
+They are most likely preinstalled, but it is still good to check.
+
+<br>
+
 Arch:
 ```
 sudo pacman -S python ncurses git
@@ -36,7 +40,7 @@ sudo apt install python3 libncurses5 git
 
 <br>
 
-## Installation
+## Installation of git version
 
 After installing the needed dependencies, clone this repository:
 
@@ -60,6 +64,46 @@ Finally, to install the program, type this command to run the install script:
 
 > [!NOTE]
 > After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths
+
+<br>
+
+## Installation of stable release
+
+After installing dependencies, either use wget to get the tar.gz from the releases page:
+
+```
+wget https://github.com/dormant-chicken/sorTTY/releases/download/v1.0-stable/sorTTY.tar.gz
+```
+
+<br>
+
+You can also grab it with a web browser from the [releases page](https://github.com/dormant-chicken/sorTTY/releases)
+
+<br>
+
+Then, you can decompress the tar.gz file by typing:
+
+```
+tar -xzvf sorTTY.tar.gz
+```
+
+<br>
+
+You can remove the tar.gz file if you want to:
+
+```
+rm sorTTY.tar.gz
+```
+
+<br>
+
+Finally, change your directory into sorTTY/, make install.sh executable, and run install.sh:
+
+```
+cd sorTTY/
+chmod +x install.sh
+./install.sh
+```
 
 <br>
 
@@ -109,4 +153,4 @@ sudo rm -rf -r /usr/local/bin/sortty-bin/ /usr/local/bin/sortty
 
 ## The Name
 
-The name is the word "sort", because this is a program to visualize sorting algorithms, plus the word "TTY", which is similar to a terminal. "sort" plus "TTY" equals "sorTTY"
+The name is the word "sort", because this is a program to visualize sorting algorithms, plus the word "TTY", which is similar to a terminal. "sort" plus "TTY" equals "sorTTY", it's a great name, I know.
