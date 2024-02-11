@@ -149,6 +149,36 @@ def gnome_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, arr
             i -= 1
             draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
 
+# Heapsort
+def heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, arr):
+    N = len(arr)
+
+    for i in range(N//2 - 1, -1, -1):
+        heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N, i)
+
+    for i in range(N-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+        heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, i, 0)
+
+# Needed for heapsort
+def heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N, i):
+    largest = i
+    l = 2 * i + 1
+    r = 2 * i + 2
+
+    if l < N and arr[largest] < arr[l]:
+        largest = l
+
+    if r < N and arr[largest] < arr[r]:
+        largest = r
+
+    if largest != i:
+        arr[i], arr[largest] = arr[largest], arr[i]
+        draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+
+        heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N, largest)
+
 def main(stdscr):
     # Finds terminal info
     term_size = os.get_terminal_size()
@@ -243,6 +273,9 @@ def main(stdscr):
             
         elif sys.argv[7] == "gnomesort":
             gnome_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+        
+        elif sys.argv[7] == "heapsort":
+            heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
