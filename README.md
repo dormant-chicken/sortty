@@ -125,7 +125,7 @@ In the example command above,
 
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
-[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort, insertionsort, quicksort, gnomesort, heapsort, cocktailsort, and selectionsort, making 9 available algorithms to chose from
+[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort, insertionsort, quicksort, gnomesort, heapsort, cocktailsort, selectionsort, and shellsort, making 10 available algorithms to chose from
 
 <br>
 
@@ -136,7 +136,7 @@ In the example command above,
 > I had trouble getting the mergesort algorithm to be drawn properly, because the mergesort function uses multiple arrays. The algorithm still works, and it is still drawn, but the items in the array do not get merged, as seen [here](https://www.youtube.com/watch?v=ZRPoEKHXTJg).
 
 > [!WARNING]
-> I do not recommend using bogosort with a delay of 0, I ran it and it made my cpu go to the highest clock speed
+> I do not recommend running an inefficient sorting algorithm, especially bogosort with a delay of 0, I ran it and it made my cpu go to the highest clock speed
 
 <br>
 
