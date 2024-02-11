@@ -3,8 +3,8 @@ sorTTY - A program to visualize sorting algorithms in your terminal / TTY, writt
 
 <br>
 
-![mergesort1](https://github.com/dormant-chicken/sorTTY/blob/main/assets/mergesort1.png)
-![bogosort1](https://github.com/dormant-chicken/sorTTY/blob/main/assets/bogosort1.png)
+![quicksort1](https://github.com/dormant-chicken/sorTTY/blob/main/assets/quicksort1.png)
+![sortty-help](https://github.com/dormant-chicken/sorTTY/blob/main/assets/sortty-help.png)
 ![mergesort2](https://github.com/dormant-chicken/sorTTY/blob/main/assets/mergesort2.png)
 
 ## Dependencies
