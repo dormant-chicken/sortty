@@ -61,8 +61,8 @@ def merge_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, arr
         right_arr = arr[len(arr)//2:]
 
         # recursion
-        merge_sort(stdscr, array_size, wait_delay, term_height, startx, left_arr, False)
-        merge_sort(stdscr, array_size, wait_delay, term_height, startx, right_arr, False)
+        merge_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, left_arr, False)
+        merge_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, right_arr, False)
 
         # merge
         i = 0
