@@ -212,6 +212,31 @@ def selection_sort(reverse, stdscr, array_size, wait_delay, term_height, startx,
         array[i], array[min_idx] = array[min_idx], array[i]
         draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
 
+# Shellsort
+def shellSort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
+    gap = int(len(array) / 2)
+
+    while gap > 0:
+        j = gap
+
+        # Sorts the array
+        while j < len(array):
+            i = j - gap
+            
+            while i >= 0:
+                # Swap if value on right is lesser
+                if array[i + gap] < array[i]:
+                    array[i + gap], array[i] = array[i], array[i + gap]
+                    draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+                
+                # Move gap to sort
+                i = i - gap
+
+            j += 1
+
+        # Cuts gap size in half
+        gap = int(gap / 2)
+
 def main(stdscr):
     # Finds terminal info
     term_size = os.get_terminal_size()
@@ -266,8 +291,9 @@ def main(stdscr):
     stdscr.clear()
 
     # Quits program if terminal height too small for array_range
-    if ((array_range + 2) > term_height) or term_height < 25:
-        stdscr.addstr(0, 0, "terminal height too small for array range!")
+    # This does not acount for array range if fill_screen is True
+    if (fill_screen == False and (array_range + 2) > term_height) or term_height < 25:
+        stdscr.addstr(0, 0, "terminal height too small!")
         stdscr.addstr(2, 0, "required height: 25 cells terminal height: " + str(term_height))
         stdscr.addstr(4, 0, "please resize your terminal and try again")
         stdscr.addstr(6, 0, "press any key to exit")
@@ -275,8 +301,9 @@ def main(stdscr):
         curses.endwin()
 
     # Same if terminal width too small for array_size
-    elif ((array_size + 2) > term_width) or term_width < 80:
-        stdscr.addstr(0, 0, "terminal width too small for array size!")
+    # This does not acount for array range if fill_screen is True
+    elif (fill_screen == False and (array_size + 2) > term_width) or term_width < 80:
+        stdscr.addstr(0, 0, "terminal width too small!")
         stdscr.addstr(2, 0, "required height: 80 cells terminal height: " + str(term_width))
         stdscr.addstr(4, 0, "please resize your terminal and try again")
         stdscr.addstr(6, 0, "press any key to exit")
@@ -320,6 +347,9 @@ def main(stdscr):
 
             case "selectionsort":
                 selection_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
+            case "shellsort":
+                shellSort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
@@ -343,11 +373,12 @@ def main(stdscr):
             stdscr.addstr(6, text_x, "array range: " + str(array_range))
             stdscr.addstr(7, text_x, "time taken to sort: " + str(round(end_time - start_time, 3)) + " second(s)")
             stdscr.addstr(8, text_x, "delay: " + str(sys.argv[6]) + " millisecond(s)")
+            
             if reverse:
-                stdscr.addstr(9, text_x, "Greatest to least")
+                stdscr.addstr(9, text_x, "sorted greatest to least")
 
             else:
-                stdscr.addstr(9, text_x, "Least to greatest")
+                stdscr.addstr(9, text_x, "sorted least to greatest")
 
             stdscr.addstr(11, text_x, "Press any key to exit")
         
