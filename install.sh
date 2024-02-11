@@ -13,3 +13,7 @@ sudo cp src/sortty.sh /usr/local/bin/sortty
 
 echo "Making /usr/local/bin/sortty executable"
 sudo chmod +x /usr/local/bin/sortty
+
+echo "Done, now you can run sortty directly from your terminal"
+echo "Have fun using sorTTY!"
+echo
