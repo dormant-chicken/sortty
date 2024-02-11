@@ -133,6 +133,22 @@ def partition(reverse, stdscr, array_size, wait_delay, term_height, startx, arr,
             draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
     return i
 
+# Gnomesort
+def gnome_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, arr):
+    i = 0
+    while i < len(arr): 
+        if i == 0: 
+            i += 1
+            
+        if arr[i] >= arr[i - 1]: 
+            i += 1
+            draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+
+        else: 
+            arr[i], arr[i - 1] = arr[i - 1], arr[i] 
+            i -= 1
+            draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+
 def main(stdscr):
     # Finds terminal info
     term_size = os.get_terminal_size()
@@ -224,6 +240,9 @@ def main(stdscr):
             
         elif sys.argv[7] == "quicksort":
             quick_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array, 0, len(array) - 1)
+            
+        elif sys.argv[7] == "gnomesort":
+            gnome_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
