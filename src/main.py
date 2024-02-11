@@ -223,7 +223,7 @@ def main(stdscr):
         stdscr.addstr(5, 0, "array size: " + str(array_size))
         stdscr.addstr(6, 0, "array range: " + str(array_range))
         stdscr.addstr(7, 0, "time taken to sort: " + str(math.floor(end_time - start_time)) + " second(s)")
-        stdscr.addstr(8, 0, "delay: " + str(sys.argv[4]) + " milliseconds(s)")
+        stdscr.addstr(8, 0, "delay: " + str(sys.argv[4]) + " millisecond(s)")
         stdscr.addstr(10, 0, "Press any key to exit")
         
         # Waits for key press and stops program
