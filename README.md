@@ -11,11 +11,7 @@ sorTTY - A program to visualize sorting algorithms in your terminal / TTY, writt
 
 These dependencies are needed:
 
-`python`
-
-`ncurses`
-
-`git`
+`python ncurses git`
 
 <br>
 
@@ -40,6 +36,11 @@ sudo apt install python3 libncurses5 git
 
 <br>
 
+> [!NOTE]
+> After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths
+
+<br>
+
 ## Installation of git version
 
 After installing the needed dependencies, clone this repository:
@@ -59,11 +60,6 @@ Finally, to install the program, type this command to run the install script:
 ```
 ./install.sh
 ```
-
-<br>
-
-> [!NOTE]
-> After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths
 
 <br>
 
@@ -132,6 +128,8 @@ In the example command above,
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
 [ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort
+
+<br>
 
 > [!NOTE]
 > If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ], as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead.
