@@ -208,6 +208,15 @@ def cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, 
 
         start += 1
 
+def selection_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
+    for i in range(len(array)):
+        min_idx = i
+        for j in range(i+1, len(array)):
+            if array[min_idx] > array[j]:
+                min_idx = j
+        array[i], array[min_idx] = array[min_idx], array[i]
+        draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
 def main(stdscr):
     # Finds terminal info
     term_size = os.get_terminal_size()
@@ -306,8 +315,12 @@ def main(stdscr):
                 
             case "heapsort":
                 heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
             case "cocktailsort":
                 cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
+            case "selectionsort":
+                selection_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
