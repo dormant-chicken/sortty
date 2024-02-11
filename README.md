@@ -11,7 +11,7 @@ sorTTY - A program to visualize sorting algorithms in your terminal / TTY, writt
 
 These dependencies are needed:
 
-`python ncurses git`
+`python ncurses git figlet`
 
 <br>
 
@@ -21,17 +21,17 @@ They are most likely preinstalled, but it is still good to check.
 
 Arch:
 ```
-sudo pacman -S python ncurses git
+sudo pacman -S python ncurses git figlet
 ```
 
 Fedora:
 ```
-sudo dnf install python ncurses git
+sudo dnf install python ncurses git figlet
 ```
 
 Debian:
 ```
-sudo apt install python3 libncurses5 git
+sudo apt install python3 libncurses5 git figlet
 ```
 
 <br>
