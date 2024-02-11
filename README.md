@@ -36,11 +36,6 @@ sudo apt install python3 libncurses5 git
 
 <br>
 
-> [!NOTE]
-> After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths
-
-<br>
-
 ## Installation of git version
 
 After installing the needed dependencies, clone this repository:
@@ -59,6 +54,14 @@ Finally, to install the program, type this command to run the install script:
 
 ```
 ./install.sh
+```
+
+<br>
+
+After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths by typing:
+
+```
+rm -r -f sorTTY/
 ```
 
 <br>
@@ -99,6 +102,14 @@ Finally, change your directory into sorTTY/, make install.sh executable, and run
 cd sorTTY/
 chmod +x install.sh
 ./install.sh
+```
+
+<br>
+
+After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths by typing:
+
+```
+rm -r -f sorTTY/
 ```
 
 <br>
