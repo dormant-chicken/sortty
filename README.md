@@ -65,7 +65,7 @@ Finally, to install the program, type this command to run the install script:
 
 ## Installation of stable release
 
-After installing dependencies, either use wget to get the tar.gz from the releases page:
+After installing dependencies, use wget to get the tar.gz file from the releases page:
 
 ```
 wget https://github.com/dormant-chicken/sorTTY/releases/download/v1.0-stable/sorTTY.tar.gz
@@ -73,7 +73,7 @@ wget https://github.com/dormant-chicken/sorTTY/releases/download/v1.0-stable/sor
 
 <br>
 
-You can also grab it with a web browser from the [releases page](https://github.com/dormant-chicken/sorTTY/releases)
+Or you can also get it with a web browser from the [releases page](https://github.com/dormant-chicken/sorTTY/releases)
 
 <br>
 
@@ -127,7 +127,7 @@ In the example command above,
 
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
-[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort
+[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort, insertionsort, and quicksort
 
 <br>
 
