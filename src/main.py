@@ -179,6 +179,35 @@ def heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N
 
         heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N, largest)
 
+def cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
+    swapped = True
+    start = 0
+    end = len(array) - 1
+    while (swapped == True):
+
+        swapped = False
+
+        for i in range(start, end):
+            if (array[i] > array[i + 1]):
+                array[i], array[i + 1] = array[i + 1], array[i]
+                swapped = True
+                draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
+        if (swapped == False):
+            break
+
+        swapped = False
+
+        end -= 1
+
+        for i in range(end - 1, start - 1, -1):
+            if (array[i] > array[i + 1]):
+                array[i], array[i + 1] = array[i + 1], array[i]
+                swapped = True
+                draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
+        start += 1
+
 def main(stdscr):
     # Finds terminal info
     term_size = os.get_terminal_size()
@@ -277,6 +306,8 @@ def main(stdscr):
                 
             case "heapsort":
                 heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+            case "cocktailsort":
+                cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
