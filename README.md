@@ -1,5 +1,5 @@
 # sorTTY
-sorTTY - A lightweight program to visualize sorting algorithms in your unix terminal / TTY, written in python and ncurses
+sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algorithms in your unix terminal / TTY, written in python and ncurses
 
 <br>
 
@@ -41,7 +41,7 @@ sorTTY - A lightweight program to visualize sorting algorithms in your unix term
 
 <br>
 
-![quicksort1](https://github.com/dormant-chicken/sorTTY/blob/main/assets/quicksort1.png)
+![quicksort-fancy](https://github.com/dormant-chicken/sorTTY/blob/main/assets/quicksort-fancy.png)
 ![sortty-help](https://github.com/dormant-chicken/sorTTY/blob/main/assets/sortty-help.png)
 ![mergesort2](https://github.com/dormant-chicken/sorTTY/blob/main/assets/mergesort2.png)
 
@@ -167,6 +167,8 @@ In the example command above,
 [ reversed ] is 0 (AKA False), so the program will not sort from greatest to least, but least to greatest.
 
 [ show_info ] is 1 (AKA True), so the program will show the sorting information after sorting
+
+[ fancy ] is 0 (AKA False), so the program will use a '#' instead of a fancy bar
 
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
