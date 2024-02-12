@@ -88,6 +88,13 @@ git clone https://github.com/dormant-chicken/sorTTY
 
 ### Stable release
 
+<br>
+
+> [!WARNING]
+> I recommend using the newest stable release, as the older ones might have a few small bugs
+
+<br>
+
 If you want the stable release, install the dependencies above and use wget to get the tar.gz file from the releases page:
 
 ```
