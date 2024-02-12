@@ -1,5 +1,5 @@
 # sorTTY
-sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algorithms in your unix terminal / TTY, written in python and ncurses
+sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algorithms in your Unix terminal / TTY, written in python and ncurses
 
 <br>
 
