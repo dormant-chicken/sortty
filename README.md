@@ -3,6 +3,28 @@ sorTTY - A lightweight program to visualize sorting algorithms in your unix term
 
 <br>
 
+## Table of contents
+
+* [Features](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#features)
+
+* [Dependencies](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#dependencies)
+
+* [Installation](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#installation)
+
+    * [Latest git](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#latest-git)
+
+    * [Stable release](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#stable-release)
+
+* [Last step of install](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#last-step-of-install)
+
+* [Usage](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#usage)
+
+* [Uninstalling](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#uninstalling)
+
+* [The name](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#the-name)
+
+<br>
+
 ## Features
 
 - Draws every step of a specified sorting algorithm quickly using ncurses
