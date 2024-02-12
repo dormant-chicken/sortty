@@ -146,6 +146,24 @@ The command above also changes your directory to the parent directory of sorTTY/
 
 <br>
 
+## Trying sorTTY without installing
+
+If you just want to try sorTTY without installing, the script has support for that
+
+Just get the files by using git to clone this repostory (shown in the [latest git](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#latest-git) tab) or get the latest stable release and decompress it (shown in the [stable release](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#stable-release) tab). Then, run this command to go into the sorTTY/src/ directory that you just got:
+
+```
+cd sorTTY/
+chmod +x sortty.sh
+./sortty.sh
+```
+
+<br>
+
+After trying sorTTY, you can still install it (shown in the [last step of install](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#last-step-of-install) tab) without problems
+
+<br>
+
 ## Usage
 
 > [!WARNING]
