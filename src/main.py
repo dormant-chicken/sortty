@@ -135,12 +135,14 @@ def gnome_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, arr
             
         if arr[i] >= arr[i - 1]: 
             i += 1
-            draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+            if wait_delay:
+                draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
 
         else: 
             arr[i], arr[i - 1] = arr[i - 1], arr[i] 
             i -= 1
-            draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+            if wait_delay:
+                draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
 
 # Heapsort
 def heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, arr):
@@ -151,7 +153,9 @@ def heap_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
 
     for i in range(N-1, 0, -1):
         arr[i], arr[0] = arr[0], arr[i]
-        draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+        if wait_delay:
+            draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+
         heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, i, 0)
 
 # Needed for heapsort
@@ -168,7 +172,8 @@ def heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N
 
     if largest != i:
         arr[i], arr[largest] = arr[largest], arr[i]
-        draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
+        if wait_delay:
+            draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, arr)
 
         heapify(reverse, stdscr, array_size, wait_delay, term_height, startx, arr, N, largest)
 
@@ -185,7 +190,8 @@ def cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, 
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+                if wait_delay:
+                    draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
 
         if (swapped == False):
             break
@@ -198,7 +204,8 @@ def cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, 
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+                if wait_delay:
+                    draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
 
         start += 1
 
@@ -206,11 +213,14 @@ def cocktail_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, 
 def selection_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
     for i in range(len(array)):
         min_idx = i
+
         for j in range(i + 1, len(array)):
             if array[min_idx] > array[j]:
                 min_idx = j
+
         array[i], array[min_idx] = array[min_idx], array[i]
-        draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+        if wait_delay:
+            draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
 
 # Shellsort
 def shellSort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
@@ -227,7 +237,8 @@ def shellSort(reverse, stdscr, array_size, wait_delay, term_height, startx, arra
                 # Swap if value on right is lesser
                 if array[i + gap] < array[i]:
                     array[i + gap], array[i] = array[i], array[i + gap]
-                    draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+                    if wait_delay:
+                        draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
                 
                 # Move gap to sort
                 i = i - gap
@@ -236,6 +247,28 @@ def shellSort(reverse, stdscr, array_size, wait_delay, term_height, startx, arra
 
         # Cuts gap size in half
         gap = int(gap / 2)
+
+def oddeven_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array):
+    sorted = False
+
+    while sorted == False:
+        sorted = True
+
+        for i in range(1, len(array) - 1, 2):
+            if array[i] > array[i + 1]:
+                # Swap
+                array[i], array[i + 1] = array[i + 1], array[i]
+                sorted = False
+                if wait_delay:
+                    draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+                
+        for i in range(0, len(array) - 1, 2):
+            if array[i] > array[i + 1]:
+                # Swap
+                array[i], array[i + 1] = array[i + 1], array[i]
+                sorted = False
+                if wait_delay:
+                    draw_array(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
 
 def main(stdscr):
     # Finds terminal info
@@ -350,6 +383,9 @@ def main(stdscr):
 
             case "shellsort":
                 shellSort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
+
+            case "oddevensort":
+                oddeven_sort(reverse, stdscr, array_size, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
