@@ -17,6 +17,8 @@ sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algo
 
 * [Last step of install](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#last-step-of-install)
 
+* [Trying sorTTY without installing](https://github.com/dormant-chicken/sorTTY/tree/main#trying-sortty-without-installing)
+
 * [Usage](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#usage)
 
 * [Uninstalling](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#uninstalling)
