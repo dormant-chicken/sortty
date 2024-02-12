@@ -3,6 +3,22 @@ sorTTY - A lightweight program to visualize sorting algorithms in your unix term
 
 <br>
 
+## Features
+
+- Draws every step of a specified sorting algorithm quickly using ncurses
+- Currently has 10 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#usage) tab of the README)
+- Detects if terminal is too small for the specified array_size / array_range
+- #### Options to:
+- change array size
+- change array range
+- fill the entire terminal / TTY with the array or not
+- sort from greatest to least or least to greatest
+- show or not to show sorting information (like the array size chosen, the array range chosen, the time taken to sort, the delay chosen, and if it was sorted greatest to least or least to greatest)
+- change the delay (how fast or slow the algorithm sorts the array)
+- change what algorithm to use
+
+<br>
+
 ![quicksort1](https://github.com/dormant-chicken/sorTTY/blob/main/assets/quicksort1.png)
 ![sortty-help](https://github.com/dormant-chicken/sorTTY/blob/main/assets/sortty-help.png)
 ![mergesort2](https://github.com/dormant-chicken/sorTTY/blob/main/assets/mergesort2.png)
