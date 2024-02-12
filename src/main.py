@@ -339,10 +339,10 @@ def main(stdscr):
 
     # Quits program if terminal height too small for array_range
     # This does not acount for array range if fill_screen is True
-    if term_height < 20:
+    if term_height < 25:
         give_term_error(stdscr, 20, term_height, "terminal height less than minimum!")
 
-    elif term_width < 80:
+    elif term_width < 110:
         give_term_error(stdscr, 100, term_width, "terminal width less than minimum!")
 
     elif fill_screen == False and (array_range >= term_height):
