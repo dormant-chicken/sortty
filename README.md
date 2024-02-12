@@ -148,6 +148,11 @@ The command above also changes your directory to the parent directory of sorTTY/
 
 ## Usage
 
+> [!WARNING]
+> There might be slight flashing on the screen when running any algorithm on any delay while setting [ fancy ] to 1 (AKA True), but ONLY when the terminal is above 90 cells horizontally and 25 cells vertically or when the delay if too low, or less than 100 ms. The [ fancy ] effect causing flashing is because the program uses special text when rendering the fancy bars, so make sure to make the terminal 1/4 to 1/2 of your screen size or less and to not make the delay too small to reduce flashing or flickering.
+
+<br>
+
 `sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]`
 
 Example command:
