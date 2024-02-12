@@ -59,7 +59,12 @@ elif [ $1 == "-v" ] || [ $1 == "--version" ]; then
 
 # Checks if arguments are correct value type [ integer, integer, integer, integer, string ]
 elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && ([ $3 == 0 ] || [ $3 == 1 ]) && ([ $4 == 0 ] || [ $4 == 1 ]) && ([ $5 == 0 ] || [ $5 == 1 ]) && ([ $6 == 0 ] || [ $6 == 1 ]) && [[ $7 =~ ^[0-9]+$ ]] && ([ $8 == "bogosort" ] || [ $8 == "bubblesort" ] || [ $8 == "mergesort" ] || [ $8 == "insertionsort" ] || [ $8 == "quicksort" ] || [ $8 == "gnomesort" ] || [ $8 == "heapsort" ] || [ $8 == "cocktailsort" ] || [ $8 == "selectionsort" ] || [ $8 == "shellsort" ] || [ $8 == "oddevensort" ]); then
-  python3 /usr/local/bin/sortty-bin/main.py $1 $2 $3 $4 $5 $6 $7 $8
+  # If not installed, and the user wants to just try it, run the python script directly without installing
+  if [ -d /usr/local/bin/sortty-bin/ ]; then
+    python3 /usr/local/bin/sortty-bin/main.py $1 $2 $3 $4 $5 $6 $7 $8
+  else
+    python3 sort.py $1 $2 $3 $4 $5 $6 $7 $8
+  fi
 
 # Any other possible arguments display help message
 else
