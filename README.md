@@ -43,8 +43,8 @@ sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algo
 
 <br>
 
-![quicksort-fancy](https://github.com/dormant-chicken/sorTTY/blob/main/assets/quicksort-fancy.png)
-![sortty-help](https://github.com/dormant-chicken/sorTTY/blob/main/assets/sortty-help.png)
+![radixsort](https://github.com/dormant-chicken/sorTTY/blob/main/assets/radixsort.png)
+![sortty](https://github.com/dormant-chicken/sorTTY/blob/main/assets/sortty.png)
 ![quicksort-reverse](https://github.com/dormant-chicken/sorTTY/blob/main/assets/quicksort-reverse.png)
 
 ## Dependencies
