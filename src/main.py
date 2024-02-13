@@ -15,19 +15,35 @@ def draw_array(stdscr, wait_delay, term_height, startx, array):
                     # Checks if [ fancy ] is True
                     match int(sys.argv[6]):
                         case 1:
-                            stdscr.addstr(term_height - 1 - j, startx - (i * 2), " ", curses.A_REVERSE)
+                            match int(sys.argv[7]):
+                                case 1:
+                                    stdscr.addstr(term_height - 1 - j, startx - (i * 3), "  ", curses.A_REVERSE)
+                                case 0:
+                                    stdscr.addstr(term_height - 1 - j, startx - (i * 2), " ", curses.A_REVERSE)
                         case 0:
-                            stdscr.addstr(term_height - 1 - j, startx - (i * 2), "#")
+                            match int(sys.argv[7]):
+                                case 1:
+                                    stdscr.addstr(term_height - 1 - j, startx - (i * 3), "#")
+                                case 0:
+                                    stdscr.addstr(term_height - 1 - j, startx - (i * 2), "#")
                 case 0:
                     match int(sys.argv[6]):
                         case 1:
-                            stdscr.addstr(term_height - 1 - j, startx + (i * 2), " ", curses.A_REVERSE)
+                            match int(sys.argv[7]):
+                                case 1:
+                                    stdscr.addstr(term_height - 1 - j, startx + (i * 3), "  ", curses.A_REVERSE)
+                                case 0:
+                                    stdscr.addstr(term_height - 1 - j, startx + (i * 2), " ", curses.A_REVERSE)
                         case 0:
-                            stdscr.addstr(term_height - 1 - j, startx + (i * 2), "#")
+                            match int(sys.argv[7]):
+                                case 1:
+                                    stdscr.addstr(term_height - 1 - j, startx + (i * 3), "##")
+                                case 0:
+                                    stdscr.addstr(term_height - 1 - j, startx + (i * 2), "#")
 
     stdscr.refresh()
     if wait_delay:
-        time.sleep(int(sys.argv[7]) / 1000)
+        time.sleep(int(sys.argv[8]) / 1000)
 
 # Bogosort
 def bogo_sort(stdscr, wait_delay, term_height, startx, array):
@@ -301,7 +317,7 @@ def main(stdscr):
     array_range = int(sys.argv[2])
 
     # If True, instantly sort the array without drawing
-    if int(sys.argv[7]) == 0:
+    if int(sys.argv[8]) == 0:
         wait_delay = False
     else:
         wait_delay = True
@@ -316,7 +332,11 @@ def main(stdscr):
     fill_screen = int(sys.argv[3])
     
     if fill_screen == 1:
-        array_size = int(term_width / 2) - 2
+        match int(sys.argv[7]):
+            case 1:
+                array_size = int(term_width / 3) - 2
+            case 0:
+                array_size = int(term_width / 2) - 2
         array_range = term_height - 2
     
     # Fills the array with random integers
@@ -326,10 +346,19 @@ def main(stdscr):
         array.append(temp)
 
     # Finds correct position to start drawing
+    # adds instead of substract if reverse if 1
     if int(sys.argv[4]) == 0:
-        startx = math.floor(term_width / 2) - math.floor(array_size)
+        match int(sys.argv[7]):
+            case 1:
+                startx = math.floor(term_width / 2) - math.floor(array_size * 1.5)
+            case 0:
+                startx = math.floor(term_width / 2) - math.floor(array_size)
     else:
-        startx = math.floor(term_width / 2) + math.floor(array_size)
+        match int(sys.argv[7]):
+            case 1:
+                startx = math.floor(term_width / 2) + math.floor(array_size * 1.5)
+            case 0:
+                startx = math.floor(term_width / 2) + math.floor(array_size)
 
     # Curses initialization
     curses.initscr()
@@ -361,7 +390,7 @@ def main(stdscr):
         start_time = time.perf_counter()
 
         # Sorting algorithms determined by bash script
-        match sys.argv[8]:
+        match sys.argv[9]:
             case "bogosort":
                 bogo_sort(stdscr, wait_delay, term_height, startx, array)
 
@@ -403,6 +432,7 @@ def main(stdscr):
             draw_array(stdscr, wait_delay, term_height, startx, array)
 
         # Finds where to place sort_info text
+        # sets to 0 if not reversed
         match int(sys.argv[4]):
             case 1:
                 text_x = term_width - 50
@@ -413,19 +443,20 @@ def main(stdscr):
             # Shows that array is sorted and other info
             stdscr.addstr(0, text_x, "Array sorted!")
             stdscr.addstr(2, text_x, "Sorting information:")
-            stdscr.addstr(4, text_x, "sorting algorithm: " + str(sys.argv[8]))
+            stdscr.addstr(4, text_x, "sorting algorithm: " + str(sys.argv[9]))
             stdscr.addstr(5, text_x, "array size: " + str(array_size))
             stdscr.addstr(6, text_x, "array range: " + str(array_range))
             stdscr.addstr(7, text_x, "time taken to sort: " + str(round(end_time - start_time, 3)) + " second(s)")
-            stdscr.addstr(8, text_x, "delay: " + str(sys.argv[7]) + " millisecond(s)")
+            stdscr.addstr(8, text_x, "delay: " + str(sys.argv[8]) + " millisecond(s)")
+            stdscr.addstr(9, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7] + " " + sys.argv[8] + " " + sys.argv[9])
             
             match int(sys.argv[4]):
                 case 1:
-                    stdscr.addstr(9, text_x, "sorted greatest to least")
+                    stdscr.addstr(10, text_x, "sorted greatest to least")
                 case 0:
-                    stdscr.addstr(9, text_x, "sorted least to greatest")
+                    stdscr.addstr(10, text_x, "sorted least to greatest")
 
-            stdscr.addstr(11, text_x, "Press any key to exit")
+            stdscr.addstr(12, text_x, "Press any key to exit")
         
         else:
             stdscr.addstr(0, term_width - 25, "Array sorted!")
