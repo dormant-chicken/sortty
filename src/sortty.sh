@@ -14,6 +14,10 @@ help_advanced () {
   echo
   echo "or"
   echo
+  echo "usage: sortty [ -hs --help-short ] (to show short version of help message)"
+  echo
+  echo "or"
+  echo
   echo "sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ fancy (boolean integer) ] [ bigger_bars (boolean integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]"
   echo
   echo "Example command:"
@@ -36,7 +40,7 @@ help_advanced () {
   echo
   echo "[ bigger_bars ] is 0, so the program will display smaller bars when sorting"
   echo
-  echo "[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort, insertionsort, quicksort, gnomesort, heapsort, cocktailsort, selectionsort, shellsort, oddevensort"
+  echo "[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort, insertionsort, quicksort, gnomesort, heapsort, cocktailsort, selectionsort, shellsort, oddevensort, combsort, bingosort, radixsort"
   echo
   echo "Note: If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ],"
   echo "as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead."
@@ -55,12 +59,17 @@ elif [ $1 == "-h" ] || [ $1 == "--help" ]; then
   echo "Arguments are needed with sortty"
   help_advanced
 
+# -hs or --help-short arguments
+elif [ $1 == "-hs" ] || [ $1 == "--help-short" ]; then
+  echo "sortty [array_size] [array_range] [fill] [reversed] [show_info] [fancy] [bigger_bars] [wait_time(ms)] [algorithm]"
+  echo "sortty [integer] [integer] [boolean integer(0/1)] [boolean integer] [boolean integer] [boolean integer] [boolean integer] [integer] [string]"
+
 # -v or --version arguments
 elif [ $1 == "-v" ] || [ $1 == "--version" ]; then
   echo "$version"
 
 # Checks if arguments are correct value type [ integer, integer, integer, integer, string ]
-elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && ([ $3 == 0 ] || [ $3 == 1 ]) && ([ $4 == 0 ] || [ $4 == 1 ]) && ([ $5 == 0 ] || [ $5 == 1 ]) && ([ $6 == 0 ] || [ $6 == 1 ]) && ([ $7 == 0 ] || [ $7 == 1 ]) && [[ $8 =~ ^[0-9]+$ ]] && ([ $9 == "bogosort" ] || [ $9 == "bubblesort" ] || [ $9 == "mergesort" ] || [ $9 == "insertionsort" ] || [ $9 == "quicksort" ] || [ $9 == "gnomesort" ] || [ $9 == "heapsort" ] || [ $9 == "cocktailsort" ] || [ $9 == "selectionsort" ] || [ $9 == "shellsort" ] || [ $9 == "oddevensort" ]); then
+elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && ([ $3 == 0 ] || [ $3 == 1 ]) && ([ $4 == 0 ] || [ $4 == 1 ]) && ([ $5 == 0 ] || [ $5 == 1 ]) && ([ $6 == 0 ] || [ $6 == 1 ]) && ([ $7 == 0 ] || [ $7 == 1 ]) && [[ $8 =~ ^[0-9]+$ ]] && ([ $9 == "bogosort" ] || [ $9 == "bubblesort" ] || [ $9 == "mergesort" ] || [ $9 == "insertionsort" ] || [ $9 == "quicksort" ] || [ $9 == "gnomesort" ] || [ $9 == "heapsort" ] || [ $9 == "cocktailsort" ] || [ $9 == "selectionsort" ] || [ $9 == "shellsort" ] || [ $9 == "oddevensort" ] || [ $9 == "combsort" ] || [ $9 == "bingosort" ] || [ $9 == "radixsort" ]); then
   # If not installed, and the user wants to just try it, run the python script directly without installing
   if [ -d /usr/local/bin/sortty-bin/ ]; then
     python3 /usr/local/bin/sortty-bin/main.py $1 $2 $3 $4 $5 $6 $7 $8 $9
