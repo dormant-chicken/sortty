@@ -173,12 +173,12 @@ After trying sorTTY, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]`
+`sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ fancy (boolean integer) ] [ bigger_bars (boolean integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]`
 
 Example command:
 
 ```
-sortty 15 10 0 0 1 100 bubblesort
+sortty 15 10 0 0 1 0 0 100 bubblesort
 ```
 
 In the example command above,
@@ -194,6 +194,8 @@ In the example command above,
 [ show_info ] is 1 (AKA True), so the program will show the sorting information after sorting
 
 [ fancy ] is 0 (AKA False), so the program will use a '#' instead of a fancy bar
+
+[ bigger_bars ] is 0, so the program will display smaller bars when sorting
 
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
