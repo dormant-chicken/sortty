@@ -15,6 +15,7 @@ def draw_array(stdscr, wait_delay, term_height, startx, array):
                     # Checks if [ fancy ] is True
                     match int(sys.argv[6]):
                         case 1:
+                            # Checks if bigget_bars is True
                             match int(sys.argv[7]):
                                 case 1:
                                     stdscr.addstr(term_height - 1 - j, startx - (i * 3), "  ", curses.A_REVERSE)
@@ -250,7 +251,7 @@ def selection_sort(stdscr, wait_delay, term_height, startx, array):
             draw_array(stdscr, wait_delay, term_height, startx, array)
 
 # Shellsort
-def shellSort(stdscr, wait_delay, term_height, startx, array):
+def shell_sort(stdscr, wait_delay, term_height, startx, array):
     gap = int(len(array) / 2)
 
     while gap > 0:
@@ -275,6 +276,7 @@ def shellSort(stdscr, wait_delay, term_height, startx, array):
         # Cuts gap size in half
         gap = int(gap / 2)
 
+# Oddevensort
 def oddeven_sort(stdscr, wait_delay, term_height, startx, array):
     sorted = False
 
@@ -297,10 +299,100 @@ def oddeven_sort(stdscr, wait_delay, term_height, startx, array):
                 if wait_delay:
                     draw_array(stdscr, wait_delay, term_height, startx, array)
 
+# Combsort
+def comb_sort(stdscr, wait_delay, term_height, startx, array):
+    n = len(array)
+
+    gap = n
+
+    swapped = True
+
+    while gap != 1 or swapped:
+        gap = get_next_gap(gap)
+
+        swapped = False
+
+        for i in range(0, n-gap):
+            if array[i] > array[i + gap]:
+                array[i], array[i + gap]=array[i + gap], array[i]
+                swapped = True
+                draw_array(stdscr, wait_delay, term_height, startx, array)
+
+# Needed for combsort
+def get_next_gap(gap):
+
+    gap = int(gap / 1.3)
+    if gap < 1:
+        return 1
+    return gap
+
+def bingo_sort(stdscr, wait_delay, term_height, startx, array):
+    # smallest element From array
+    bingo = min(array)
+    
+    # largest element from 
+    largest = max(array)
+    next_bingo = largest
+    nextPos = 0
+    
+    while bingo < next_bingo:
+        # keep track of element to put in correct position
+        startPos = nextPos
+        for i in range(startPos, len(array)):
+            if array[i] == bingo:
+                array[i], array[nextPos] = array[nextPos], array[i]
+                nextPos += 1
+                draw_array(stdscr, wait_delay, term_height, startx, array)
+                
+            # finds next bingo elemnt
+            elif array[i] < next_bingo:
+                next_bingo = array[i]
+        bingo = next_bingo
+        next_bingo = largest
+
+# Radixsort
+def radix_sort(stdscr, wait_delay, term_height, startx, array):
+    max_array = max(array)
+
+    exp = 1
+    while max_array / exp >= 1:
+        counting_sort(stdscr, wait_delay, term_height, startx, array, exp)
+        exp *= 10
+
+# Needed for radixsort
+def counting_sort(stdscr, wait_delay, term_height, startx, array, exp):
+    n = len(array)
+
+    output = [0] * (n)
+
+    count = [0] * (10)
+
+    for i in range(0, n):
+        index = int(array[i] / exp)
+        count[index % 10] += 1
+
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+
+    # builds output array
+    i = n - 1
+    while i >= 0:
+        index = int(array[i] / exp)
+        output[count[index % 10] - 1] = array[i]
+        count[index % 10] -= 1
+        i -= 1
+
+    # copy the output array to array
+    i = 0
+    for i in range(0, len(array)):
+        array[i] = output[i]
+        draw_array(stdscr, wait_delay, term_height, startx, array)
+
+# Function gives error if terminal is too small
 def give_term_error(stdscr, term_required, term_current, message):
     stdscr.addstr(0, 0, str(message))
-    stdscr.addstr(2, 0, "required height: " + str(term_required) + " cells")
-    stdscr.addstr(3, 0, "terminal height: " + str(term_current) + " cells")
+    stdscr.addstr(2, 0, "required height / width: " + str(term_required) + " cells")
+    stdscr.addstr(3, 0, "terminal height / width: " + str(term_current) + " cells")
     stdscr.addstr(5, 0, "please resize your terminal and try again")
     stdscr.addstr(7, 0, "press any key to exit")
     stdscr.getch()
@@ -367,12 +459,11 @@ def main(stdscr):
     stdscr.clear()
 
     # Quits program if terminal height too small for array_range
-    # This does not acount for array range if fill_screen is True
-    if term_height < 25:
-        give_term_error(stdscr, 20, term_height, "terminal height less than minimum!")
+    if term_height < 18:
+        give_term_error(stdscr, 18, term_height, "terminal height less than minimum!")
 
-    elif term_width < 110:
-        give_term_error(stdscr, 100, term_width, "terminal width less than minimum!")
+    elif term_width < 90:
+        give_term_error(stdscr, 90, term_width, "terminal width less than minimum!")
 
     elif fill_screen == False and (array_range >= term_height):
         give_term_error(stdscr, array_range, term_height, "terminal height too small for array range!")
@@ -419,10 +510,19 @@ def main(stdscr):
                 selection_sort(stdscr, wait_delay, term_height, startx, array)
 
             case "shellsort":
-                shellSort(stdscr, wait_delay, term_height, startx, array)
+                shell_sort(stdscr, wait_delay, term_height, startx, array)
 
             case "oddevensort":
                 oddeven_sort(stdscr, wait_delay, term_height, startx, array)
+            
+            case "combsort":
+                comb_sort(stdscr, wait_delay, term_height, startx, array)
+
+            case "bingosort":
+                bingo_sort(stdscr, wait_delay, term_height, startx, array)
+
+            case "radixsort":
+                radix_sort(stdscr, wait_delay, term_height, startx, array)
         
         # Ends performance timer
         end_time = time.perf_counter()
@@ -435,7 +535,7 @@ def main(stdscr):
         # sets to 0 if not reversed
         match int(sys.argv[4]):
             case 1:
-                text_x = term_width - 50
+                text_x = term_width - 55
             case 0:
                 text_x = 0
 
@@ -448,14 +548,14 @@ def main(stdscr):
             stdscr.addstr(6, text_x, "array range: " + str(array_range))
             stdscr.addstr(7, text_x, "time taken to sort: " + str(round(end_time - start_time, 3)) + " second(s)")
             stdscr.addstr(8, text_x, "delay: " + str(sys.argv[8]) + " millisecond(s)")
-            stdscr.addstr(9, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7] + " " + sys.argv[8] + " " + sys.argv[9])
             
             match int(sys.argv[4]):
                 case 1:
-                    stdscr.addstr(10, text_x, "sorted greatest to least")
+                    stdscr.addstr(9, text_x, "sorted greatest to least")
                 case 0:
-                    stdscr.addstr(10, text_x, "sorted least to greatest")
-
+                    stdscr.addstr(9, text_x, "sorted least to greatest")
+            
+            stdscr.addstr(10, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7] + " " + sys.argv[8] + " " + sys.argv[9])
             stdscr.addstr(12, text_x, "Press any key to exit")
         
         else:
