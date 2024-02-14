@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=v1.4-git
+version=v1.4.1-git
 
 help_advanced () {
   # Displays sorTTY in big ascii letters using figlet
