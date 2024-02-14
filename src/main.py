@@ -316,7 +316,8 @@ def comb_sort(stdscr, wait_delay, term_height, startx, array):
             if array[i] > array[i + gap]:
                 array[i], array[i + gap]=array[i + gap], array[i]
                 swapped = True
-                draw_array(stdscr, wait_delay, term_height, startx, array)
+                if wait_delay:
+                    draw_array(stdscr, wait_delay, term_height, startx, array)
 
 # Needed for combsort
 def get_next_gap(gap):
@@ -342,7 +343,8 @@ def bingo_sort(stdscr, wait_delay, term_height, startx, array):
             if array[i] == bingo:
                 array[i], array[nextPos] = array[nextPos], array[i]
                 nextPos += 1
-                draw_array(stdscr, wait_delay, term_height, startx, array)
+                if wait_delay:
+                    draw_array(stdscr, wait_delay, term_height, startx, array)
                 
             # finds next bingo elemnt
             elif array[i] < next_bingo:
@@ -386,7 +388,8 @@ def counting_sort(stdscr, wait_delay, term_height, startx, array, exp):
     i = 0
     for i in range(0, len(array)):
         array[i] = output[i]
-        draw_array(stdscr, wait_delay, term_height, startx, array)
+        if wait_delay:
+            draw_array(stdscr, wait_delay, term_height, startx, array)
 
 # Function gives error if terminal is too small
 def give_term_error(stdscr, term_required, term_current, message):
