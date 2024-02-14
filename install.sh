@@ -16,5 +16,8 @@ sudo chmod +x /usr/local/bin/sortty
 
 echo
 echo "Done, now you can run sortty directly from your terminal"
+echo
+echo "Run 'sortty --help' for instructions"
+echo
 echo "Have fun using sorTTY!"
 echo
