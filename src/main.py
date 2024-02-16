@@ -5,6 +5,8 @@ def draw_array(stdscr, wait_delay, term_height, startx, array):
     stdscr.clear()
 
     # This draws the array onto the screen
+    bar_size = int(sys.argv[7]) + 1
+    gap_size = 1
     i = 0
     j = 0
     for i in range(len(array)):
@@ -15,32 +17,15 @@ def draw_array(stdscr, wait_delay, term_height, startx, array):
                     # Checks if [ fancy ] is True
                     match int(sys.argv[6]):
                         case 1:
-                            # Checks if bigget_bars is True
-                            match int(sys.argv[7]):
-                                case 1:
-                                    stdscr.addstr(term_height - 1 - j, startx - (i * 3), "  ", curses.A_REVERSE)
-                                case 0:
-                                    stdscr.addstr(term_height - 1 - j, startx - (i * 2), " ", curses.A_REVERSE)
+                                stdscr.addstr(term_height - 1 - j, startx - (i * bar_size), " " * (bar_size - gap_size), curses.A_REVERSE)
                         case 0:
-                            match int(sys.argv[7]):
-                                case 1:
-                                    stdscr.addstr(term_height - 1 - j, startx - (i * 3), "#")
-                                case 0:
-                                    stdscr.addstr(term_height - 1 - j, startx - (i * 2), "#")
+                                stdscr.addstr(term_height - 1 - j, startx - (i * bar_size), "#" * (bar_size - gap_size))
                 case 0:
                     match int(sys.argv[6]):
                         case 1:
-                            match int(sys.argv[7]):
-                                case 1:
-                                    stdscr.addstr(term_height - 1 - j, startx + (i * 3), "  ", curses.A_REVERSE)
-                                case 0:
-                                    stdscr.addstr(term_height - 1 - j, startx + (i * 2), " ", curses.A_REVERSE)
+                                stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * (bar_size - gap_size), curses.A_REVERSE)
                         case 0:
-                            match int(sys.argv[7]):
-                                case 1:
-                                    stdscr.addstr(term_height - 1 - j, startx + (i * 3), "##")
-                                case 0:
-                                    stdscr.addstr(term_height - 1 - j, startx + (i * 2), "#")
+                                stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * (bar_size - gap_size))
 
     stdscr.refresh()
     if wait_delay:
@@ -426,12 +411,8 @@ def main(stdscr):
     # If True, makes the array size and range the highest possible that can fit on the screen
     fill_screen = int(sys.argv[3])
     
-    if fill_screen == 1:
-        match int(sys.argv[7]):
-            case 1:
-                array_size = int(term_width / 3) - 2
-            case 0:
-                array_size = int(term_width / 2) - 2
+    if fill_screen:
+        array_size = int(term_width / (int(sys.argv[7]) + 1)) - 2
         array_range = term_height - 2
     
     # Fills the array with random integers
@@ -443,17 +424,9 @@ def main(stdscr):
     # Finds correct position to start drawing
     # adds instead of substract if reverse if 1
     if int(sys.argv[4]) == 0:
-        match int(sys.argv[7]):
-            case 1:
-                startx = math.floor(term_width / 2) - math.floor(array_size * 1.5)
-            case 0:
-                startx = math.floor(term_width / 2) - math.floor(array_size)
+        startx = math.floor(term_width / 2) - math.floor(array_size * (int(sys.argv[7]) + 1) / 2)
     else:
-        match int(sys.argv[7]):
-            case 1:
-                startx = math.floor(term_width / 2) + math.floor(array_size * 1.5)
-            case 0:
-                startx = math.floor(term_width / 2) + math.floor(array_size)
+        startx = math.floor(term_width / 2) + math.floor(array_size * (int(sys.argv[7]) + 1) / 2)
 
     # Curses initialization
     curses.initscr()
