@@ -40,6 +40,7 @@ sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algo
 - show or not to show sorting information (like the array size chosen, the array range chosen, the time taken to sort, the delay chosen, and if it was sorted greatest to least or least to greatest)
 - change the delay (how fast or slow the algorithm sorts the array)
 - change what algorithm to use
+- change size of bars (can improve performance)
 
 <br>
 
@@ -169,7 +170,7 @@ After trying sorTTY, you can still install it (shown in the [last step of instal
 ## Usage
 
 > [!WARNING]
-> There might be slight flashing on the screen when running any algorithm on any delay while setting [ fancy ] to 1 (AKA True), but ONLY when the terminal is above 90 cells horizontally and 25 cells vertically or when the delay if too low, or less than 100 ms. The [ fancy ] effect causing flashing is because the program uses special text when rendering the fancy bars, so make sure to make the terminal 1/4 to 1/2 of your screen size or less and to not make the delay too small to reduce flashing or flickering.
+> There might be slight flashing on the screen if [ fancy ] to 1 (AKA True), but this can be reduced by lowering the size of your terminal or increasing the size of the bars.
 
 <br>
 
@@ -178,7 +179,7 @@ After trying sorTTY, you can still install it (shown in the [last step of instal
 Example command:
 
 ```
-sortty 15 10 0 0 1 0 0 100 bubblesort
+sortty 15 10 0 0 1 1 3 100 bubblesort
 ```
 
 In the example command above,
@@ -195,7 +196,7 @@ In the example command above,
 
 [ fancy ] is 0 (AKA False), so the program will use a '#' instead of a fancy bar
 
-[ bigger_bars ] is 0, so the program will display smaller bars when sorting
+[ bar_size ] is 3, so the program will draw the bars with a width of 3 terminal cells
 
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
