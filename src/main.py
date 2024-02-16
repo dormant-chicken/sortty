@@ -377,10 +377,10 @@ def counting_sort(stdscr, wait_delay, term_height, startx, array, exp):
             draw_array(stdscr, wait_delay, term_height, startx, array)
 
 # Function gives error if terminal is too small
-def give_term_error(stdscr, term_required, term_current, message):
+def give_term_error(stdscr, term_required, term_current, message, needed):
     stdscr.addstr(0, 0, str(message))
-    stdscr.addstr(2, 0, "required height / width: " + str(term_required) + " cells")
-    stdscr.addstr(3, 0, "terminal height / width: " + str(term_current) + " cells")
+    stdscr.addstr(2, 0, "required " + needed + ": " + str(term_required) + " cells")
+    stdscr.addstr(3, 0, "terminal " + needed + ": " + str(term_current) + " cells")
     stdscr.addstr(5, 0, "please resize your terminal and try again")
     stdscr.addstr(7, 0, "press any key to exit")
     stdscr.getch()
@@ -436,16 +436,16 @@ def main(stdscr):
 
     # Quits program if terminal height too small for array_range
     if term_height < 18:
-        give_term_error(stdscr, 18, term_height, "terminal height less than minimum!")
+        give_term_error(stdscr, 18, term_height, "terminal height less than minimum!", "height")
 
     elif term_width < 90:
-        give_term_error(stdscr, 90, term_width, "terminal width less than minimum!")
+        give_term_error(stdscr, 90, term_width, "terminal width less than minimum!", "width")
 
     elif fill_screen == False and (array_range >= term_height):
-        give_term_error(stdscr, array_range, term_height, "terminal height too small for array range!")
+        give_term_error(stdscr, array_range, term_height, "terminal height too small for array range!", "height")
 
     elif (fill_screen == False and array_size > term_width):
-        give_term_error(stdscr, array_size, term_width, "terminal width too small for array size!")
+        give_term_error(stdscr, array_size, term_width, "terminal width too small for array size!", "width")
     
     # Otherwise, start main script
     else:
