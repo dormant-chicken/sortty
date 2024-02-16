@@ -40,7 +40,7 @@ sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algo
 - show or not to show sorting information (like the array size chosen, the array range chosen, the time taken to sort, the delay chosen, and if it was sorted greatest to least or least to greatest)
 - change the delay (how fast or slow the algorithm sorts the array)
 - change what algorithm to use
-- change size of bars (can improve performance)
+- change size of bars (increasing this can improve performance)
 
 <br>
 
