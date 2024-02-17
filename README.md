@@ -174,7 +174,7 @@ After trying sorTTY, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ fancy (boolean integer) ] [ bigger_bars (boolean integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]`
+`sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ fancy (boolean integer) ] [ bar_size (integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]`
 
 Example command:
 
