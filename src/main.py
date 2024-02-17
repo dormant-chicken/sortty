@@ -532,7 +532,7 @@ def main(stdscr):
                     stdscr.addstr(9, text_x, "sorted least to greatest")
                 
             
-            stdscr.addstr(10, text_x, "gap size: " + sys.argv[7])
+            stdscr.addstr(10, text_x, "bar size: " + sys.argv[7])
             stdscr.addstr(11, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7] + " " + sys.argv[8] + " " + sys.argv[9])
             stdscr.addstr(13, text_x, "Press any key to exit")
         
