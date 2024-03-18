@@ -77,7 +77,7 @@ elif [[ $1 =~ ^[0-9]+$ ]] && [[ $2 =~ ^[0-9]+$ ]] && ([ $3 == 0 ] || [ $3 == 1 ]
   if [ -d /usr/local/bin/sortty-bin/ ]; then
     python3 /usr/local/bin/sortty-bin/main.py $1 $2 $3 $4 $5 $6 $7 $8 $9
   else
-    python3 main.py $1 $2 $3 $4 $5 $6 $7 $8 $9
+    python3 src/main.py $1 $2 $3 $4 $5 $6 $7 $8 $9
   fi
 
 # Any other possible arguments display help message
