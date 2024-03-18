@@ -157,8 +157,8 @@ Just get the files by using git to clone this repostory (shown in the [latest gi
 
 ```
 cd sorTTY/
-chmod +x sortty.sh
-./sortty.sh
+chmod +x src/sortty.sh
+src/sortty.sh
 ```
 
 <br>
