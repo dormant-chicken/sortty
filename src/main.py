@@ -1,35 +1,66 @@
 import os, sys, curses, time, random, math
 from curses import wrapper
 
+# Finds terminal info
+term_size = os.get_terminal_size()
+term_height = term_size.lines
+term_width = term_size.columns
+
 def draw_array(stdscr, wait_delay, term_height, startx, array):
     stdscr.clear()
 
     # This draws the array onto the screen
-    bar_size = int(sys.argv[7]) + 1
-    gap_size = 1
+    bar_size = int(sys.argv[5]) + 1
     i = 0
     j = 0
     for i in range(len(array)):
         for j in range(array[i]):
-            # Checks if [ reverse ] is True
+            # Checks if [ fancy ] is True
             match int(sys.argv[4]):
                 case 1:
-                    # Checks if [ fancy ] is True
-                    match int(sys.argv[6]):
-                        case 1:
-                                stdscr.addstr(term_height - 1 - j, startx - (i * bar_size), " " * (bar_size - gap_size), curses.A_REVERSE)
-                        case 0:
-                                stdscr.addstr(term_height - 1 - j, startx - (i * bar_size), "#" * (bar_size - gap_size))
+                    stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * (bar_size + 1), curses.A_REVERSE)
                 case 0:
-                    match int(sys.argv[6]):
-                        case 1:
-                                stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * (bar_size - gap_size), curses.A_REVERSE)
-                        case 0:
-                                stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * (bar_size - gap_size))
+                    stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * (bar_size + 1))
+    
+    # moves cursor to bottom right of screen (less distracting)
+    stdscr.move(term_height - 1, term_width - 1)
 
+    # refresh screen and wait specified time
     stdscr.refresh()
     if wait_delay:
-        time.sleep(int(sys.argv[8]) / 1000)
+        time.sleep(int(sys.argv[6]) / 1000)
+
+# used for filling array with green
+def draw_final(stdscr, wait_delay, term_height, startx, array, index):
+    stdscr.clear()
+
+    # This draws the array onto the screen
+    bar_size = int(sys.argv[5]) + 1
+    i = 0
+    j = 0
+    for i in range(len(array)):
+        for j in range(array[i]):
+            # Checks if [ fancy ] is True
+            match int(sys.argv[4]):
+                case 1:
+                    if i <= index:
+                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * (bar_size + 1), curses.color_pair(1))
+                    else:
+                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * (bar_size + 1), curses.A_REVERSE)
+                case 0:
+                    if i <= index:
+                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "@" * (bar_size + 1))
+                    else:
+                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * (bar_size + 1))
+    
+    # moves cursor to bottom right of screen (less distracting)
+    stdscr.move(term_height - 1, term_width - 1)
+    
+    # refresh screen and wait specified time
+    stdscr.refresh()
+    if wait_delay:
+        time.sleep(20 / 1000)
+
 
 # Bogosort
 def bogo_sort(stdscr, wait_delay, term_height, startx, array):
@@ -387,52 +418,48 @@ def give_term_error(stdscr, term_required, term_current, message, needed):
     curses.endwin()
 
 def main(stdscr):
-    # Finds terminal info
-    term_size = os.get_terminal_size()
-    term_height = term_size.lines
-    term_width = term_size.columns
-
     # Set variables and lists
     array_size = int(sys.argv[1])
     array_range = int(sys.argv[2])
 
     # If True, instantly sort the array without drawing
-    if int(sys.argv[8]) == 0:
+    if int(sys.argv[6]) == 0:
         wait_delay = False
     else:
         wait_delay = True
-
-    # Shows info after sorting
-    if int(sys.argv[5]) == 0:
-        show_info = False
-    else:
-        show_info = True
 
     # If True, makes the array size and range the highest possible that can fit on the screen
     fill_screen = int(sys.argv[3])
     
     if fill_screen:
-        array_size = int(term_width / (int(sys.argv[7]) + 1)) - 2
+        array_size = int(term_width / (int(sys.argv[5]) + 1)) - 2
         array_range = term_height - 2
     
-    # Fills the array with random integers
+    # array declaration
     array = []
+
+    # finds slope using array range and array size (slope = rise / run)
+    slope = array_range / array_size
+    bar_height = 0
     for i in range(array_size):
-        temp = random.randint(1, array_range)
-        array.append(temp)
+        bar_height += slope
+        array.append(math.ceil(bar_height))
+    
+    # shuffles array before sorting
+    random.shuffle(array)
 
     # Finds correct position to start drawing
-    # adds instead of substract if reverse if 1
-    if int(sys.argv[4]) == 0:
-        startx = math.floor(term_width / 2) - math.floor(array_size * (int(sys.argv[7]) + 1) / 2)
-    else:
-        startx = math.floor(term_width / 2) + math.floor(array_size * (int(sys.argv[7]) + 1) / 2)
+    startx = math.floor(term_width / 2) - math.floor(array_size * (int(sys.argv[5]) + 1) / 2)
 
     # Curses initialization
     curses.initscr()
     curses.noecho()
     curses.cbreak()
+    stdscr.timeout(-1)
     stdscr.clear()
+
+    # color pair for after sorting
+    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_GREEN)
 
     # Quits program if terminal height too small for array_range
     if term_height < 18:
@@ -457,7 +484,7 @@ def main(stdscr):
         start_time = time.perf_counter()
 
         # Sorting algorithms determined by bash script
-        match sys.argv[9]:
+        match sys.argv[7]:
             case "bogosort":
                 bogo_sort(stdscr, wait_delay, term_height, startx, array)
 
@@ -506,39 +533,25 @@ def main(stdscr):
         # Only draw at the end of sorting when wait_delay is on, otherwise it would just show the array being unsorted
         if not wait_delay:
             draw_array(stdscr, wait_delay, term_height, startx, array)
+        
+        # fills array with green after sorting
+        for i in range(array_size):
+            draw_final(stdscr, wait_delay, term_height, startx, array, i)
 
         # Finds where to place sort_info text
-        # sets to 0 if not reversed
-        match int(sys.argv[4]):
-            case 1:
-                text_x = term_width - 55
-            case 0:
-                text_x = 0
+        text_x = 0
 
-        if show_info == True:
-            # Shows that array is sorted and other info
-            stdscr.addstr(0, text_x, "Array sorted!")
-            stdscr.addstr(2, text_x, "Sorting information:")
-            stdscr.addstr(4, text_x, "sorting algorithm: " + str(sys.argv[9]))
-            stdscr.addstr(5, text_x, "array size: " + str(array_size))
-            stdscr.addstr(6, text_x, "array range: " + str(array_range))
-            stdscr.addstr(7, text_x, "time taken to sort: " + str(round(end_time - start_time, 3)) + " second(s)")
-            stdscr.addstr(8, text_x, "delay: " + str(sys.argv[8]) + " millisecond(s)")
-            
-            match int(sys.argv[4]):
-                case 1:
-                    stdscr.addstr(9, text_x, "sorted greatest to least")
-                case 0:
-                    stdscr.addstr(9, text_x, "sorted least to greatest")
-                
-            
-            stdscr.addstr(10, text_x, "bar size: " + sys.argv[7])
-            stdscr.addstr(11, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7] + " " + sys.argv[8] + " " + sys.argv[9])
-            stdscr.addstr(13, text_x, "Press any key to exit")
-        
-        else:
-            stdscr.addstr(0, term_width - 25, "Array sorted!")
-            stdscr.addstr(1, term_width - 25, "Press any key to exit")
+        # Shows that array is sorted and other info
+        stdscr.addstr(0, text_x, "Array sorted!")
+        stdscr.addstr(2, text_x, "Sorting information:")
+        stdscr.addstr(4, text_x, "sorting algorithm: " + str(sys.argv[7]))
+        stdscr.addstr(5, text_x, "array size: " + str(array_size))
+        stdscr.addstr(6, text_x, "array range: " + str(array_range))
+        stdscr.addstr(7, text_x, "time taken to sort: " + str(round(end_time - start_time, 3)) + " second(s)")
+        stdscr.addstr(8, text_x, "delay: " + str(sys.argv[6]) + " millisecond(s)")
+        stdscr.addstr(10, text_x, "bar size: " + sys.argv[5])
+        stdscr.addstr(11, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7])
+        stdscr.addstr(13, text_x, "Press any key to exit")
         
         # Waits for key press and stops program
         stdscr.getch()
