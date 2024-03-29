@@ -1,36 +1,38 @@
-# sorTTY
-sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algorithms in your Unix terminal / TTY, written in python and ncurses
+# sortty
+sortty - A lightweight, minimal, and beautiful program to visualize sorting algorithms in your Unix terminal / TTY, written in python and ncurses
 
 <br>
 
 ## Table of contents
 
-* [Features](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#features)
+* [Features](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#features)
 
-* [Dependencies](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#dependencies)
+* [Gallery](https://github.com/dormant-chicken/sortty/tree/main?tab=readme-ov-file#gallery)
 
-* [Installation](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#installation)
+* [Dependencies](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#dependencies)
 
-    * [Latest git](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#latest-git)
+* [Installation](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#installation)
 
-    * [Stable release](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#stable-release)
+    * [Latest git](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#latest-git)
 
-* [Last step of install](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#last-step-of-install)
+    * [Stable release](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#stable-release)
 
-* [Trying sorTTY without installing](https://github.com/dormant-chicken/sorTTY/tree/main?tab=readme-ov-file#trying-sortty-without-installing)
+* [Last step of install](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#last-step-of-install)
 
-* [Usage](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#usage)
+* [Trying sortty without installing](https://github.com/dormant-chicken/sortty/tree/main?tab=readme-ov-file#trying-sortty-without-installing)
 
-* [Uninstalling](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#uninstalling)
+* [Usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage)
 
-* [The name](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#the-name)
+* [Uninstalling](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#uninstalling)
+
+* [The name](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#the-name)
 
 <br>
 
 ## Features
 
 - Draws every step of a specified sorting algorithm quickly using ncurses
-- Currently has 10 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#usage) tab of the README)
+- Currently has 10 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
 - Detects if terminal is too small for the specified array_size / array_range
 - #### Options to:
 - change array size
@@ -46,9 +48,9 @@ sorTTY - A lightweight, minimal, and beautiful program to visualize sorting algo
 
 ## Gallery
 
-![radixsort](https://github.com/dormant-chicken/sorTTY/blob/main/assets/radixsort.png)
-![sortty](https://github.com/dormant-chicken/sorTTY/blob/main/assets/sortty.png)
-![quicksort-reverse](https://github.com/dormant-chicken/sorTTY/blob/main/assets/quicksort-reverse.png)
+![quicksort](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort.png)
+![sortty-help](https://github.com/dormant-chicken/sortty/blob/main/assets/sortty-help.png)
+![heapsort](https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort.png)
 
 ## Dependencies
 
@@ -86,7 +88,7 @@ sudo apt install python3 libncurses5 git figlet
 After installing the needed dependencies, clone this repository to get the very latest git release:
 
 ```
-git clone https://github.com/dormant-chicken/sorTTY
+git clone https://github.com/dormant-chicken/sortty
 ```
 
 <br>
@@ -103,19 +105,19 @@ git clone https://github.com/dormant-chicken/sorTTY
 If you want the stable release, install the dependencies above and use wget to get the tar.gz file from the releases page:
 
 ```
-wget https://github.com/dormant-chicken/sorTTY/releases/download/v1.0-stable/sorTTY.tar.gz
+wget https://github.com/dormant-chicken/sortty/releases/download/v1.6/sortty.tar.gz
 ```
 
 <br>
 
-Or you can also get it with a web browser from the [releases page](https://github.com/dormant-chicken/sorTTY/releases)
+Or you can also get it with a web browser from the [releases page](https://github.com/dormant-chicken/sortty/releases)
 
 <br>
 
 Then, you can decompress the tar.gz file by typing:
 
 ```
-tar -xzvf sorTTY.tar.gz
+tar -xzvf sortty.tar.gz
 ```
 
 <br>
@@ -123,49 +125,49 @@ tar -xzvf sorTTY.tar.gz
 You can remove the tar.gz file if you want to:
 
 ```
-rm sorTTY.tar.gz
+rm sortty.tar.gz
 ```
 
 <br>
 
 ## Last step of install
 
-Finally, change your directory into sorTTY/, make install.sh executable, and run install.sh:
+Finally, change your directory into sortty/, make install.sh executable, and run install.sh:
 
 ```
-cd sorTTY/
+cd sortty/
 chmod +x install.sh
 ./install.sh
 ```
 
 <br>
 
-After installing, you can remove the sorTTY/ directory, as the needed files are already copied to the correct paths:
+After installing, you can remove the sortty/ directory, as the needed files are already copied to the correct paths:
 
 ```
 cd ..
-rm -r -f sorTTY/
+rm -r -f sortty/
 ```
 
-The command above also changes your directory to the parent directory of sorTTY/ with 'cd ..', which is the directory that it is located in, so that it can remove the directory
+The command above also changes your directory to the parent directory of sortty/ with 'cd ..', which is the directory that it is located in, so that it can remove the directory
 
 <br>
 
-## Trying sorTTY without installing
+## Trying sortty without installing
 
-If you just want to try sorTTY without installing, the script has support for that
+If you just want to try sortty without installing, the script has support for that
 
-Just get the files by using git to clone this repostory (shown in the [latest git](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#latest-git) tab) or get the latest stable release and decompress it (shown in the [stable release](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#stable-release) tab). Then, run this command to go into the sorTTY/src/ directory that you just got:
+Just get the files by using git to clone this repostory (shown in the [latest git](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#latest-git) tab) or get the latest stable release and decompress it (shown in the [stable release](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#stable-release) tab). Then, run this command to go into the sortty/src/ directory that you just got:
 
 ```
-cd sorTTY/
+cd sortty/
 chmod +x src/sortty.sh
 src/sortty.sh
 ```
 
 <br>
 
-After trying sorTTY, you can still install it (shown in the [last step of install](https://github.com/dormant-chicken/sorTTY?tab=readme-ov-file#last-step-of-install) tab) without problems
+After trying sortty, you can still install it (shown in the [last step of install](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#last-step-of-install) tab) without problems
 
 <br>
 
@@ -219,7 +221,7 @@ In the example command above,
 
 ## Uninstalling
 
-Run this command to remove the sorTTY binaries:
+Run this command to remove the sortty binaries:
 
 ```
 sudo rm -rf -r /usr/local/bin/sortty-bin/ /usr/local/bin/sortty
@@ -229,4 +231,4 @@ sudo rm -rf -r /usr/local/bin/sortty-bin/ /usr/local/bin/sortty
 
 ## The Name
 
-The name is the word "sort", because this is a program to visualize sorting algorithms, plus the word "TTY", which is similar to a terminal. "sort" plus "TTY" equals "sorTTY", it's a great name, I know.
+The name is the word "sort", because this is a program to visualize sorting algorithms, plus the word "TTY", which is similar to a terminal. "sort" plus "TTY" equals "sortty", it's a great name, I know.
