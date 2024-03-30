@@ -69,11 +69,18 @@ elif (argc != 5) and (argc != 7):
 elif ((int(sys.argv[1]) == 0) or (int(sys.argv[1]) == 1)) and sys.argv[2].isnumeric() and (int(sys.argv[2]) >= 1) and (int(sys.argv[2]) <= 6) and sys.argv[3].isnumeric() and ((str(sys.argv[4]) == "bogo") or (str(sys.argv[4]) == "bubble") or (str(sys.argv[4]) == "merge") or (str(sys.argv[4]) == "insertion") or (str(sys.argv[4]) == "quick") or (str(sys.argv[4]) == "gnome") or (str(sys.argv[4]) == "heap") or (str(sys.argv[4]) == "cocktail") or (str(sys.argv[4]) == "selection") or (str(sys.argv[4]) == "shell") or (str(sys.argv[4]) == "oddeven") or (str(sys.argv[4]) == "comb") or (str(sys.argv[4]) == "bingo") or (str(sys.argv[4]) == "radix")):
     if argc == 5:
         # passes -1 to let the python program know that it has to fill the screen
-        os.system("python3 /usr/local/bin/sortty-bin/main.py " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " -1")
+        if os.path.isdir("/usr/local/bin/sortty-bin/"):
+            os.system("python3 /usr/local/bin/sortty-bin/main.py " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " -1")
+        else:
+            os.system("python3 src/main.py " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " -1")
     
     # user has passed custom array size and range
     elif (argc == 7) and sys.argv[5].isnumeric() and sys.argv[6].isnumeric():
-        os.system("python3 /usr/local/bin/sortty-bin/main.py " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6])
+        if os.path.isdir("/usr/local/bin/sortty-bin/"):
+            os.system("python3 /usr/local/bin/sortty-bin/main.py " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6])
+        else:
+            os.system("python3 src/main.py " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6])
+
 
 else:
     print("run 'sortty -h' or 'sortty --help' for help")
