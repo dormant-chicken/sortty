@@ -244,7 +244,7 @@ def cocktail_sort(stdscr, wait_delay, startx, array):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
                 if wait_delay:
-                    draw_array(stdscr, wait_delay, startx, array, i, "mark_element")
+                    draw_array(stdscr, wait_delay, startx, array, i + 1, "mark_element")
 
         if (swapped == False):
             break
