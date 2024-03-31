@@ -52,7 +52,7 @@ sortty - A lightweight, minimal, and beautiful program to visualize sorting algo
 
 <br>
 
-## Warning
+## Flashing Light Warning
 
 > [!WARNING]
 > There may be flashing on the screen if fancy bars are used, instead of a text-based character, but this can be reduced by lowering the size of your terminal, increasing the size of the bars, or increasing terminal font size.
