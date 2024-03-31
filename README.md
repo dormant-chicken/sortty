@@ -196,7 +196,7 @@ In the example command above,
 
 [wait_time] is 100, meaning the program will wait 100ms before drawing again
 
-[algorithm] uses the bubblesort algorithm, but available algorithms are: bogosort bubblesort mergesort insertionsort quicksort gnomesort heapsort cocktailsort selectionsort shellsort oddevensort combsort bingosort radixsort
+[algorithm] uses the bubblesort algorithm, but available algorithms are: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix
 
 If you want a custom array size and array range, you can do so like this:
 
