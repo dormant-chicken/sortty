@@ -210,8 +210,6 @@ After you specify the algorithm, put down the array size you want then the array
 
 [array_range] is 20, meaning the array that the program sorts ranges from values 1 to 20
 
-[ wait_time ] waits 0.01 seconds before refreshing the screen.
-
 <br>
 
 > [!NOTE]
