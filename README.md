@@ -185,7 +185,7 @@ After trying sortty, you can still install it (shown in the [last step of instal
 Example command:
 
 ```
-sortty 0 3 100 bubblesort
+sortty 0 3 100 bubble
 ```
 
 In the example command above,
@@ -201,7 +201,7 @@ In the example command above,
 If you want a custom array size and array range, you can do so like this:
 
 ```
-sortty 0 3 100 bubblesort 30 20
+sortty 0 3 100 bubble 30 20
 ```
 
 After you specify the algorithm, put down the array size you want then the array range you want
