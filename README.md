@@ -55,7 +55,7 @@ sortty - A lightweight, minimal, and beautiful program to visualize sorting algo
 ## Flashing Light Warning
 
 > [!WARNING]
-> There may be flashing on the screen if fancy bars are used instead of a text-based character, if the terminal text is small, if the bar size is small, or if your GPU is low-end. This can be fixed by lowering the size of your terminal, increasing the size of the bars, increasing terminal font size, or increasing the wait delay for the program.
+> There may be flashing on the screen if fancy bars are used instead of a text-based character, if the terminal text is small, if the bar size is small, or if your computer is low-end. This can be fixed by lowering the size of your terminal, increasing the size of the bars, increasing terminal font size, or increasing the wait delay for the program.
 
 ## Dependencies
 
@@ -65,7 +65,7 @@ These dependencies are needed:
 
 <br>
 
-They are most likely preinstalled, but it is still good to check.
+Some are most likely preinstalled, but it is still good to check.
 
 <br>
 
