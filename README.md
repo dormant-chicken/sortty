@@ -76,12 +76,12 @@ sudo pacman -S python ncurses git figlet
 
 Fedora:
 ```
-sudo dnf install python ncurses git figlet
+sudo dnf install python ncurses ncurses-devel git figlet
 ```
 
 Debian:
 ```
-sudo apt install python3 libncurses5 git figlet
+sudo apt install python3 libncurses5 libncurses6 libncurses-dev git figlet
 ```
 
 <br>
