@@ -48,9 +48,14 @@ sortty - A lightweight, minimal, and beautiful program to visualize sorting algo
 
 ## Gallery
 
-![quicksort](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort.png)
-![sortty-help](https://github.com/dormant-chicken/sortty/blob/main/assets/sortty-help.png)
-![heapsort](https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort.png)
+![quicksort3](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort3.png)
+![quicksort2](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort2.png)
+![heapsort1](https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort1.png)
+
+## Warning
+
+> [!WARNING]
+> There might be flashing on the screen if fancy bars are used, instead of a '#' character, but this can be reduced by lowering the size of your terminal, increasing the size of the bars, or increasing terminal font size.
 
 ## Dependencies
 
@@ -105,7 +110,7 @@ git clone https://github.com/dormant-chicken/sortty
 If you want the stable release, install the dependencies above and use wget to get the tar.gz file from the releases page:
 
 ```
-wget https://github.com/dormant-chicken/sortty/releases/download/v1.6/sortty.tar.gz
+wget https://github.com/dormant-chicken/sortty/releases/download/v1.7/sortty.tar.gz
 ```
 
 <br>
@@ -173,49 +178,47 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 ## Usage
 
-> [!WARNING]
-> There might be slight flashing on the screen if [ fancy ] to 1 (AKA True), but this can be reduced by lowering the size of your terminal or increasing the size of the bars.
-
 <br>
 
-`sortty [ array_size (integer) ] [ array_range (integer) ] [ fill (boolean integer (0 or 1)) ] [ reversed (boolean integer) ] [ show_info (boolean integer) ] [ fancy (boolean integer) ] [ bar_size (integer) ] [ wait_time (milliseconds) (integer) ] [ algorithm (string) ]`
+`sortty [fancy] [bar_size] [wait_time(ms)] [algorithm] [array_size(optional)] [array_range(optional)]`
 
 Example command:
 
 ```
-sortty 15 10 0 0 1 1 3 100 bubblesort
+sortty 0 3 100 bubblesort
 ```
 
 In the example command above,
 
-[ array_size ] is 15, meaning it will give the program 15 items to sort.
+[fancy] is 0 (AKA False), so the program will use a '#' character and a '@' character for highlight instead of a fancy bar with colors for highlight
 
-[ array_range ] is 10, meaning the array that the program sorts ranges from values 0 to 10.
+[bar_size] is 3, so the program will draw the bars with a width of 3 terminal cells
 
-[ fill ] is 0 (AKA False), meaning that the program will not ignore the values above and use the highest possible array size and array range, limited by the size of the screen.
+[wait_time] is 100, meaning the program will wait 100ms before drawing again
 
-[ reversed ] is 0 (AKA False), so the program will not sort from greatest to least, but least to greatest.
+[algorithm] uses the bubblesort algorithm, but available algorithms are: bogosort bubblesort mergesort insertionsort quicksort gnomesort heapsort cocktailsort selectionsort shellsort oddevensort combsort bingosort radixsort
 
-[ show_info ] is 1 (AKA True), so the program will show the sorting information after sorting
+If you want a custom array size and array range, you can do so like this:
 
-[ fancy ] is 0 (AKA False), so the program will use a '#' instead of a fancy bar
+```
+sortty 0 3 100 bubblesort 30 20
+```
 
-[ bar_size ] is 3, so the program will draw the bars with a width of 3 terminal cells
+After you specify the algorithm, put down the array size you want then the array range you want
+
+[array_size] is 30, meaning it will give the program 30 items to sort
+
+[array_range] is 20, meaning the array that the program sorts ranges from values 1 to 20
 
 [ wait_time ] waits 0.01 seconds before refreshing the screen.
 
-[ algorithm ] uses the bubblesort algorithm, but available algorithms are: bogosort, bubblesort, mergesort, insertionsort, quicksort, gnomesort, heapsort, cocktailsort, selectionsort, shellsort, oddevensort, combsort, bingosort, and radixsort, making 14 available algorithms to chose from
-
 <br>
-
-> [!NOTE]
-> If [ fill ] is 1 (AKA True), the program will ignore [ array_size ] and [ array_range ], as it makes the program use the screen dimensions for [ array_size ] and [ array_range ] instead.
 
 > [!NOTE]
 > I had trouble getting the mergesort algorithm to be drawn properly, because the mergesort function uses multiple arrays. The algorithm still works, and it is still drawn, but the items in the array do not get merged, as seen [here](https://www.youtube.com/watch?v=ZRPoEKHXTJg).
 
 > [!WARNING]
-> I do not recommend running an inefficient sorting algorithm, especially bogosort with a delay of 0, I ran it and it made my cpu go to the highest clock speed
+> I do not recommend running an inefficient sorting algorithm, especially bogosort with a delay of 0, I ran it and it made my cpu go to the highest clock speed :\
 
 <br>
 
