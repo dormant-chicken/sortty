@@ -32,14 +32,16 @@ sortty - A lightweight, minimal, and beautiful program to visualize sorting algo
 ## Features
 
 - Draws every step of a specified sorting algorithm quickly using ncurses
-- Currently has 10 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
+- Currently has 14 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
 - Detects if terminal is too small for the specified array_size / array_range
+- animation before shuffling array
+- animation during shuffling of array
+- red bar to indicate index when sorting array
+- animation that fills the array green after shuffling array
 - #### Options to:
 - change array size
 - change array range
 - fill the entire terminal / TTY with the array or not
-- sort from greatest to least or least to greatest
-- show or not to show sorting information (like the array size chosen, the array range chosen, the time taken to sort, the delay chosen, and if it was sorted greatest to least or least to greatest)
 - change the delay (how fast or slow the algorithm sorts the array)
 - change what algorithm to use
 - change size of bars (increasing this can improve performance)
