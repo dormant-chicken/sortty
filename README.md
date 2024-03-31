@@ -1,13 +1,17 @@
 # sortty
 sortty - A lightweight, minimal, and beautiful program to visualize sorting algorithms in your Unix terminal / TTY, written in python and ncurses
 
+## Gallery
+
+![quicksort3](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort3.png)
+![quicksort2](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort2.png)
+![heapsort1](https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort1.png)
+
 <br>
 
 ## Table of contents
 
 * [Features](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#features)
-
-* [Gallery](https://github.com/dormant-chicken/sortty/tree/main?tab=readme-ov-file#gallery)
 
 * [Dependencies](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#dependencies)
 
@@ -48,16 +52,10 @@ sortty - A lightweight, minimal, and beautiful program to visualize sorting algo
 
 <br>
 
-## Gallery
-
-![quicksort3](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort3.png)
-![quicksort2](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort2.png)
-![heapsort1](https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort1.png)
-
 ## Warning
 
 > [!WARNING]
-> There might be flashing on the screen if fancy bars are used, instead of a '#' character, but this can be reduced by lowering the size of your terminal, increasing the size of the bars, or increasing terminal font size.
+> There may be flashing on the screen if fancy bars are used, instead of a text-based character, but this can be reduced by lowering the size of your terminal, increasing the size of the bars, or increasing terminal font size.
 
 ## Dependencies
 
