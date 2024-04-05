@@ -7,7 +7,7 @@ term_height = term_size.lines
 term_width = term_size.columns
 
 # used for filling array with green
-def draw_array(stdscr, wait_delay, startx, array, index, mode):
+def draw_array(stdscr, startx, array, index, mode):
     stdscr.clear()
 
     # This draws the array onto the screen
@@ -70,7 +70,7 @@ def draw_array(stdscr, wait_delay, startx, array, index, mode):
         time.sleep(5 / 1000)
 
     elif mode == "shuffle":
-        time.sleep(5 / 1000)
+        time.sleep(10 / 1000)
 
     elif mode == "start":
         time.sleep(3 / 1000)
@@ -79,7 +79,7 @@ def draw_array(stdscr, wait_delay, startx, array, index, mode):
         time.sleep(int(sys.argv[3]) / 1000)
 
 # Bogosort
-def bogo_sort(stdscr, wait_delay, startx, array):
+def bogo_sort(stdscr, startx, array):
 
     sorted = False
 
@@ -91,11 +91,10 @@ def bogo_sort(stdscr, wait_delay, startx, array):
                 break
         if not sorted:
             random.shuffle(array)
-            if wait_delay:
-                draw_array(stdscr, wait_delay, startx, array, 0, "none")
+            draw_array(stdscr, startx, array, 0, "none")
 
 # Bubblesort
-def bubble_sort(stdscr, wait_delay, startx, array):
+def bubble_sort(stdscr, startx, array):
     sorted = False
 
     while not sorted:
@@ -104,19 +103,18 @@ def bubble_sort(stdscr, wait_delay, startx, array):
             if array[i] > array[i + 1]:
                 sorted = False
                 array[i], array[i + 1] = array[i + 1], array[i]
-            if wait_delay:
-                draw_array(stdscr, wait_delay, startx, array, i + 1, "mark_element")
+            draw_array(stdscr, startx, array, i + 1, "mark_element")
 
 # Mergesort
-def merge_sort(stdscr, wait_delay, startx, arr, is_main):
+def merge_sort(stdscr, startx, arr, is_main):
 
     if len(arr) > 1:
         left_arr = arr[:len(arr)//2]
         right_arr = arr[len(arr)//2:]
 
         # recursion
-        merge_sort(stdscr, wait_delay, startx, left_arr, False)
-        merge_sort(stdscr, wait_delay, startx, right_arr, False)
+        merge_sort(stdscr, startx, left_arr, False)
+        merge_sort(stdscr, startx, right_arr, False)
 
         # merge
         i = 0
@@ -126,8 +124,8 @@ def merge_sort(stdscr, wait_delay, startx, arr, is_main):
             if left_arr[i] < right_arr[j]:
                 arr[k] = left_arr[i]
                 i += 1
-                if is_main == True and wait_delay:
-                    draw_array(stdscr, wait_delay, startx, arr, 0, "none")
+                if is_main == True:
+                    draw_array(stdscr, startx, arr, 0, "none")
             else:
                 arr[k] = right_arr[j]
                 j += 1
@@ -144,94 +142,90 @@ def merge_sort(stdscr, wait_delay, startx, arr, is_main):
             k += 1
 
 # Insertion sort
-def insertion_sort(stdscr, wait_delay, startx, arr):
-    for i in range(1, len(arr)):
+def insertion_sort(stdscr, startx, array):
+    for i in range(1, len(array)):
         j = i
-        if wait_delay:
-            draw_array(stdscr, wait_delay, startx, arr, j, "mark_element")
-        while arr[j] < arr[j - 1] and j > 0:
-            arr[j - 1], arr[j] = arr[j], arr[j - 1]
+        draw_array(stdscr, startx, array, j, "mark_element")
+
+        while array[j] < array[j - 1] and j > 0:
+            array[j - 1], array[j] = array[j], array[j - 1]
             j -= 1
-            if wait_delay:
-                draw_array(stdscr, wait_delay, startx, arr, j, "mark_element")
+            draw_array(stdscr, startx, array, j, "mark_element")
 
 # Quicksort
-def quick_sort(stdscr, wait_delay, startx, arr, left, right):
+def quick_sort(stdscr, startx, array, left, right):
     if left < right:
-        partition_pos = partition(stdscr, wait_delay, startx, arr, left, right)
-        quick_sort(stdscr, wait_delay, startx, arr, left, partition_pos - 1)
-        quick_sort(stdscr, wait_delay, startx, arr, partition_pos + 1, right)
+        partition_pos = partition(stdscr, startx, array, left, right)
+        quick_sort(stdscr, startx, array, left, partition_pos - 1)
+        quick_sort(stdscr, startx, array, partition_pos + 1, right)
 
 # Used by quicksort function
-def partition(stdscr, wait_delay, startx, arr, left, right):
+def partition(stdscr, startx, array, left, right):
     i = left
     j = right - 1
-    pivot = arr[right]
+    pivot = array[right]
 
     while i < j:
-        while i < right and arr[i] < pivot:
+        while i < right and array[i] < pivot:
             i += 1
-        while j > left and arr[j] >= pivot:
+        while j > left and array[j] >= pivot:
             j -= 1
         if i < j:
-            arr[i], arr[j] = arr[j], arr[i]
-            if wait_delay:
-                draw_array(stdscr, wait_delay, startx, arr, i, "mark_element")
-    if arr[i] > pivot:
-        arr[i], arr[right] = arr[right], arr[i]
+            array[i], array[j] = array[j], array[i]
+            draw_array(stdscr, startx, array, i, "mark_element")
+
+    if array[i] > pivot:
+        array[i], array[right] = array[right], array[i]
     return i
 
 # Gnomesort
-def gnome_sort(stdscr, wait_delay, startx, arr):
+def gnome_sort(stdscr, startx, array):
     i = 0
-    while i < len(arr): 
+    while i < len(array): 
         if i == 0: 
             i += 1
             
-        if arr[i] >= arr[i - 1]: 
+        if array[i] >= array[i - 1]: 
             i += 1
-            if wait_delay:
-                draw_array(stdscr, wait_delay, startx, arr, i, "mark_element")
+            draw_array(stdscr, startx, array, i, "mark_element")
 
         else: 
-            arr[i], arr[i - 1] = arr[i - 1], arr[i] 
+            array[i], array[i - 1] = array[i - 1], array[i] 
             i -= 1
-            if wait_delay:
-                draw_array(stdscr, wait_delay, startx, arr, i, "mark_element")
+            draw_array(stdscr, startx, array, i, "mark_element")
 
 # Heapsort
-def heap_sort(stdscr, wait_delay, startx, arr):
-    N = len(arr)
+def heap_sort(stdscr, startx, array):
+    N = len(array)
 
     for i in range(N//2 - 1, -1, -1):
-        heapify(stdscr, wait_delay, startx, arr, N, i)
+        heapify(stdscr, startx, array, N, i)
 
     for i in range(N-1, 0, -1):
-        arr[i], arr[0] = arr[0], arr[i]
+        array[i], array[0] = array[0], array[i]
 
-        heapify(stdscr, wait_delay, startx, arr, i, 0)
+        heapify(stdscr, startx, array, i, 0)
 
 # Needed for heapsort
-def heapify(stdscr, wait_delay, startx, arr, N, i):
+def heapify(stdscr, startx, array, N, i):
     largest = i
     l = 2 * i + 1
     r = 2 * i + 2
 
-    if l < N and arr[largest] < arr[l]:
+    if l < N and array[largest] < array[l]:
         largest = l
 
-    if r < N and arr[largest] < arr[r]:
+    if r < N and array[largest] < array[r]:
         largest = r
 
     if largest != i:
-        arr[i], arr[largest] = arr[largest], arr[i]
-        if wait_delay:
-            draw_array(stdscr, wait_delay, startx, arr, l, "mark_element")
+        array[i], array[largest] = array[largest], array[i]
+        draw_array(stdscr, startx, array, l, "mark_element")
 
-        heapify(stdscr, wait_delay, startx, arr, N, largest)
+        heapify(stdscr, startx, array, N, largest)
 
 # Cocktailsort
-def cocktail_sort(stdscr, wait_delay, startx, array):
+def cocktail_sort(stdscr, startx, array):
     swapped = True
     start = 0
     end = len(array) - 1
@@ -243,8 +237,7 @@ def cocktail_sort(stdscr, wait_delay, startx, array):
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                if wait_delay:
-                    draw_array(stdscr, wait_delay, startx, array, i + 1, "mark_element")
+                draw_array(stdscr, startx, array, i + 1, "mark_element")
 
         if (swapped == False):
             break
@@ -257,13 +250,12 @@ def cocktail_sort(stdscr, wait_delay, startx, array):
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                if wait_delay:
-                    draw_array(stdscr, wait_delay, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "mark_element")
 
         start += 1
 
 # Selectionsort
-def selection_sort(stdscr, wait_delay, startx, array):
+def selection_sort(stdscr, startx, array):
     for i in range(len(array)):
         min_idx = i
 
@@ -272,11 +264,10 @@ def selection_sort(stdscr, wait_delay, startx, array):
                 min_idx = j
 
         array[i], array[min_idx] = array[min_idx], array[i]
-        if wait_delay:
-            draw_array(stdscr, wait_delay, startx, array, min_idx, "mark_element")
+        draw_array(stdscr, startx, array, min_idx, "mark_element")
 
 # Shellsort
-def shell_sort(stdscr, wait_delay, startx, array):
+def shell_sort(stdscr, startx, array):
     gap = int(len(array) / 2)
 
     while gap > 0:
@@ -290,8 +281,7 @@ def shell_sort(stdscr, wait_delay, startx, array):
                 # Swap if value on right is lesser
                 if array[i + gap] < array[i]:
                     array[i + gap], array[i] = array[i], array[i + gap]
-                    if wait_delay:
-                        draw_array(stdscr, wait_delay, startx, array, j, "mark_element")
+                    draw_array(stdscr, startx, array, j, "mark_element")
                 
                 # Move gap to sort
                 i = i - gap
@@ -302,7 +292,7 @@ def shell_sort(stdscr, wait_delay, startx, array):
         gap = int(gap / 2)
 
 # Oddevensort
-def oddeven_sort(stdscr, wait_delay, startx, array):
+def oddeven_sort(stdscr, startx, array):
     sorted = False
 
     while sorted == False:
@@ -313,19 +303,17 @@ def oddeven_sort(stdscr, wait_delay, startx, array):
                 # swap elements
                 array[i], array[i + 1] = array[i + 1], array[i]
                 sorted = False
-                if wait_delay:
-                    draw_array(stdscr, wait_delay, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "mark_element")
                 
         for i in range(0, len(array) - 1, 2):
             if array[i] > array[i + 1]:
                 # swap elements
                 array[i], array[i + 1] = array[i + 1], array[i]
                 sorted = False
-                if wait_delay:
-                    draw_array(stdscr, wait_delay, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "mark_element")
 
 # Combsort
-def comb_sort(stdscr, wait_delay, startx, array):
+def comb_sort(stdscr, startx, array):
     n = len(array)
 
     gap = n
@@ -341,8 +329,7 @@ def comb_sort(stdscr, wait_delay, startx, array):
             if array[i] > array[i + gap]:
                 array[i], array[i + gap]=array[i + gap], array[i]
                 swapped = True
-                if wait_delay:
-                    draw_array(stdscr, wait_delay, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "mark_element")
 
 # Needed for combsort
 def get_next_gap(gap):
@@ -352,7 +339,7 @@ def get_next_gap(gap):
         return 1
     return gap
 
-def bingo_sort(stdscr, wait_delay, startx, array):
+def bingo_sort(stdscr, startx, array):
     # smallest element From array
     bingo = min(array)
     
@@ -368,8 +355,7 @@ def bingo_sort(stdscr, wait_delay, startx, array):
             if array[i] == bingo:
                 array[i], array[nextPos] = array[nextPos], array[i]
                 nextPos += 1
-                if wait_delay:
-                    draw_array(stdscr, wait_delay, startx, array, nextPos, "mark_element")
+                draw_array(stdscr, startx, array, nextPos, "mark_element")
                 
             # finds next bingo elemnt
             elif array[i] < next_bingo:
@@ -378,16 +364,16 @@ def bingo_sort(stdscr, wait_delay, startx, array):
         next_bingo = largest
 
 # Radixsort
-def radix_sort(stdscr, wait_delay, startx, array):
+def radix_sort(stdscr, startx, array):
     max_array = max(array)
 
     exp = 1
     while max_array / exp >= 1:
-        counting_sort(stdscr, wait_delay, startx, array, exp)
+        counting_sort(stdscr, startx, array, exp)
         exp *= 10
 
 # Needed for radixsort
-def counting_sort(stdscr, wait_delay, startx, array, exp):
+def counting_sort(stdscr, startx, array, exp):
     n = len(array)
 
     output = [0] * (n)
@@ -413,8 +399,64 @@ def counting_sort(stdscr, wait_delay, startx, array, exp):
     i = 0
     for i in range(0, len(array)):
         array[i] = output[i]
-        if wait_delay:
-            draw_array(stdscr, wait_delay, startx, array, i, "mark_element")
+        draw_array(stdscr, startx, array, i, "mark_element")
+
+# Pigeonholesort
+def pigeonhole_sort(stdscr, startx, array):
+    array_min = min(array)
+    array_max = max(array)
+    array_range = array_max - array_min + 1
+
+    # fill pigeonhole array
+    holes = [0] * array_range
+
+    # populate pigeonholes
+    for i in array:
+        holes[i - array_min] += 1
+
+    # put back elements
+    i = 0
+    for count in range(array_range):
+        while holes[count] > 0:
+            holes[count] -= 1
+            array[i] = count + array_min
+            i += 1
+            draw_array(stdscr, startx, array, i, "mark_element")
+
+# Pancake sort
+def pancake_sort(stdscr, startx, array, n):
+    current = n
+
+    while current > 1:
+
+        # finds max element in array
+        max = 0
+
+        for i in range(0, current):
+            if array[i] > array[max]:
+                max = i
+        
+        if max != (current - 1):
+
+            # flips once to bring max to first element of array
+            flip(stdscr, startx, array, max)
+
+            # flips again to bring max element next to current
+            flip(stdscr, startx, array, current - 1)
+
+        current -= 1
+
+# needed for pancakesort
+def flip(stdscr, startx, array, i):
+
+    # swaps elements until specified part of array is flipped
+    start = 0
+    
+    while start < i:
+        array[start], array[i] = array[i], array[start]
+        start += 1
+        i -= 1
+        draw_array(stdscr, startx, array, i, "mark_element")
 
 # Function gives error if terminal is too small
 def give_term_error(stdscr, term_required, term_current, message, needed):
@@ -427,14 +469,14 @@ def give_term_error(stdscr, term_required, term_current, message, needed):
     curses.endwin()
 
 def main(stdscr):
-    # If True, instantly sort the array without drawing
-    if int(sys.argv[3]) == 0:
-        wait_delay = False
+    # checks if user wants to sort forever
+    if sys.argv[4] == "forever":
+        forever = True
     else:
-        wait_delay = True
+        forever = False
 
     # If not filled, makes the array size and range the highest possible that can fit on the screen
-    if int(sys.argv[5]) == -1:
+    if int(sys.argv[7]) == 1:
         fill_screen = True
         array_size = int(term_width / (int(sys.argv[2]))) - 2
         array_range = term_height - 2
@@ -445,6 +487,7 @@ def main(stdscr):
     
     # array declaration
     array = []
+    available_algorithms = ["bogo", "bubble", "merge", "insertion", "quick", "gnome", "heap", "cocktail", "selection", "shell", "oddeven", "comb", "bingo", "radix", "pigeonhole", "pancake"]
 
     # finds slope using array range and array size (slope = rise / run)
     slope = array_range / array_size
@@ -484,79 +527,96 @@ def main(stdscr):
     # Otherwise, start main script
     else:
         # Draw the array before sorting
-        if wait_delay:
-            for i in range(array_size):
-                draw_array(stdscr, wait_delay, startx, array, i, "start")
-
-        # waits before shuffle
-        time.sleep(750 / 1000)
-
-        # shuffle array
         for i in range(array_size):
-            temp = random.randint(0, array_size - 1)
-            array[i], array[temp] = array[temp], array[i]
-            draw_array(stdscr, wait_delay, startx, array, 0, "shuffle")
+            draw_array(stdscr, startx, array, i, "start")
         
-        # waits before sorting
-        time.sleep(1000 / 1000)
+        while True:
+            # creates new algorithm
+            if forever:
+                algorithm = available_algorithms[random.randint(1, len(available_algorithms) - 1)]
+            else:
+                algorithm = sys.argv[4]
 
-        # Starts performance timer
-        start_time = time.perf_counter()
+            # waits before shuffle
+            time.sleep(750 / 1000)
 
-        # Sorting algorithms determined by bash script
-        match sys.argv[4]:
-            case "bogo":
-                bogo_sort(stdscr, wait_delay, startx, array)
-
-            case "bubble":
-                bubble_sort(stdscr, wait_delay, startx, array)
-
-            case "merge":
-                merge_sort(stdscr, wait_delay, startx, array, True)
-
-            case "insertion":
-                insertion_sort(stdscr, wait_delay, startx, array)
-
-            case "quick":
-                quick_sort(stdscr, wait_delay, startx, array, 0, len(array) - 1)
-
-            case "gnome":
-                gnome_sort(stdscr, wait_delay, startx, array)
-                
-            case "heap":
-                heap_sort(stdscr, wait_delay, startx, array)
-
-            case "cocktail":
-                cocktail_sort(stdscr, wait_delay, startx, array)
-
-            case "selection":
-                selection_sort(stdscr, wait_delay, startx, array)
-
-            case "shell":
-                shell_sort(stdscr, wait_delay, startx, array)
-
-            case "oddeven":
-                oddeven_sort(stdscr, wait_delay, startx, array)
+            # shuffle array
+            for i in range(array_size):
+                temp = random.randint(0, array_size - 1)
+                array[i], array[temp] = array[temp], array[i]
+                draw_array(stdscr, startx, array, 0, "shuffle")
             
-            case "comb":
-                comb_sort(stdscr, wait_delay, startx, array)
+            # waits before sorting
+            time.sleep(1000 / 1000)
 
-            case "bingo":
-                bingo_sort(stdscr, wait_delay, startx, array)
+            if forever == False:
+                # Starts performance timer
+                start_time = time.perf_counter()
 
-            case "radix":
-                radix_sort(stdscr, wait_delay, startx, array)
-        
-        # Ends performance timer
-        end_time = time.perf_counter()
+            # Sorting algorithms determined by bash script
+            match algorithm:
+                case "bogo":
+                    bogo_sort(stdscr, startx, array)
 
-        # Only draw at the end of sorting when wait_delay is on, otherwise it would just show the array being unsorted
-        if not wait_delay:
-            draw_array(stdscr, wait_delay, startx, array, 0, "none")
+                case "bubble":
+                    bubble_sort(stdscr, startx, array)
+
+                case "merge":
+                    merge_sort(stdscr, startx, array, True)
+
+                case "insertion":
+                    insertion_sort(stdscr, startx, array)
+
+                case "quick":
+                    quick_sort(stdscr, startx, array, 0, len(array) - 1)
+
+                case "gnome":
+                    gnome_sort(stdscr, startx, array)
+                    
+                case "heap":
+                    heap_sort(stdscr, startx, array)
+
+                case "cocktail":
+                    cocktail_sort(stdscr, startx, array)
+
+                case "selection":
+                    selection_sort(stdscr, startx, array)
+
+                case "shell":
+                    shell_sort(stdscr, startx, array)
+
+                case "oddeven":
+                    oddeven_sort(stdscr, startx, array)
+                
+                case "comb":
+                    comb_sort(stdscr, startx, array)
+
+                case "bingo":
+                    bingo_sort(stdscr, startx, array)
+
+                case "radix":
+                    radix_sort(stdscr, startx, array)
+                
+                case "pigeonhole":
+                    pigeonhole_sort(stdscr, startx, array)
+                
+                case "pancake":
+                    pancake_sort(stdscr, startx, array, len(array))
+            
+            if forever == False:
+                # Ends performance timer
+                end_time = time.perf_counter()
+            
+            # draws array final time
+            draw_array(stdscr, startx, array, 0, "none")
+            
+            # if forever is false, stop running loop
+            if forever == False:
+                break
         
         # fills array with green after sorting
         for i in range(array_size):
-            draw_array(stdscr, wait_delay, startx, array, i, "fill")
+            draw_array(stdscr, startx, array, i, "fill")
 
         # Finds where to place sort_info text
         text_x = 0
@@ -570,17 +630,17 @@ def main(stdscr):
         stdscr.addstr(7, text_x, "time taken to sort: " + str(round(end_time - start_time, 3)) + " second(s)")
         stdscr.addstr(8, text_x, "delay: " + str(sys.argv[3]) + " millisecond(s)")
         stdscr.addstr(9, text_x, "bar size: " + sys.argv[2])
-
-        # only attempt to display extra arguments if user specified
-        if int(sys.argv[5]) == -1:
-            stdscr.addstr(10, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4])
-        else:
-            stdscr.addstr(10, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6])
+        stdscr.addstr(10, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7])
 
         stdscr.addstr(12, text_x, "Press any key to exit")
+
+        # moves cursor to bottom right of screen (less distracting)
+        stdscr.move(term_height - 1, term_width - 1)
         
-        # Waits for key press and stops program
+        # waits for key press and stops program
         stdscr.getch()
-        curses.endwin()
+
+        # sometimes using endwin() makes ncurses give error after program ends
+#        curses.endwin()
 
 wrapper(main)
