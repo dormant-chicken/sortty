@@ -1,29 +1,40 @@
-echo "Creating /usr/local/bin/sortty-bin/"
-echo "You might have to enter your root password"
+#!/bin/bash
 
-sudo mkdir /usr/local/bin/sortty-bin/
+if [ "$SHELL" == "/bin/bash" ] || [ "$SHELL" == "/usr/bin/bash" ] || [ "$SHELL" == "/bin/zsh" ] || [ "$SHELL" == "/usr/bin/zsh" ]; then
+    echo "Creating /usr/local/bin/sortty-bin/"
+    echo
 
-echo "Moving main.py from src into /usr/local/bin/sortty-bin/"
+    echo "You might have to enter your root password"
+    echo
+    sudo mkdir /usr/local/bin/sortty-bin/
 
-sudo cp src/main.py /usr/local/bin/sortty-bin/
+    echo "Moving main.py from src into /usr/local/bin/sortty-bin/"
+    echo
+    sudo cp src/main.py /usr/local/bin/sortty-bin/
 
-echo "Moving sortty.py from src into /usr/local/bin/"
+    echo "Moving sortty.py from src into /usr/local/bin/sortty-bin/"
+    echo
+    sudo touch /usr/local/bin/sortty-bin/sortty.py
+    sudo cp src/sortty.py /usr/local/bin/sortty-bin/sortty.py
 
-sudo touch /usr/local/bin/sortty-bin/sortty.py
-sudo cp src/sortty.py /usr/local/bin/sortty-bin/sortty.py
+    # places alias in rc file depending on shell
+    if [ "$SHELL" == "/bin/bash" ] || [ "$SHELL" == "/usr/bin/bash" ]; then
+        echo "Appending 'alias sortty='python3 /usr/local/bin/sortty.py'' to ~/.bashrc so that sortty can be run directly from the terminal"
+        echo "alias sortty='python3 /usr/local/bin/sortty-bin/sortty.py'" >> ~/.bashrc
+        
+    elif [ "$SHELL" == "/bin/zsh" ] || [ "$SHELL" == "/usr/bin/zsh" ]; then
+        echo "Appending 'alias sortty='python3 /usr/local/bin/sortty.py'' to ~/.zshrc so that sortty can be run directly from the terminal"
+        echo "alias sortty='python3 /usr/local/bin/sortty-bin/sortty.py'" >> ~/.zshrc
+        
+    fi
 
-echo "Moving sortty.sh from src into /usr/local/bin/"
-
-sudo touch /usr/local/bin/sortty
-sudo cp src/sortty.sh /usr/local/bin/sortty
-
-echo "Making /usr/local/bin/sortty executable"
-sudo chmod +x /usr/local/bin/sortty
-
-echo
-echo "Done, now you can run sortty directly from your terminal"
-echo
-echo "Run 'sortty --help' for instructions"
-echo
-echo "Have fun using sorTTY!"
-echo
+    echo
+    echo "Done, reopen your terminal so that you can run sortty directly from your terminal"
+    echo
+    echo "Run 'sortty --help' for instructions"
+    echo
+    echo "Have fun using sortty!"
+    echo
+else
+    echo "Unrecognized shell (only bash and zsh are supported)"
+fi
