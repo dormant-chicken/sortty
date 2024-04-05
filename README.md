@@ -36,8 +36,8 @@ sortty - A lightweight, minimal, and beautiful program to visualize sorting algo
 ## Features
 
 - Draws every step of a specified sorting algorithm quickly using ncurses
-- Currently has 14 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
-- Detects if terminal is too small for the specified array_size / array_range
+- Currently has 16 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
+- Detects if terminal is too small for the specified array size / array range
 - animation before shuffling array
 - animation during shuffling of array
 - red bar to indicate index when sorting array
@@ -49,6 +49,8 @@ sortty - A lightweight, minimal, and beautiful program to visualize sorting algo
 - change the delay (how fast or slow the algorithm sorts the array)
 - change what algorithm to use
 - change size of bars (increasing this can improve performance)
+- use fancy bars (shown in the gallery)
+- sort arrays forever with random algorithms
 
 <br>
 
@@ -110,7 +112,7 @@ git clone https://github.com/dormant-chicken/sortty
 If you want the stable release, install the dependencies above and use wget to get the tar.gz file from the releases page:
 
 ```
-wget https://github.com/dormant-chicken/sortty/releases/download/v1.7/sortty.tar.gz
+wget https://github.com/dormant-chicken/sortty/releases/download/v1.8/sortty.tar.gz
 ```
 
 <br>
@@ -166,13 +168,12 @@ Just get the files by using git to clone this repostory (shown in the [latest gi
 
 ```
 cd sortty/
-chmod +x src/sortty.sh
-src/sortty.sh
+python3 src/sortty.py
 ```
 
 <br>
 
-After trying sortty, you can still install it (shown in the [last step of install](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#last-step-of-install) tab) without problems
+After trying sortty, you can still install it (shown in the [last step of install](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#last-step-of-install) tab) without any problems
 
 <br>
 
@@ -180,35 +181,50 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty [fancy] [bar_size] [wait_time(ms)] [algorithm] [array_size(optional)] [array_range(optional)]`
+`sortty [--fancy or -f] [--bar_size or -b] [--wait_time or -w (ms)] [--algorithm or -a] [--size or -s] [--range or -r] [--fill or -fi]`
 
 Example command:
 
 ```
-sortty 0 3 100 bubble
+sortty
 ```
 
-In the example command above,
+Since only the name of the program is run, and there are no arguments, these are the defaults:
 
-[fancy] is 0 (AKA False), so the program will use a '#' character and a '@' character for highlight instead of a fancy bar with colors for highlight
+[--fancy or -f] is 0 (false), meaning the program will use a '#' character for the bars instead of a fancy bar
 
-[bar_size] is 3, so the program will draw the bars with a width of 3 terminal cells
+[--bar_size or -b] is 2, meaning the program will display the bars with a width of 2 terminal characters
 
-[wait_time] is 100, meaning the program will wait 100ms before drawing again
+[--wait_time or -w] is 75, meaning the program wlll wait 75ms before refreshing the screen
 
-[algorithm] uses the bubblesort algorithm, but available algorithms are: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix
+[--algorithm or -a] is quick, meaning the program will use the quicksort algorithm to sort the array
 
-If you want a custom array size and array range, you can do so like this:
+[--size or -s] of array is 30, meaning the array will have 30 elements
+
+[--range or -r] of array is 20, meaning the maximum value of the array will be 20
+
+[--fill or -fi] is 1, so the array fills the screen and ignores the array size and range
+
+Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake
+
+If you want custom options different from the default ones, do so like this:
 
 ```
-sortty 0 3 100 bubble 30 20
+sortty --algorithm insertion --fancy 1
 ```
 
-After you specify the algorithm, put down the array size you want then the array range you want
+The command above runs sortty with the insertion sort algorithm and sets fancy bars to 1 (true)
 
-[array_size] is 30, meaning it will give the program 30 items to sort
+More options are available above in the usage part
 
-[array_range] is 20, meaning the array that the program sorts ranges from values 1 to 20
+Note: you can set the algorithm to 'forever' like this:
+
+```
+sortty --algorithm forever
+```
+
+Setting it to forever makes the program shuffles the array sorts the array with a random algorithm forever (excluding bogo sort)
+
 
 <br>
 
@@ -226,6 +242,12 @@ Run this command to remove the sortty binaries:
 
 ```
 sudo rm -rf -r /usr/local/bin/sortty-bin/ /usr/local/bin/sortty
+```
+
+Also, edit your ~/.bashrc file to remove these lines:
+
+```
+alias sortty='python3 /usr/local/bin/sortty-bin/sortty.py'
 ```
 
 <br>
