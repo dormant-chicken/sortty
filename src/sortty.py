@@ -30,7 +30,7 @@ Example command:
 sortty
 
 Since only the name of the program is run, and there are no arguments, these are the defaults:
-[--fancy of -f] is 0 (false), meaning the program will use a '#' character for the bars instead of a fancy bar
+[--fancy or -f] is 0 (false), meaning the program will use a '#' character for the bars instead of a fancy bar
 [--bar_size or -b] is 2, meaning the program will display the bars with a width of 2 terminal characters
 [--wait_time or -w] is 75, meaning the program wlll wait 75ms before refreshing the screen
 [--algorithm or -a] is quick, meaning the program will use the quicksort algorithm to sort the array
