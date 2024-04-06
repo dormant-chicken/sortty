@@ -643,4 +643,7 @@ def main(stdscr):
         # sometimes using endwin() makes ncurses give error after program ends
 #        curses.endwin()
 
-wrapper(main)
+try:
+    wrapper(main)
+except KeyboardInterrupt: #this way you can use ctrl+c to quit without showing an error
+    sys.exit(0)
