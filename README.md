@@ -60,6 +60,14 @@ sortty - sorting algorithms in the terminal
 > [!WARNING]
 > There may be flashing on the screen if fancy bars are used instead of a text-based character, if the terminal text is small, if the bar size is small, or if your computer is low-end. This can be fixed by lowering the size of your terminal, increasing the size of the bars, increasing terminal font size, or increasing the wait delay for the program.
 
+<br>
+
+## AUR
+
+If you don't want to install sortty manually, sortty is available on the AUR [here](https://aur.archlinux.org/packages/sortty)
+
+<br>
+
 ## Dependencies
 
 These dependencies are needed:
