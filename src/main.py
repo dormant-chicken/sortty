@@ -469,6 +469,12 @@ def give_term_error(stdscr, term_required, term_current, message, needed):
     curses.endwin()
 
 def main(stdscr):
+    # checks fancy bar argument
+    if int(sys.argv[1]) == 1:
+        fancy = True
+    else:
+        fancy = False
+
     # checks if user wants to sort forever
     if sys.argv[4] == "forever":
         forever = True
@@ -630,9 +636,10 @@ def main(stdscr):
         stdscr.addstr(7, text_x, "time taken to sort: " + str(round(end_time - start_time, 3)) + " second(s)")
         stdscr.addstr(8, text_x, "delay: " + str(sys.argv[3]) + " millisecond(s)")
         stdscr.addstr(9, text_x, "bar size: " + sys.argv[2])
-        stdscr.addstr(10, text_x, "command used: sortty " + sys.argv[1] + " " + sys.argv[2] + " " + sys.argv[3] + " " + sys.argv[4] + " " + sys.argv[5] + " " + sys.argv[6] + " " + sys.argv[7])
+        stdscr.addstr(10, text_x, "fill screen: " + str(fill_screen))
+        stdscr.addstr(11, text_x, "fancy bars: " + str(fancy))
 
-        stdscr.addstr(12, text_x, "Press any key to exit")
+        stdscr.addstr(13, text_x, "Press any key to exit")
 
         # moves cursor to bottom right of screen (less distracting)
         stdscr.move(term_height - 1, term_width - 1)
