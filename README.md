@@ -209,7 +209,7 @@ sortty
 
 Since only the name of the program is run, and there are no arguments, these are the defaults:
 
-[--fancy or -f] is 0 (false), meaning the program will use a '#' character for the bars instead of a fancy bar
+[--fancy or -f] is not used by default, meaning the program will use a '#' character for the bars instead of a fancy bar
 
 [--bar_size or -b] is 2, meaning the program will display the bars with a width of 2 terminal characters
 
@@ -221,7 +221,7 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [--range or -r] of array is 20, meaning the maximum value of the array will be 20
 
-[--fill or -fi] is 1, so the array fills the screen and ignores the array size and range
+[--fill or -fi] is used by default, so the array fills the screen and ignores the array size and range
 
 Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake
 
