@@ -14,6 +14,8 @@ sortty - sorting algorithms in the terminal
 
 * [Features](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#features)
 
+* [AUR](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#aur)
+
 * [Dependencies](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#dependencies)
 
 * [Installation](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#installation)
