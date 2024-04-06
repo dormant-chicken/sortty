@@ -228,7 +228,7 @@ Available algorithms: bogo bubble merge insertion quick gnome heap cocktail sele
 If you want custom options different from the default ones, do so like this:
 
 ```
-sortty --algorithm insertion --fancy 1
+sortty --algorithm insertion --fancy
 ```
 
 The command above runs sortty with the insertion sort algorithm and sets fancy bars to 1 (true)
