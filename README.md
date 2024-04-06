@@ -66,11 +66,13 @@ These dependencies are needed:
 
 `python ncurses git figlet`
 
+These pip dependencies are also needed:
+
+`argparse art`
+
 <br>
 
-Some are most likely preinstalled, but it is still good to check.
-
-<br>
+Some of the package dependencies are most likely preinstalled, but it is still good to check.
 
 Arch:
 ```
@@ -87,6 +89,11 @@ Debian:
 sudo apt install python3 libncurses5 libncurses6 libncurses-dev git figlet
 ```
 
+You can install the pip dependencies with
+
+```
+pip install argparse art
+```
 <br>
 
 ## Installation
