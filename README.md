@@ -221,7 +221,7 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [--range or -r] of array is 20, meaning the maximum value of the array will be 20
 
-[--fill or -fi] is used by default, so the array fills the screen and ignores the array size and range
+[--no-fill or -nf] is not used by default, so the array will not fill the screen and ignore the array size and range given
 
 Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake
 
