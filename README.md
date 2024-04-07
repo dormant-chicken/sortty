@@ -199,7 +199,7 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty [--fancy or -f] [--bar_size or -b] [--wait_time or -w (ms)] [--algorithm or -a] [--size or -s] [--range or -r] [--fill or -fi]`
+`sortty [--fancy or -f] [--bar_size or -b] [--wait_time or -w (ms)] [--algorithm or -a] [--size or -s] [--range or -r] [--no-fill or -nf]`
 
 Example command:
 
