@@ -46,8 +46,7 @@ sortty - sorting algorithms in the terminal
 - red bar to indicate index when sorting array
 - animation that fills the array green after shuffling array
 - #### Options to:
-- change array size
-- change array range
+- change array heigth and width
 - fill the entire terminal / TTY with the array or not
 - change the delay (how fast or slow the algorithm sorts the array)
 - change what algorithm to use
@@ -74,11 +73,11 @@ If you don't want to install sortty manually, sortty is available on the AUR [he
 
 These dependencies are needed:
 
-`python ncurses git figlet`
+`python ncurses git`
 
 These pip dependencies are also needed:
 
-`argparse art`
+`art`
 
 <br>
 
@@ -86,23 +85,23 @@ Some of the package dependencies are most likely preinstalled, but it is still g
 
 Arch:
 ```
-sudo pacman -S python ncurses git figlet
+sudo pacman -S python ncurses git
 ```
 
 Fedora:
 ```
-sudo dnf install python ncurses ncurses-devel git figlet
+sudo dnf install python ncurses ncurses-devel git
 ```
 
 Debian:
 ```
-sudo apt install python3 libncurses5 libncurses6 libncurses-dev git figlet
+sudo apt install python3 libncurses5 libncurses6 libncurses-dev git
 ```
 
 You can install the pip dependencies with
 
 ```
-pip install argparse art
+pip install art
 ```
 <br>
 
@@ -171,7 +170,7 @@ After installing, you can remove the sortty/ directory, as the needed files are 
 
 ```
 cd ..
-rm -r -f sortty/
+rm -rvf sortty/
 ```
 
 The command above also changes your directory to the parent directory of sortty/ with 'cd ..', which is the directory that it is located in, so that it can remove the directory
@@ -199,7 +198,7 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty [--fancy or -f] [--bar_size or -b] [--wait_time or -w (ms)] [--algorithm or -a] [--size or -s] [--range or -r] [--no-fill or -nf]`
+`sortty.py [-h] [-f] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
 
 Example command:
 
@@ -217,11 +216,7 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [--algorithm or -a] is quick, meaning the program will use the quicksort algorithm to sort the array
 
-[--size or -s] of array is 30, meaning the array will have 30 elements
-
-[--range or -r] of array is 20, meaning the maximum value of the array will be 20
-
-[--no-fill or -nf] is not used by default, so the array will not fill the screen and ignore the array size and range given
+[--size or -s] if not specified, size will be depending from the screen size, otherwise you can do HEIGTHxWIDTH, for example 30x20
 
 Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake
 
@@ -231,7 +226,7 @@ If you want custom options different from the default ones, do so like this:
 sortty --algorithm insertion --fancy
 ```
 
-The command above runs sortty with the insertion sort algorithm and sets fancy bars to 1 (true)
+The command above runs sortty with the insertion sort algorithm and sets fancy bars to true
 
 More options are available above in the usage part
 
@@ -259,13 +254,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
 Run this command to remove the sortty binaries:
 
 ```
-sudo rm -rf -r /usr/local/bin/sortty-bin/ /usr/local/bin/sortty
-```
-
-Also, edit your ~/.bashrc file to remove these lines:
-
-```
-alias sortty='python3 /usr/local/bin/sortty-bin/sortty.py'
+sudo rm -v /usr/local/bin/sortty
 ```
 
 <br>
