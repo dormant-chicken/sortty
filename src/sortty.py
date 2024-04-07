@@ -91,13 +91,13 @@ def draw_array(stdscr, startx, array, index, mode):
     stdscr.refresh()
 
     if mode == "fill":
-        time.sleep(5 / 1000)
+        time.sleep(((750 / len(array)) * bar_size) / 1000)
 
     elif mode == "shuffle":
-        time.sleep(10 / 1000)
+        time.sleep(((1250 / len(array)) * bar_size) / 1000)
 
     elif mode == "start":
-        time.sleep(3 / 1000)
+        time.sleep(((500 / len(array)) * bar_size) / 1000)
 
     else:
         time.sleep(options['wait_time'] / 1000)
