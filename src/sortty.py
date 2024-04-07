@@ -1,10 +1,13 @@
 import argparse
-import art #this is for the fancy ascii art, instead of an external program
+# this is for the fancy ascii art, instead of an external program
+import art
 import sys
 import os
 
 version = "v1.8-git"
-algorithms = ( #edit this list to add algorithms
+
+# edit this list to add algorithms
+algorithms = (
     'forever',
     'bogo',
     'bubble',
@@ -23,7 +26,8 @@ algorithms = ( #edit this list to add algorithms
     'pigeonhole',
     'pancake')
 
-class ArgumentParser(argparse.ArgumentParser): #edit print message function to make it show ascii art
+# edit print message function to make it show ascii art
+class ArgumentParser(argparse.ArgumentParser):
     def print_help(self):
         print(art.text2art('sortty'))
         return super(ArgumentParser, self).print_help()
@@ -35,7 +39,7 @@ sortty --algorithm forever
 Setting it to forever makes the program shuffles the array sorts the array with a random algorithm forever (excluding bogo sort)'''
     )
 
-    #every command-line argument with help message and default values
+    # every command-line argument with help message and default values
     parser.add_argument(
         '-f', '--fancy',
         help='add this to make the program use a \'#\' character for the bars instead of a fancy bar',
@@ -92,9 +96,9 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     if os.path.isdir("/usr/local/bin/sortty-bin/"):
         path = "/usr/local/bin/sortty-bin/main.py"
     else:
-        #i used absolute path so you can run the script from any dir
+        # i used absolute path so you can run the script from any dir
         path = os.path.join(os.path.dirname(__file__), 'main.py') 
-    #finally, call the script (should change this to a function instead later)
+    # finally, call the script (should change this to a function instead later)
     os.system("python3 " + path + " " + str(int(args.fancy)) + " " + str(args.bar_size) + " " + str(args.wait_time) + " " + args.algorithm + " " + str(args.array_size) + " " + str(args.array_range) + " " + str(int(not args.no_fill)))
 
 if __name__ == '__main__':
