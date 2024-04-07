@@ -555,13 +555,13 @@ def run_sortty(stdscr):
 
     # Quits program if terminal height too small for array_range
     if term_height < 18:
-        give_term_error(stdscr, 18, "terminal height less than minimum!", "height")
+        give_term_error(stdscr, 18, term_height, "terminal height less than minimum!", "height")
 
-    elif term_width < 90:
+    elif term_width < 75:
         give_term_error(stdscr, 90, term_width, "terminal width less than minimum!", "width")
 
     elif fill_screen == False and (array_range > term_height):
-        give_term_error(stdscr, array_range, "terminal height too small for array range!", "height")
+        give_term_error(stdscr, array_range, term_height, "terminal height too small for array range!", "height")
 
     elif fill_screen == False and (array_size > term_width):
         give_term_error(stdscr, array_size, term_width, "terminal width too small for array size!", "width")
