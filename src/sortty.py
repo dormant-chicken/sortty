@@ -683,8 +683,7 @@ def run_sortty(stdscr):
         # waits for key press and stops program
         stdscr.getch()
 
-        # sometimes using endwin() makes ncurses give error after program ends
-#        curses.endwin()
+        curses.endwin()
 
 
 def sortty(**options):
