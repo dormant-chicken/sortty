@@ -31,28 +31,32 @@ import art
 import sys
 import os
 
-# used for filling array with green
 def draw_array(stdscr, startx, array, index, mode):
     stdscr.clear()
-    # This draws the array onto the screen
+
     bar_size = options['bar_size']
+
+    # draws the array onto the screen
     for i in range(len(array)):
         for j in range(array[i]):
-            # Checks if [ fancy ] is True
+            # checks if [ fancy ] is True
             if options['fancy']:
+                # fills with green
                 if mode == "fill":
                     if i <= index:
                         stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.color_pair(1))
                     else:
                         stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.A_REVERSE)
 
+                # fills with characters
                 elif mode == "start":
                     if i <= index:
                         stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.A_REVERSE)
                     else:
                         stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size)
-
-                elif mode == "mark_element":
+                
+                # colors index red
+                elif mode == "index":
                     if i == index:
                         stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.color_pair(2))
                     else:
@@ -74,7 +78,7 @@ def draw_array(stdscr, startx, array, index, mode):
                     else:
                         stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size)
                         
-                elif mode == "mark_element":
+                elif mode == "index":
                     if i == index:
                         stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "@" * bar_size)
                     else:
@@ -91,13 +95,13 @@ def draw_array(stdscr, startx, array, index, mode):
     stdscr.refresh()
 
     if mode == "fill":
-        time.sleep(((750 / len(array)) * bar_size) / 1000)
+        time.sleep(((500 / len(array)) * bar_size) / 1000)
 
     elif mode == "shuffle":
-        time.sleep(((1250 / len(array)) * bar_size) / 1000)
+        time.sleep(((600 / len(array)) * bar_size) / 1000)
 
     elif mode == "start":
-        time.sleep(((500 / len(array)) * bar_size) / 1000)
+        time.sleep(((300 / len(array)) * bar_size) / 1000)
 
     else:
         time.sleep(options['wait_time'] / 1000)
@@ -126,7 +130,7 @@ def bubble_sort(stdscr, startx, array):
             if array[i] > array[i + 1]:
                 sorted = False
                 array[i], array[i + 1] = array[i + 1], array[i]
-            draw_array(stdscr, startx, array, i + 1, "mark_element")
+            draw_array(stdscr, startx, array, i + 1, "index")
 
 # Mergesort
 def merge_sort(stdscr, startx, arr, is_main):
@@ -167,12 +171,12 @@ def merge_sort(stdscr, startx, arr, is_main):
 def insertion_sort(stdscr, startx, array):
     for i in range(1, len(array)):
         j = i
-        draw_array(stdscr, startx, array, j, "mark_element")
+        draw_array(stdscr, startx, array, j, "index")
 
         while array[j] < array[j - 1] and j > 0:
             array[j - 1], array[j] = array[j], array[j - 1]
             j -= 1
-            draw_array(stdscr, startx, array, j, "mark_element")
+            draw_array(stdscr, startx, array, j, "index")
 
 # Quicksort
 def quick_sort(stdscr, startx, array, left, right):
@@ -194,7 +198,7 @@ def partition(stdscr, startx, array, left, right):
             j -= 1
         if i < j:
             array[i], array[j] = array[j], array[i]
-            draw_array(stdscr, startx, array, i, "mark_element")
+            draw_array(stdscr, startx, array, i, "index")
 
     if array[i] > pivot:
         array[i], array[right] = array[right], array[i]
@@ -209,12 +213,12 @@ def gnome_sort(stdscr, startx, array):
             
         if array[i] >= array[i - 1]: 
             i += 1
-            draw_array(stdscr, startx, array, i, "mark_element")
+            draw_array(stdscr, startx, array, i, "index")
 
         else: 
             array[i], array[i - 1] = array[i - 1], array[i] 
             i -= 1
-            draw_array(stdscr, startx, array, i, "mark_element")
+            draw_array(stdscr, startx, array, i, "index")
 
 # Heapsort
 def heap_sort(stdscr, startx, array):
@@ -242,7 +246,7 @@ def heapify(stdscr, startx, array, N, i):
 
     if largest != i:
         array[i], array[largest] = array[largest], array[i]
-        draw_array(stdscr, startx, array, l, "mark_element")
+        draw_array(stdscr, startx, array, l, "index")
 
         heapify(stdscr, startx, array, N, largest)
 
@@ -259,7 +263,7 @@ def cocktail_sort(stdscr, startx, array):
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                draw_array(stdscr, startx, array, i + 1, "mark_element")
+                draw_array(stdscr, startx, array, i + 1, "index")
 
         if (swapped == False):
             break
@@ -272,7 +276,7 @@ def cocktail_sort(stdscr, startx, array):
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                draw_array(stdscr, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "index")
 
         start += 1
 
@@ -281,12 +285,14 @@ def selection_sort(stdscr, startx, array):
     for i in range(len(array)):
         min_idx = i
 
+        # finds smallest index
         for j in range(i + 1, len(array)):
             if array[min_idx] > array[j]:
                 min_idx = j
-
+        
+        # swap
         array[i], array[min_idx] = array[min_idx], array[i]
-        draw_array(stdscr, startx, array, min_idx, "mark_element")
+        draw_array(stdscr, startx, array, min_idx, "index")
 
 # Shellsort
 def shell_sort(stdscr, startx, array):
@@ -303,7 +309,7 @@ def shell_sort(stdscr, startx, array):
                 # Swap if value on right is lesser
                 if array[i + gap] < array[i]:
                     array[i + gap], array[i] = array[i], array[i + gap]
-                    draw_array(stdscr, startx, array, j, "mark_element")
+                    draw_array(stdscr, startx, array, j, "index")
                 
                 # Move gap to sort
                 i = i - gap
@@ -325,14 +331,14 @@ def oddeven_sort(stdscr, startx, array):
                 # swap elements
                 array[i], array[i + 1] = array[i + 1], array[i]
                 sorted = False
-                draw_array(stdscr, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "index")
                 
         for i in range(0, len(array) - 1, 2):
             if array[i] > array[i + 1]:
                 # swap elements
                 array[i], array[i + 1] = array[i + 1], array[i]
                 sorted = False
-                draw_array(stdscr, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "index")
 
 # Combsort
 def comb_sort(stdscr, startx, array):
@@ -351,7 +357,7 @@ def comb_sort(stdscr, startx, array):
             if array[i] > array[i + gap]:
                 array[i], array[i + gap]=array[i + gap], array[i]
                 swapped = True
-                draw_array(stdscr, startx, array, i, "mark_element")
+                draw_array(stdscr, startx, array, i, "index")
 
 # Needed for combsort
 def get_next_gap(gap):
@@ -377,7 +383,7 @@ def bingo_sort(stdscr, startx, array):
             if array[i] == bingo:
                 array[i], array[nextPos] = array[nextPos], array[i]
                 nextPos += 1
-                draw_array(stdscr, startx, array, nextPos, "mark_element")
+                draw_array(stdscr, startx, array, nextPos, "index")
                 
             # finds next bingo elemnt
             elif array[i] < next_bingo:
@@ -421,7 +427,7 @@ def counting_sort(stdscr, startx, array, exp):
     i = 0
     for i in range(0, len(array)):
         array[i] = output[i]
-        draw_array(stdscr, startx, array, i, "mark_element")
+        draw_array(stdscr, startx, array, i, "index")
 
 # Pigeonholesort
 def pigeonhole_sort(stdscr, startx, array):
@@ -443,18 +449,17 @@ def pigeonhole_sort(stdscr, startx, array):
             holes[count] -= 1
             array[i] = count + array_min
             i += 1
-            draw_array(stdscr, startx, array, i, "mark_element")
+            draw_array(stdscr, startx, array, i, "index")
 
 # Pancake sort
 def pancake_sort(stdscr, startx, array, n):
     current = n
 
     while current > 1:
-
         # finds max element in array
         max = 0
 
-        for i in range(0, current):
+        for i in range(current):
             if array[i] > array[max]:
                 max = i
         
@@ -478,9 +483,9 @@ def flip(stdscr, startx, array, i):
         array[start], array[i] = array[i], array[start]
         start += 1
         i -= 1
-        draw_array(stdscr, startx, array, i, "mark_element")
+        draw_array(stdscr, startx, array, i, "index")
 
-# Function gives error if terminal is too small
+# function gives error if terminal is too small
 def give_term_error(stdscr, term_required, term_current, message, needed):
     stdscr.addstr(0, 0, str(message))
     stdscr.addstr(2, 0, "required " + needed + ": " + str(term_required) + " cells")
@@ -491,7 +496,7 @@ def give_term_error(stdscr, term_required, term_current, message, needed):
     curses.endwin()
 
 def run_sortty(stdscr):
-    # Finds terminal info
+    # finds terminal info
     global options
     global term_height
     global term_width
@@ -511,7 +516,7 @@ def run_sortty(stdscr):
     else:
         forever = False
 
-    # If not filled, makes the array size and range the highest possible that can fit on the screen
+    # if not filled, makes the array size and range the highest possible that can fit on the screen
     if options['size'] is None:
         fill_screen = True
         array_size = int(term_width / options['bar_size']) - 2
@@ -539,10 +544,10 @@ def run_sortty(stdscr):
         bar_height += slope
         array.append(math.ceil(bar_height))
 
-    # Finds correct position to start drawing
+    # finds correct position to start drawing
     startx = math.floor(term_width / 2) - math.floor(array_size * options['bar_size'] / 2)
 
-    # Curses initialization
+    # curses initialization
     curses.initscr()
     curses.noecho()
     curses.cbreak()
@@ -553,22 +558,16 @@ def run_sortty(stdscr):
     curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_GREEN)
     curses.init_pair(2, curses.COLOR_RED, curses.COLOR_RED)
 
-    # Quits program if terminal height too small for array_range
-    if term_height < 18:
-        give_term_error(stdscr, 18, term_height, "terminal height less than minimum!", "height")
-
-    elif term_width < 75:
-        give_term_error(stdscr, 90, term_width, "terminal width less than minimum!", "width")
-
-    elif fill_screen == False and (array_range > term_height):
+    # quits program if terminal height too small
+    if fill_screen == False and (array_range > term_height):
         give_term_error(stdscr, array_range, term_height, "terminal height too small for array range!", "height")
 
     elif fill_screen == False and (array_size > term_width):
         give_term_error(stdscr, array_size, term_width, "terminal width too small for array size!", "width")
     
-    # Otherwise, start main script
+    # otherwise, start main script
     else:
-        # Draw the array before sorting
+        # draw the array before sorting
         for i in range(array_size):
             draw_array(stdscr, startx, array, i, "start")
         
@@ -657,25 +656,27 @@ def run_sortty(stdscr):
                 break
         
         # fills array with green after sorting
-        for i in range(array_size):
-            draw_array(stdscr, startx, array, i, "fill")
+        if options['green']:
+            for i in range(array_size):
+                draw_array(stdscr, startx, array, i, "fill")
 
         # Finds where to place sort_info text
         text_x = 0
 
-        # Shows that array is sorted and other info
-        stdscr.addstr(0, text_x, "Array sorted!")
-        stdscr.addstr(2, text_x, "Sorting information:")
-        stdscr.addstr(4, text_x, f"sorting algorithm: {options['algorithm']} sort")
-        stdscr.addstr(5, text_x, f"array size: {array_size}")
-        stdscr.addstr(6, text_x, f"array range: {array_range}")
-        stdscr.addstr(7, text_x, f"sorting time: {round(end_time - start_time, 3)} second(s)")
-        stdscr.addstr(8, text_x, f"delay: {options['wait_time']} millisecond(s)")
-        stdscr.addstr(9, text_x, f"bar size: {options['bar_size']}")
-        stdscr.addstr(10, text_x, f"fill screen: {str(fill_screen).lower()}")
-        stdscr.addstr(11, text_x, f"fancy bars: {str(fancy).lower()}")
+        if options['info']:
+            # Shows that array is sorted and other info
+            stdscr.addstr(0, text_x, "Array sorted!")
+            stdscr.addstr(2, text_x, "Sorting information:")
+            stdscr.addstr(4, text_x, f"sorting algorithm: {options['algorithm']} sort")
+            stdscr.addstr(5, text_x, f"array size: {array_size}")
+            stdscr.addstr(6, text_x, f"array range: {array_range}")
+            stdscr.addstr(7, text_x, f"sorting time: {round(end_time - start_time, 3)} second(s)")
+            stdscr.addstr(8, text_x, f"delay: {options['wait_time']} millisecond(s)")
+            stdscr.addstr(9, text_x, f"bar size: {options['bar_size']}")
+            stdscr.addstr(10, text_x, f"fill screen: {str(fill_screen).lower()}")
+            stdscr.addstr(11, text_x, f"fancy bars: {str(fancy).lower()}")
 
-        stdscr.addstr(13, text_x, "Press any key to exit")
+            stdscr.addstr(13, text_x, "Press any key to exit")
 
         # moves cursor to bottom right of screen (less distracting)
         stdscr.move(term_height - 1, term_width - 1)
@@ -713,9 +714,19 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         action='store_true',
     )
     parser.add_argument(
+        '-i', '--info',
+        help='shows sorting information after sorting',
+        action='store_true',
+    )
+    parser.add_argument(
+        '-g', '--green',
+        help='colors array green after sorting',
+        action='store_true',
+    )
+    parser.add_argument(
         '-b', '--bar_size',
-        help='default is 2, meaning the program will display the bars with a width of 2 terminal characters',
-        default=2,
+        help='default is 1, meaning the program will display the bars with a width of 1 terminal character',
+        default=1,
         type=int,
     )
     parser.add_argument(
@@ -747,6 +758,8 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     # finally, call the function to run sortty
     sortty(
         fancy=args.fancy,
+        info=args.info,
+        green=args.green,
         bar_size=args.bar_size,
         wait_time=args.wait_time,
         algorithm=args.algorithm,
