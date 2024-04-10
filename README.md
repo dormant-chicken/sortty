@@ -198,7 +198,7 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty.py [-h] [-f] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
+`sortty.py [-h] [-f] [-i] [-g] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
 
 Example command:
 
@@ -210,7 +210,11 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [--fancy or -f] is not used by default, meaning the program will use a '#' character for the bars instead of a fancy bar
 
-[--bar_size or -b] is 2, meaning the program will display the bars with a width of 2 terminal characters
+[-i --info] is off, meaning it will not show the sorting information after sorting
+
+[-g --green] is off, meaning it will not color the array green after sorting
+
+[--bar_size or -b] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
 [--wait_time or -w] is 75, meaning the program wlll wait 75ms before refreshing the screen
 
