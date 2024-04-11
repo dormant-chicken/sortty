@@ -198,7 +198,7 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty.py [-h] [-f] [-i] [-g] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
+`sortty.py [-h] [-f] [-i] [-nf] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
 
 Example command:
 
