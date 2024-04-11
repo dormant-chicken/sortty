@@ -655,8 +655,8 @@ def run_sortty(stdscr):
             if forever == False:
                 break
         
-        # fills array with green after sorting
-        if options['green']:
+        # fills array after sorting
+        if options['no_fill'] == False:
             for i in range(array_size):
                 draw_array(stdscr, startx, array, i, "fill")
 
@@ -719,8 +719,8 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         action='store_true',
     )
     parser.add_argument(
-        '-g', '--green',
-        help='colors array green after sorting',
+        '-nf', '--no_fill',
+        help='when used, does not fill array after sorting',
         action='store_true',
     )
     parser.add_argument(
@@ -759,7 +759,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     sortty(
         fancy=args.fancy,
         info=args.info,
-        green=args.green,
+        no_fill=args.no_fill,
         bar_size=args.bar_size,
         wait_time=args.wait_time,
         algorithm=args.algorithm,
