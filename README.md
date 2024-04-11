@@ -212,7 +212,7 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [-i --info] is off, meaning it will not show the sorting information after sorting
 
-[-g --green] is off, meaning it will not color the array green after sorting
+[-nf --no_fill] is off, meaning it will not fill the array after sorting
 
 [--bar_size or -b] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
