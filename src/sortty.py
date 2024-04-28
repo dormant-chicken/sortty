@@ -41,52 +41,47 @@ def draw_array(stdscr, startx, array, index, mode):
         for j in range(array[i]):
             # checks if [ fancy ] is True
             if options['fancy']:
+                # defaults
+                char = " "
+                effect = curses.A_REVERSE
+
+                # special cases
                 # fills with green
                 if mode == "fill":
                     if i <= index:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.color_pair(1))
-                    else:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.A_REVERSE)
+                        effect = curses.color_pair(1)
 
-                # fills with characters
+                # fills with characters when starting
                 elif mode == "start":
-                    if i <= index:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.A_REVERSE)
-                    else:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size)
+                    if i > index:
+                        effect = None
                 
                 # colors index red
                 elif mode == "index":
                     if i == index:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.color_pair(2))
-                    else:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.A_REVERSE)
-
-                elif (mode == "none") or (mode == "shuffle"):
-                    stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size, curses.A_REVERSE)
+                        effect = curses.color_pair(2)
 
             else:
+                char = "#"
+                effect = None
+
                 if mode == "fill":
                     if i <= index:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "@" * bar_size)
-                    else:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * bar_size)
+                        char = "@"
 
                 elif mode == "start":
-                    if i <= index:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * bar_size)
-                    else:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), " " * bar_size)
+                    if i > index:
+                        char = " "
                         
                 elif mode == "index":
                     if i == index:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "@" * bar_size)
-                    else:
-                        stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * bar_size)
-
-                elif (mode == "none") or (mode == "shuffle"):
-                    stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), "#" * bar_size)
-
+                        char = "@"
+            
+            # actual drawing
+            if effect == None:
+                stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), char * bar_size)
+            else:
+                stdscr.addstr(term_height - 1 - j, startx + (i * bar_size), char * bar_size, effect)
 
     # moves cursor to bottom right of screen (less distracting)
     stdscr.move(term_height - 1, term_width - 1)
