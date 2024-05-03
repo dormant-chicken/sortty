@@ -40,10 +40,11 @@ sortty - sorting algorithms in the terminal
 
 - Draws every step of a specified sorting algorithm quickly using ncurses
 - Currently has 16 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
+- Auto-adjusts if terminal is resized
 - Detects if terminal is too small for the specified array size / array range
 - animation before shuffling array
 - animation during shuffling of array
-- red bar to indicate index when sorting array
+- show index when sorting array
 - animation that fills the array green after shuffling array
 - #### Options to:
 - change array heigth and width
@@ -51,7 +52,7 @@ sortty - sorting algorithms in the terminal
 - change the delay (how fast or slow the algorithm sorts the array)
 - change what algorithm to use
 - change size of bars (increasing this can improve performance)
-- use fancy bars (shown in the gallery)
+- use fancy bars or text-only mode (shown in the gallery)
 - sort arrays forever with random algorithms
 
 <br>
@@ -198,7 +199,7 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty.py [-h] [-f] [-i] [-nf] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
+`sortty.py [-h] [-f] [-i] [-nf] [-ni] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
 
 Example command:
 
@@ -208,11 +209,13 @@ sortty
 
 Since only the name of the program is run, and there are no arguments, these are the defaults:
 
-[--fancy or -f] is not used by default, meaning the program will use a '#' character for the bars instead of a fancy bar
+[-t --text] add this to make the program use text-only mode instead of using fancy bars
 
 [-i --info] is off, meaning it will not show the sorting information after sorting
 
 [-nf --no_fill] is off, meaning it will not fill the array after sorting
+
+[-ni --no_index] when used, does not show the index as a red bar if (or as a '@' character if --text is enabled) when sorting
 
 [--bar_size or -b] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
@@ -227,10 +230,10 @@ Available algorithms: bogo bubble merge insertion quick gnome heap cocktail sele
 If you want custom options different from the default ones, do so like this:
 
 ```
-sortty --algorithm insertion --fancy
+sortty --algorithm insertion --text
 ```
 
-The command above runs sortty with the insertion sort algorithm and sets fancy bars to true
+The command above runs sortty with the insertion sort algorithm and sets text-only mode to true
 
 More options are available above in the usage part
 
@@ -241,7 +244,6 @@ sortty --algorithm forever
 ```
 
 Setting it to forever makes the program shuffles the array sorts the array with a random algorithm forever (excluding bogo sort)
-
 
 <br>
 
