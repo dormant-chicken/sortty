@@ -260,7 +260,13 @@ Setting it to forever makes the program shuffles the array sorts the array with 
 Run this command to remove the sortty binaries:
 
 ```
-sudo rm -v /usr/local/bin/sortty
+rm ~/.local/bin/sortty
+```
+
+Also, remove this line from your shell rc file ('~/.basrc' if you use bash or '~/.zshrc' if you use zsh):
+
+```
+export PATH=\$PATH:\$HOME/.local/bin
 ```
 
 <br>
