@@ -35,8 +35,10 @@ def draw_array(stdscr, array, index, mode):
     resize = stdscr.getch()
 
     if resize == curses.KEY_RESIZE:
+        stdscr.clear()
         curses.endwin()
         sortty(**options)
+        sys.exit(0)
 
     stdscr.clear()
 
