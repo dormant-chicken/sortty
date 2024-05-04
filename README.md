@@ -42,18 +42,18 @@ sortty - sorting algorithms in the terminal
 - Currently has 16 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
 - Auto-adjusts if terminal is resized
 - Detects if terminal is too small for the specified array size / array range
-- animation before shuffling array
-- animation during shuffling of array
-- show index when sorting array
-- animation that fills the array green after shuffling array
+- Animation before shuffling array
+- Animation during shuffling of array
+- Shows index when sorting array
+- Animation that fills the array green after shuffling array
 - #### Options to:
-- change array heigth and width
-- fill the entire terminal / TTY with the array or not
-- change the delay (how fast or slow the algorithm sorts the array)
-- change what algorithm to use
-- change size of bars (increasing this can improve performance)
-- use fancy bars or text-only mode (shown in the gallery)
-- sort arrays forever with random algorithms
+- Change array heigth and width
+- Fill the entire terminal / TTY with the array or not
+- Change the delay (how fast or slow the algorithm sorts the array)
+- Change what algorithm to use
+- Change size of bars (increasing this can improve performance)
+- Use fancy bars or text-only mode (shown in the gallery)
+- Sort arrays forever with random algorithms
 
 <br>
 
