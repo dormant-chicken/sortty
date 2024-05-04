@@ -60,7 +60,7 @@ sortty - sorting algorithms in the terminal
 ## Flashing Light Warning
 
 > [!WARNING]
-> There may be flashing on the screen if fancy bars are used instead of a text-based character, if the terminal text is small, if the bar size is small, or if your computer is low-end. This can be fixed by lowering the size of your terminal, increasing the size of the bars, increasing terminal font size, or increasing the wait delay for the program, but the best solution I found is to use a lightweight terminal such as [st](https://wiki.archlinux.org/title/st) or [foot](https://wiki.archlinux.org/title/Foot)
+> There may be flashing on the screen if text-only mode is not used, if the terminal text is small, or if the bar size is small. This can be fixed by lowering the size of your terminal, increasing the size of the bars, increasing terminal font size, or increasing the wait delay for the program, but the best solution I found is to use a lightweight terminal such as [st](https://wiki.archlinux.org/title/st) if you use Xorg or [foot](https://wiki.archlinux.org/title/Foot) if you use Wayland
 
 <br>
 
