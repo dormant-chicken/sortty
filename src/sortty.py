@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-version = 'v1.8-git'
+version = 'v1.9-git'
 
 # edit this list to add algorithms
 algorithms = (
