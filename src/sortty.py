@@ -187,7 +187,7 @@ def quickSort(stdscr, array, left, right):
         quickSort(stdscr, array, left, partitionPos - 1)
         quickSort(stdscr, array, partitionPos + 1, right)
 
-# Used by quicksort function
+# used by quicksort function
 def partition(stdscr, array, left, right):
     i = left
     j = right - 1
@@ -232,7 +232,7 @@ def heapSort(stdscr, array):
 
         heapify(stdscr, array, i, 0)
 
-# Needed for heapsort
+# needed for heapsort
 def heapify(stdscr, array, N, i):
     largest = i
     l = 2 * i + 1
@@ -298,22 +298,22 @@ def shellSort(stdscr, array):
     while gap > 0:
         j = gap
 
-        # Sorts the array
+        # sorts the array
         while j < len(array):
             i = j - gap
 
             while i >= 0:
-                # Swap if value on right is lesser
+                # swap if value on right is less
                 if array[i + gap] < array[i]:
                     array[i + gap], array[i] = array[i], array[i + gap]
                     drawArray(stdscr, array, j, 'index')
 
-                # Move gap to sort
+                # move gap to sort
                 i = i - gap
 
             j += 1
 
-        # Cuts gap size in half
+        # cuts gap size in half
         gap = int(gap / 2)
 
 def oddevenSort(stdscr, array):
@@ -354,7 +354,7 @@ def combSort(stdscr, array):
                 swapped = True
                 drawArray(stdscr, array, i, 'index')
 
-# Needed for combsort function
+# needed for combsort function
 def get_next_gap(gap):
 
     gap = int(gap / 1.3)
@@ -363,7 +363,7 @@ def get_next_gap(gap):
     return gap
 
 def bingoSort(stdscr, array):
-    # smallest element From array
+    # smallest element in array
     bingo = min(array)
 
     # largest element from
@@ -394,7 +394,7 @@ def radixSort(stdscr, array):
         counting_sort(stdscr, array, exp)
         exp *= 10
 
-# Needed for radixsort function
+# needed for radixsort function
 def counting_sort(stdscr, array, exp):
     n = len(array)
 
@@ -513,7 +513,7 @@ def beadSort(stdscr, array):
         drawArray(stdscr, array, 0, 'none')
 
 # function gives error if terminal is too small
-def giveTermError(stdscr, termRequired, termCurrent, message, needed):
+def displayTermError(stdscr, termRequired, termCurrent, message, needed):
     stdscr.addstr(0, 0, str(message))
     stdscr.addstr(2, 0, f"required {needed}: {str(termRequired)} cells")
     stdscr.addstr(3, 0, f"terminal {needed}: {str(termCurrent)} cells")
@@ -546,14 +546,11 @@ def run_sortty(stdscr):
         arrayRange = termHeight - 2
     else:
         fillScreen = False
-        err = False
         arraySize, arrayRange = options['size'].split('x')
         try:
             arraySize = int(arraySize)
             arrayRange = int(arrayRange)
         except ValueError:
-            err = True
-        if err:
             raise ValueError('Invalid size format: use HEIGTHxWIDTH')
 
     # array declaration
@@ -583,10 +580,10 @@ def run_sortty(stdscr):
 
     # quits program if terminal height too small
     if not fillScreen and (arrayRange > termHeight):
-        giveTermError(stdscr, arrayRange, termHeight, "terminal height too small for array range!", "height")
+        displayTermError(stdscr, arrayRange, termHeight, "terminal height too small for array range!", "height")
 
     elif not fillScreen and (arraySize > termWidth):
-        giveTermError(stdscr, arraySize, termWidth, "terminal width too small for array size!", "width")
+        displayTermError(stdscr, arraySize, termWidth, "terminal width too small for array size!", "width")
 
     # otherwise, start main script
     else:
@@ -617,10 +614,10 @@ def run_sortty(stdscr):
             time.sleep(1000 / 1000)
 
             if not forever:
-                # Starts performance timer
+                # starts performance timer
                 startTime = time.perf_counter()
 
-            # Sorting algorithms determined by bash script
+            # sorting algorithms determined by bash script
             match algorithm:
                 case 'bogo':
                     bogoSort(stdscr, array)
@@ -674,7 +671,7 @@ def run_sortty(stdscr):
                     beadSort(stdscr, array)
 
             if not forever:
-                # Ends performance timer
+                # ends performance timer
                 endTime = time.perf_counter()
 
             # draws array final time
@@ -690,7 +687,7 @@ def run_sortty(stdscr):
                 drawArray(stdscr, array, i, 'fill')
 
         if options['info']:
-            # Shows that array is sorted and other info
+            # shows sorting info
             stdscr.addstr(0, 0, "Array sorted!")
             stdscr.addstr(2, 0, "Sorting information:")
             stdscr.addstr(4, 0, f"sorting algorithm: {options['algorithm']} sort")
@@ -717,7 +714,8 @@ def sortty(**options):
     try:
         globals()['options'] = options
         curses.wrapper(run_sortty)
-    except KeyboardInterrupt: #this way you can use ctrl+c to quit without showing an error
+    # this way you can use ctrl+c to quit without showing an error
+    except KeyboardInterrupt:
         sys.exit(0)
 
 # edit print message function to make it show ascii art
