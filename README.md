@@ -267,10 +267,10 @@ Run this command to remove the sortty binaries:
 rm ~/.local/bin/sortty
 ```
 
-Also, remove this line from your shell rc file (~/.basrc if you use bash or ~/.zshrc if you use zsh):
+Optionally, you can also remove this line from your shell rc file (~/.basrc if you use bash or ~/.zshrc if you use zsh):
 
 ```
-export PATH=\$PATH:\$HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 ```
 
 <br>
