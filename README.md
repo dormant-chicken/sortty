@@ -199,7 +199,7 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty.py [-h] [-f] [-i] [-nf] [-ni] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-s HEIGHTxWIDTH] [-v]`
+`sortty.py [-h] [-f] [-i] [-nf] [-ni] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-bc --bar_color] [-ic --index_color] [-fc --fill_color] [-bch --bar_character] [-ich --index_character] [-fch --fill_character] [-s HEIGHTxWIDTH] [-v]`
 
 Example command:
 
@@ -223,6 +223,18 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [--algorithm or -a] is quick, meaning the program will use the quicksort algorithm to sort the array
 
+[-bc or --bar_color] changes color of bars when sorting, does nothing if --text is used
+
+[-ic or --index_color] changes color of index pointer when sorting, does nothing if --text is used
+
+[-fc or --fill_color] changes color that fills the array after sorting, does nothing if --text is used
+
+[-bch or --bar_character] changes character for the bars when sorting, does nothing if --text is not used
+
+[-ich or --index_character] changes character for the index pointer when sorting, does nothing if --text is not used
+
+[-fch or --fill_character] changes character that fills the array after sorting, does nothing if --text is not used
+
 [--size or -s] if not specified, size will be depending from the screen size, otherwise you can do HEIGTHxWIDTH, for example 30x20
 
 Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake bead
@@ -230,10 +242,10 @@ Available algorithms: bogo bubble merge insertion quick gnome heap cocktail sele
 If you want custom options different from the default ones, do so like this example:
 
 ```
-sortty --algorithm insertion --text
+sortty --algorithm insertion --text --bar_character o
 ```
 
-The command above runs sortty with the insertion sort algorithm and sets text-only mode to true
+The command above runs sortty with the insertion sort algorithm, sets text-only mode to true, and makes the program use an 'o' character instead of the default '#' character for the bars
 
 More options are available above in the usage part
 
@@ -243,7 +255,7 @@ Note: you can set the algorithm to 'forever' like this:
 sortty --algorithm forever
 ```
 
-Setting it to forever makes the program shuffles the array sorts the array with a random algorithm forever (excluding bogo sort)
+Setting it to forever makes the program shuffle the array and sort the array forever, with a different random algorithm every time (excluding bogo sort)
 
 <br>
 
