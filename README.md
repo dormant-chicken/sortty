@@ -130,7 +130,7 @@ git clone https://github.com/dormant-chicken/sortty
 If you want the stable release, install the dependencies above and use wget to get the tar.gz file from the releases page:
 
 ```
-wget https://github.com/dormant-chicken/sortty/releases/download/v1.9/sortty.tar.gz
+wget https://github.com/dormant-chicken/sortty/releases/latest/download/sortty.tar.gz
 ```
 
 <br>
