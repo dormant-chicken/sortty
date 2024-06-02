@@ -259,14 +259,6 @@ Setting it to forever makes the program shuffle the array and sort the array for
 
 <br>
 
-> [!NOTE]
-> I had trouble getting the mergesort algorithm to be drawn properly, because the mergesort function uses multiple arrays. The algorithm still works, and it is still drawn, but the items in the array do not get merged, as seen [here](https://www.youtube.com/watch?v=ZRPoEKHXTJg).
-
-> [!WARNING]
-> I do not recommend running an inefficient sorting algorithm, especially bogosort with a delay of 0, I ran it and it made my cpu go to the highest clock speed
-
-<br>
-
 ## Uninstalling
 
 Run this command to remove the sortty binaries:
