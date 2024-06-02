@@ -163,39 +163,42 @@ def bubbleSort(stdscr, array):
                 array[i], array[i + 1] = array[i + 1], array[i]
             drawArray(stdscr, array, i + 1, 'index')
 
-def mergeSort(stdscr, arr, isMain):
-    if len(arr) > 1:
-        leftArr = arr[:len(arr)//2]
-        rightArr = arr[len(arr)//2:]
+def mergeSort(stdscr, array, start, end):
+    if start == end:
+        return
 
-        # recursion
-        mergeSort(stdscr, leftArr, False)
-        mergeSort(stdscr, rightArr, False)
+    middle = math.floor((start + end) / 2)
 
-        # merge
-        i = 0
-        j = 0
-        k = 0
-        while i < len(leftArr) and j < len(rightArr):
-            if leftArr[i] < rightArr[j]:
-                arr[k] = leftArr[i]
-                i += 1
-                if isMain == True:
-                    drawArray(stdscr, arr, 0, 'none')
-            else:
-                arr[k] = rightArr[j]
-                j += 1
-            k += 1
+    # call recursively on left subarray
+    mergeSort(stdscr, array, start, middle)
+    # call recursively on right subarray
+    mergeSort(stdscr, array, middle + 1, end)
 
-        while i < len(leftArr):
-            arr[k] = leftArr[i]
+    merge(stdscr, array, start, end)
+
+# needed by mergesort function
+def merge(stdscr, array, start, end):
+    middle = getMiddle(end - start + 1)
+
+    while middle > 0:
+        i = start
+        while (i + middle) <= end:
+            j = i + middle
+
+            if array[i] > array[j]:
+                array[i], array[j] = array[j], array[i]
+                drawArray(stdscr, array, i, 'index')
+
             i += 1
-            k += 1
 
-        while j < len(rightArr):
-            arr[k] = rightArr[j]
-            j += 1
-            k += 1
+        middle = getMiddle(middle)
+
+# needed by mergesort function
+def getMiddle(length):
+    if length <= 1:
+        return 0
+
+    return math.ceil(length / 2)
 
 def insertionSort(stdscr, array):
     for i in range(1, len(array)):
@@ -665,7 +668,7 @@ def run_sortty(stdscr):
                     bubbleSort(stdscr, array)
 
                 case 'merge':
-                    mergeSort(stdscr, array, True)
+                    mergeSort(stdscr, array, 0, len(array) - 1)
 
                 case 'insertion':
                     insertionSort(stdscr, array)
