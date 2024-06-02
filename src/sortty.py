@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 version = 'v1.9-git'
 
 # edit this list to add algorithms
@@ -22,6 +23,15 @@ algorithms = (
     'bead'
     )
 
+colors = (
+    'red',
+    'green',
+    'blue',
+    'cyan',
+    'magenta', 
+    'yellow'
+    )
+
 # 'art' this is for the fancy ascii art, instead of an external program
 import argparse
 import curses
@@ -33,7 +43,6 @@ import sys
 import os
 
 def drawArray(stdscr, array, index, mode):
-
     # check for terminal resize
     resize = stdscr.getch()
 
@@ -53,17 +62,16 @@ def drawArray(stdscr, array, index, mode):
             # checks if text-only mode is enabled
             if options['textOnly']:
                 # defaults
-                char = '#'
+                char = options['barCharacter']
                 effect = None
 
                 # special cases
-                # fills with @ character
+                # default is @ character
                 if mode == 'fill':
                     if i <= index:
-                        char = '@'
+                        char = options['fillCharacter']
 
                 # fills with characters when starting
-
                 elif mode == 'start':
                     if i > index:
                         char = ' '
@@ -71,15 +79,16 @@ def drawArray(stdscr, array, index, mode):
                 # shows index
                 elif mode == 'index' and not options['noIndex']:
                     if i == index:
-                        char = '@'
-
+                        # default is @ character
+                        char = options['indexCharacter']
             else:
                 char = ' '
-                effect = curses.A_REVERSE
+                effect = getColor(options['barColor'])
 
                 if mode == 'fill':
                     if i <= index:
-                        effect = curses.color_pair(1)
+                        # default is green
+                        effect = getColor(options['fillColor'])
 
                 elif mode == 'start':
                     if i > index:
@@ -87,7 +96,8 @@ def drawArray(stdscr, array, index, mode):
 
                 elif mode == 'index' and not options['noIndex']:
                     if i == index:
-                        effect = curses.color_pair(2)
+                        # default is red
+                        effect = getColor(options['indexColor'])
 
             # actual drawing
             if effect == None:
@@ -103,15 +113,31 @@ def drawArray(stdscr, array, index, mode):
 
     if mode == 'fill':
         time.sleep(((500 / len(array)) * barSize) / 1000)
-
     elif mode == 'shuffle':
         time.sleep(((600 / len(array)) * barSize) / 1000)
-
     elif mode == 'start':
         time.sleep(((300 / len(array)) * barSize) / 1000)
-
     else:
         time.sleep(options['waitTime'] / 1000)
+
+def getColor(color):
+    match color:
+        # default (white and reverse mean the same thing, no need to make another color pair)
+        case 'none':
+            return curses.A_REVERSE
+        # if color is specified
+        case 'red':
+            return curses.color_pair(1)
+        case 'green':
+            return curses.color_pair(2)
+        case 'blue':
+            return curses.color_pair(3)
+        case 'cyan':
+            return curses.color_pair(4)
+        case 'magenta':
+            return curses.color_pair(5)
+        case 'yellow':
+            return curses.color_pair(6)
 
 def bogoSort(stdscr, array):
     sorted = False
@@ -356,8 +382,8 @@ def combSort(stdscr, array):
 
 # needed for combsort function
 def get_next_gap(gap):
-
     gap = int(gap / 1.3)
+
     if gap < 1:
         return 1
     return gap
@@ -467,7 +493,6 @@ def pancakeSort(stdscr, array, n):
 
 # needed for pancakesort function
 def flip(stdscr, array, i):
-
     # swaps elements until specified part of array is flipped
     start = 0
 
@@ -478,7 +503,6 @@ def flip(stdscr, array, i):
         drawArray(stdscr, array, i, 'index')
 
 def beadSort(stdscr, array):
-
     length = len(array)
     maximum = max(array)
 
@@ -503,7 +527,7 @@ def beadSort(stdscr, array):
         for i in range(length-1, length-sum-1, -1):
             beads[i][j] = 1
 
-        # compile into main array
+        # compile into main array and draw
         for i in range(length):
             sum = 0
             for j in range(maximum):
@@ -523,12 +547,18 @@ def displayTermError(stdscr, termRequired, termCurrent, message, needed):
     stdscr.getch()
     curses.endwin()
 
+# check length of character given
+def isSingleChar(char):
+    if len(char) != 1:
+        raise ValueError('character given is too long, only use a single character')
+
 def run_sortty(stdscr):
-    # finds terminal info
     global options
     global termHeight
     global termWidth
     global startX
+
+    # finds terminal info
     termSize = os.get_terminal_size()
     termHeight = termSize.lines
     termWidth = termSize.columns
@@ -540,7 +570,7 @@ def run_sortty(stdscr):
         forever = False
 
     # if not filled, makes the array size and range the highest possible that can fit on the screen
-    if options['size'] is None:
+    if options['size'] == None:
         fillScreen = True
         arraySize = int(termWidth / options['barSize']) - 2
         arrayRange = termHeight - 2
@@ -552,6 +582,11 @@ def run_sortty(stdscr):
             arrayRange = int(arrayRange)
         except ValueError:
             raise ValueError('Invalid size format: use HEIGTHxWIDTH')
+
+    # check length of characters given
+    isSingleChar(options['barCharacter'])
+    isSingleChar(options['indexCharacter'])
+    isSingleChar(options['fillCharacter'])
 
     # array declaration
     array = []
@@ -575,8 +610,12 @@ def run_sortty(stdscr):
     stdscr.clear()
 
     # color pairs for ncurses
-    curses.init_pair(1, curses.COLOR_GREEN, curses.COLOR_GREEN)
-    curses.init_pair(2, curses.COLOR_RED, curses.COLOR_RED)
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
+    curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_GREEN)
+    curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLUE)
+    curses.init_pair(4, curses.COLOR_CYAN, curses.COLOR_CYAN)
+    curses.init_pair(5, curses.COLOR_MAGENTA, curses.COLOR_MAGENTA)
+    curses.init_pair(6, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
 
     # quits program if terminal height too small
     if not fillScreen and (arrayRange > termHeight):
@@ -617,7 +656,7 @@ def run_sortty(stdscr):
                 # starts performance timer
                 startTime = time.perf_counter()
 
-            # sorting algorithms determined by bash script
+            # sorting algorithms
             match algorithm:
                 case 'bogo':
                     bogoSort(stdscr, array)
@@ -686,10 +725,12 @@ def run_sortty(stdscr):
             for i in range(arraySize):
                 drawArray(stdscr, array, i, 'fill')
 
-        if options['info']:
+        if options['info'] and termHeight > 15 and termWidth > 35:
             # shows sorting info
             stdscr.addstr(0, 0, "Array sorted!")
+
             stdscr.addstr(2, 0, "Sorting information:")
+
             stdscr.addstr(4, 0, f"sorting algorithm: {options['algorithm']} sort")
             stdscr.addstr(5, 0, f"array size: {arraySize}")
             stdscr.addstr(6, 0, f"array range: {arrayRange}")
@@ -771,8 +812,44 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         choices=algorithms + ('forever',)
     )
     parser.add_argument(
+        '-bc', '--bar_color',
+        help='changes color of bars when sorting, does nothing if --text is used',
+        default='none',
+        choices=colors
+    )
+    parser.add_argument(
+        '-ic', '--index_color',
+        help='changes color of index pointer when sorting, does nothing if --text is used',
+        default='red',
+        choices=colors
+    )
+    parser.add_argument(
+        '-fc', '--fill_color',
+        help='changes color that fills the array after sorting, does nothing if --text is used',
+        default='green',
+        choices=colors
+    )
+    parser.add_argument(
+        '-bch', '--bar_character',
+        help='changes character for the bars when sorting, does nothing if --text is not used',
+        default='@',
+        type=str,
+    )
+    parser.add_argument(
+        '-ich', '--index_character',
+        help='changes character for the index pointer when sorting, does nothing if --text is not used',
+        default='@',
+        type=str,
+    )
+    parser.add_argument(
+        '-fch', '--fill_character',
+        help='changes character that fills the array after sorting, does nothing if --text is not used',
+        default='#',
+        type=str,
+    )
+    parser.add_argument(
         '-s', '--size',
-        help='HEIGTHxWIDTH, if not specified, adapt to terminal size.',
+        help='HEIGTHxWIDTH, if not specified, the program will adapt to terminal size',
         default=None,
         type=str,
     )
@@ -793,6 +870,12 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         barSize = args.bar_size,
         waitTime = args.wait_time,
         algorithm = args.algorithm,
+        barColor = args.bar_color,
+        indexColor = args.index_color,
+        fillColor = args.fill_color,
+        barCharacter = args.bar_character,
+        indexCharacter = args.index_character,
+        fillCharacter = args.fill_character,
         size = args.size,
     )
 
