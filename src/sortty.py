@@ -20,7 +20,9 @@ algorithms = (
     'radix',
     'pigeonhole',
     'pancake',
-    'bead'
+    'bead',
+    'stooge',
+    'inplace_merge'
     )
 
 colors = (
@@ -28,7 +30,7 @@ colors = (
     'green',
     'blue',
     'cyan',
-    'magenta', 
+    'magenta',
     'yellow'
     )
 
@@ -118,7 +120,7 @@ def drawArray(stdscr, array, index, mode):
     elif mode == 'start':
         time.sleep(((300 / len(array)) * barSize) / 1000)
     else:
-        time.sleep(options['waitTime'] / 1000)
+        time.sleep(options['waitDelay'] / 1000)
 
 def getColor(color):
     match color:
@@ -163,42 +165,52 @@ def bubbleSort(stdscr, array):
                 array[i], array[i + 1] = array[i + 1], array[i]
             drawArray(stdscr, array, i + 1, 'index')
 
-def mergeSort(stdscr, array, start, end):
-    if start == end:
+def merge(stdscr, array, left, mid, right):
+    leftLen = mid - left + 1
+    rightLen = right - mid
+
+    leftArray = [0] * leftLen
+    rightArray = [0] * rightLen
+
+    # fill arrays
+    for i in range(leftLen):
+        leftArray[i] = array[left + i]
+    for j in range(rightLen):
+        rightArray[j] = array[mid + j + 1]
+
+    i = 0
+    j = 0
+    k = left
+
+    # sort
+    while i < leftLen and j < rightLen:
+        if leftArray[i] <= rightArray[j]:
+            array[k] = leftArray[i]
+            i += 1
+            drawArray(stdscr, array, k, 'index')
+        else:
+            array[k] = rightArray[j]
+            j += 1
+        k += 1
+
+    while i < leftLen:
+        array[k] = leftArray[i]
+        i += 1
+        k += 1
+
+    while j < rightLen:
+        array[k] = rightArray[j]
+        j += 1
+        k += 1
+
+def mergeSort(stdscr, array, begin, end):
+    if begin >= end:
         return
 
-    middle = math.floor((start + end) / 2)
-
-    # call recursively on left subarray
-    mergeSort(stdscr, array, start, middle)
-    # call recursively on right subarray
-    mergeSort(stdscr, array, middle + 1, end)
-
-    merge(stdscr, array, start, end)
-
-# needed by mergesort function
-def merge(stdscr, array, start, end):
-    middle = getMiddle(end - start + 1)
-
-    while middle > 0:
-        i = start
-        while (i + middle) <= end:
-            j = i + middle
-
-            if array[i] > array[j]:
-                array[i], array[j] = array[j], array[i]
-                drawArray(stdscr, array, i, 'index')
-
-            i += 1
-
-        middle = getMiddle(middle)
-
-# needed by mergesort function
-def getMiddle(length):
-    if length <= 1:
-        return 0
-
-    return math.ceil(length / 2)
+    mid = begin + (end - begin) // 2
+    mergeSort(stdscr, array, begin, mid)
+    mergeSort(stdscr, array, mid + 1, end)
+    merge(stdscr, array, begin, mid, end)
 
 def insertionSort(stdscr, array):
     for i in range(1, len(array)):
@@ -487,15 +499,15 @@ def pancakeSort(stdscr, array, n):
         if max != (current - 1):
 
             # flips once to bring max to first element of array
-            flip(stdscr, array, max)
+            pancakeFlip(stdscr, array, max)
 
             # flips again to bring max element next to current
-            flip(stdscr, array, current - 1)
+            pancakeFlip(stdscr, array, current - 1)
 
         current -= 1
 
 # needed for pancakesort function
-def flip(stdscr, array, i):
+def pancakeFlip(stdscr, array, i):
     # swaps elements until specified part of array is flipped
     start = 0
 
@@ -538,6 +550,60 @@ def beadSort(stdscr, array):
             array[i] = sum
 
         drawArray(stdscr, array, 0, 'none')
+
+def stoogeSort(stdscr, array, start, end):
+    if start >= end:
+        return
+
+    # swap
+    if array[start] > array[end]:
+        array[start], array[end] = array[end], array[start]
+        drawArray(stdscr, array, start, 'index')
+
+    if end - start + 1 > 2:
+        third = int((end - start + 1) / 3)
+
+        # call recursively on first 2/3 of array
+        stoogeSort(stdscr, array, start, end - third)
+        # call recursively on last 2/3 of array
+        stoogeSort(stdscr, array, start + third, end)
+        # call recursively on first 2/3 of array again
+        stoogeSort(stdscr, array, start, end - third)
+
+def inPlaceMergeSort(stdscr, array, start, end):
+    if start == end:
+        return
+
+    middle = math.floor((start + end) / 2)
+
+    # call recursively on left subarray
+    inPlaceMergeSort(stdscr, array, start, middle)
+    # call recursively on right subarray
+    inPlaceMergeSort(stdscr, array, middle + 1, end)
+
+    inPlaceMerge(stdscr, array, start, end)
+
+# needed by inPlaceMergeSort function
+def inPlaceMerge(stdscr, array, start, end):
+    middle = getMiddle(end - start + 1)
+
+    while middle > 0:
+        i = start
+        while (i + middle) <= end:
+            j = i + middle
+            if array[i] > array[j]:
+                array[i], array[j] = array[j], array[i]
+                drawArray(stdscr, array, i, 'index')
+            i += 1
+
+        middle = getMiddle(middle)
+
+# needed by inPlaceMergeSort function
+def getMiddle(length):
+    if length <= 1:
+        return 0
+
+    return math.ceil(length / 2)
 
 # function gives error if terminal is too small
 def displayTermError(stdscr, termRequired, termCurrent, message, needed):
@@ -633,8 +699,9 @@ def run_sortty(stdscr):
         stdscr.timeout(1)
 
         # draw the array before sorting
-        for i in range(arraySize):
-            drawArray(stdscr, array, i, 'start')
+        if not options['noAnimation']:
+            for i in range(arraySize):
+                drawArray(stdscr, array, i, 'start')
 
         while True:
             # creates new algorithm
@@ -644,13 +711,18 @@ def run_sortty(stdscr):
                 algorithm = options['algorithm']
 
             # waits before shuffle
-            time.sleep(750 / 1000)
+            if not options['noAnimation']:
+                time.sleep(750 / 1000)
 
             # shuffle array by swapping index with random element
             for i in range(arraySize):
                 temp = random.randint(0, arraySize - 1)
                 array[i], array[temp] = array[temp], array[i]
-                drawArray(stdscr, array, 0, 'shuffle')
+                if not options['noAnimation']:
+                    drawArray(stdscr, array, 0, 'shuffle')
+
+            if options['noAnimation']:
+                drawArray(stdscr, array, 0, 'none')
 
             # waits before sorting
             time.sleep(1000 / 1000)
@@ -712,6 +784,12 @@ def run_sortty(stdscr):
                 case 'bead':
                     beadSort(stdscr, array)
 
+                case 'stooge':
+                    stoogeSort(stdscr, array, 0, len(array) - 1)
+
+                case 'inplace_merge':
+                    inPlaceMergeSort(stdscr, array, 0, len(array) - 1)
+
             if not forever:
                 # ends performance timer
                 endTime = time.perf_counter()
@@ -738,7 +816,7 @@ def run_sortty(stdscr):
             stdscr.addstr(5, 0, f"array size: {arraySize}")
             stdscr.addstr(6, 0, f"array range: {arrayRange}")
             stdscr.addstr(7, 0, f"sorting time: {round(endTime - startTime, 3)} second(s)")
-            stdscr.addstr(8, 0, f"delay: {options['waitTime']} millisecond(s)")
+            stdscr.addstr(8, 0, f"delay: {options['waitDelay']} millisecond(s)")
             stdscr.addstr(9, 0, f"bar size: {options['barSize']}")
             stdscr.addstr(10, 0, f"fill screen: {str(fillScreen).lower()}")
             stdscr.addstr(11, 0, f"text-only mode: {str(options['textOnly']).lower()}")
@@ -797,13 +875,18 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         action='store_true',
     )
     parser.add_argument(
+        '-na', '--no_animation',
+        help='when used, does not show fill and shuffle animation before sorting',
+        action='store_true',
+    )
+    parser.add_argument(
         '-b', '--bar_size',
         help='default is 1, meaning the program will display the bars with a width of 1 terminal character',
         default=1,
         type=int,
     )
     parser.add_argument(
-        '-w', '--wait_time',
+        '-w', '--wait',
         help='default is 75, meaning the program wlll wait 75ms before refreshing the screen',
         default=75,
         type=int,
@@ -870,8 +953,9 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         info = args.info,
         noFill = args.no_fill,
         noIndex = args.no_index,
+        noAnimation = args.no_animation,
         barSize = args.bar_size,
-        waitTime = args.wait_time,
+        waitDelay = args.wait,
         algorithm = args.algorithm,
         barColor = args.bar_color,
         indexColor = args.index_color,
