@@ -23,7 +23,8 @@ algorithms = (
     'bead',
     'stooge',
     'inplace_merge',
-    'tim'
+    'tim',
+    'circle'
     )
 
 colors = (
@@ -45,7 +46,7 @@ import art
 import sys
 import os
 
-def drawArray(stdscr, array, index, mode):
+def drawArray(stdscr, array, *args):
     # check for terminal resize
     resize = stdscr.getch()
 
@@ -59,6 +60,12 @@ def drawArray(stdscr, array, index, mode):
 
     barSize = options['barSize']
 
+    # get mode
+    if len(args) > 0:
+        mode = args[0]
+    else:
+        mode = None
+
     # draws the array onto the screen
     for i in range(len(array)):
         for j in range(array[i]):
@@ -68,42 +75,48 @@ def drawArray(stdscr, array, index, mode):
                 char = options['barCharacter']
                 effect = None
 
-                # special cases
-                # default is @ character
-                if mode == 'fill':
-                    if i <= index:
-                        char = options['fillCharacter']
+                # handles cases where mode is specified
+                if mode is not None:
+                    # special cases
+                    # default is @ character
+                    if mode == 'fill':
+                        if i <= args[1]:
+                            char = options['fillCharacter']
 
-                # fills with characters when starting
-                elif mode == 'start':
-                    if i > index:
-                        char = ' '
+                    # fills with characters when starting
+                    elif mode == 'start':
+                        if i > args[1]:
+                            char = ' '
 
-                # shows index
-                elif mode == 'index' and not options['noIndex']:
-                    if i == index:
-                        # default is @ character
-                        char = options['indexCharacter']
+                    # shows index
+                    elif mode == 'index' and not options['noIndex']:
+                        # goes through arguments to check index given
+                        for k in range(1, len(args)):
+                            if i == args[k]:
+                                # default is @ character
+                                char = options['indexCharacter']
             else:
                 char = ' '
                 effect = getColor(options['barColor'])
 
-                if mode == 'fill':
-                    if i <= index:
-                        # default is green
-                        effect = getColor(options['fillColor'])
+                if mode is not None:
+                    if mode == 'fill':
+                        if i <= args[1]:
+                            # default is green
+                            effect = getColor(options['fillColor'])
 
-                elif mode == 'start':
-                    if i > index:
-                        effect = None
+                    elif mode == 'start':
+                        if i > args[1]:
+                            effect = None
 
-                elif mode == 'index' and not options['noIndex']:
-                    if i == index:
-                        # default is red
-                        effect = getColor(options['indexColor'])
+                    elif mode == 'index' and not options['noIndex']:
+                        for k in range(1, len(args)):
+                            if i == args[k]:
+                                # default is red
+                                effect = getColor(options['indexColor'])
 
             # actual drawing
-            if effect == None:
+            if effect is None:
                 stdscr.addstr(termHeight - 1 - j, startX + (i * barSize), char * barSize)
             else:
                 stdscr.addstr(termHeight - 1 - j, startX + (i * barSize), char * barSize, effect)
@@ -116,13 +129,10 @@ def drawArray(stdscr, array, index, mode):
 
     if mode == 'fill':
         time.sleep(((500 / len(array)) * barSize) / 1000)
-
     elif mode == 'shuffle':
         time.sleep(((600 / len(array)) * barSize) / 1000)
-
     elif mode == 'start':
         time.sleep(((300 / len(array)) * barSize) / 1000)
-
     else:
         time.sleep(options['waitDelay'] / 1000)
 
@@ -156,7 +166,7 @@ def bogoSort(stdscr, array, n):
                 break
         if not sorted:
             random.shuffle(array)
-            drawArray(stdscr, array, 0, None)
+            drawArray(stdscr, array)
 
 def bubbleSort(stdscr, array, n):
     sorted = False
@@ -167,7 +177,7 @@ def bubbleSort(stdscr, array, n):
             if array[i] > array[i + 1]:
                 sorted = False
                 array[i], array[i + 1] = array[i + 1], array[i]
-            drawArray(stdscr, array, i + 1, 'index')
+            drawArray(stdscr, array, 'index', i + 1)
 
 def merge(stdscr, array, left, mid, right):
     leftLen = mid - left + 1
@@ -191,7 +201,7 @@ def merge(stdscr, array, left, mid, right):
         if leftArray[i] <= rightArray[j]:
             array[k] = leftArray[i]
             i += 1
-            drawArray(stdscr, array, k, 'index')
+            drawArray(stdscr, array, 'index', k)
         else:
             array[k] = rightArray[j]
             j += 1
@@ -222,12 +232,12 @@ def mergeSort(stdscr, array, begin, end):
 def insertionSort(stdscr, array, left, right):
     for i in range(left + 1, right):
         j = i
-        drawArray(stdscr, array, j, 'index')
+        drawArray(stdscr, array, 'index', j)
 
         while array[j] < array[j - 1] and j > left:
             array[j - 1], array[j] = array[j], array[j - 1]
             j -= 1
-            drawArray(stdscr, array, j, 'index')
+            drawArray(stdscr, array, 'index', j)
 
 def quickSort(stdscr, array, left, right):
     if left < right:
@@ -248,7 +258,7 @@ def partition(stdscr, array, left, right):
             j -= 1
         if i < j:
             array[i], array[j] = array[j], array[i]
-            drawArray(stdscr, array, i, 'index')
+            drawArray(stdscr, array, 'index', i, j)
 
     if array[i] > pivot:
         array[i], array[right] = array[right], array[i]
@@ -266,7 +276,7 @@ def gnomeSort(stdscr, array, n):
             array[i], array[i - 1] = array[i - 1], array[i]
             i -= 1
 
-        drawArray(stdscr, array, i, 'index')
+        drawArray(stdscr, array, 'index', i)
 
 def heapSort(stdscr, array, n):
     for i in range(n//2 - 1, -1, -1):
@@ -291,7 +301,7 @@ def heapify(stdscr, array, n, i):
 
     if largest != i:
         array[i], array[largest] = array[largest], array[i]
-        drawArray(stdscr, array, l, 'index')
+        drawArray(stdscr, array, 'index', l)
 
         heapify(stdscr, array, n, largest)
 
@@ -307,7 +317,7 @@ def cocktailSort(stdscr, array, n):
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                drawArray(stdscr, array, i + 1, 'index')
+                drawArray(stdscr, array, 'index', i + 1)
 
         if (not swapped):
             break
@@ -320,7 +330,7 @@ def cocktailSort(stdscr, array, n):
             if (array[i] > array[i + 1]):
                 array[i], array[i + 1] = array[i + 1], array[i]
                 swapped = True
-                drawArray(stdscr, array, i, 'index')
+                drawArray(stdscr, array, 'index', i)
 
         start += 1
 
@@ -335,7 +345,7 @@ def selectionSort(stdscr, array, n):
 
         # swap
         array[i], array[minIdx] = array[minIdx], array[i]
-        drawArray(stdscr, array, minIdx, 'index')
+        drawArray(stdscr, array, 'index', minIdx)
 
 def shellSort(stdscr, array, n):
     gap = int(n / 2)
@@ -351,7 +361,7 @@ def shellSort(stdscr, array, n):
                 # swap if value on right is less
                 if array[i + gap] < array[i]:
                     array[i + gap], array[i] = array[i], array[i + gap]
-                    drawArray(stdscr, array, j, 'index')
+                    drawArray(stdscr, array, 'index', i, j)
 
                 # move gap to sort
                 i = i - gap
@@ -372,14 +382,14 @@ def oddevenSort(stdscr, array, n):
                 # swap elements
                 array[i], array[i + 1] = array[i + 1], array[i]
                 sorted = False
-                drawArray(stdscr, array, i, 'index')
+                drawArray(stdscr, array, 'index', i)
 
         for i in range(0, n - 1, 2):
             if array[i] > array[i + 1]:
                 # swap elements
                 array[i], array[i + 1] = array[i + 1], array[i]
                 sorted = False
-                drawArray(stdscr, array, i, 'index')
+                drawArray(stdscr, array, 'index', i)
 
 def combSort(stdscr, array, n):
     gap = n
@@ -395,7 +405,7 @@ def combSort(stdscr, array, n):
             if array[i] > array[i + gap]:
                 array[i], array[i + gap] = array[i + gap], array[i]
                 swapped = True
-                drawArray(stdscr, array, i, 'index')
+                drawArray(stdscr, array, 'index', i)
 
 # needed for combsort function
 def getNextGap(gap):
@@ -421,7 +431,7 @@ def bingoSort(stdscr, array, n):
             if array[i] == bingo:
                 array[i], array[nextPos] = array[nextPos], array[i]
                 nextPos += 1
-                drawArray(stdscr, array, nextPos, 'index')
+                drawArray(stdscr, array, 'index', nextPos)
 
             # finds next bingo elemnt
             elif array[i] < nextBingo:
@@ -463,7 +473,7 @@ def countingSort(stdscr, array, exp, n):
     i = 0
     for i in range(0, n):
         array[i] = output[i]
-        drawArray(stdscr, array, i, 'index')
+        drawArray(stdscr, array, 'index', i)
 
 def pigeonholeSort(stdscr, array, n):
     arrayMin = min(array)
@@ -477,7 +487,7 @@ def pigeonholeSort(stdscr, array, n):
     j = 0
     for i in array:
         holes[i - arrayMin] += 1
-        drawArray(stdscr, array, j, 'index')
+        drawArray(stdscr, array, 'index', j)
         j += 1
 
     # put back elements
@@ -487,7 +497,7 @@ def pigeonholeSort(stdscr, array, n):
             holes[count] -= 1
             array[i] = count + arrayMin
             i += 1
-            drawArray(stdscr, array, i, 'index')
+            drawArray(stdscr, array, 'index', i)
 
 def pancakeSort(stdscr, array, n):
     current = n
@@ -517,7 +527,7 @@ def pancakeFlip(stdscr, array, i):
         array[start], array[i] = array[i], array[start]
         start += 1
         i -= 1
-        drawArray(stdscr, array, i, 'index')
+        drawArray(stdscr, array, 'index', i)
 
 def beadSort(stdscr, array, n):
     maximum = max(array)
@@ -549,7 +559,7 @@ def beadSort(stdscr, array, n):
                 sum += beads[i][j]
             array[i] = sum
 
-        drawArray(stdscr, array, 0, None)
+        drawArray(stdscr, array)
 
 def stoogeSort(stdscr, array, start, end):
     if start >= end:
@@ -558,7 +568,7 @@ def stoogeSort(stdscr, array, start, end):
     # swap
     if array[start] > array[end]:
         array[start], array[end] = array[end], array[start]
-        drawArray(stdscr, array, start, 'index')
+        drawArray(stdscr, array, 'index', start)
 
     if end - start + 1 > 2:
         third = int((end - start + 1) / 3)
@@ -593,7 +603,7 @@ def inPlaceMerge(stdscr, array, start, end):
             j = i + middle
             if array[i] > array[j]:
                 array[i], array[j] = array[j], array[i]
-                drawArray(stdscr, array, i, 'index')
+                drawArray(stdscr, array, 'index', i, j)
             i += 1
 
         middle = getMiddle(middle)
@@ -630,12 +640,44 @@ def timSort(stdscr, arr, minMerge, n):
 
         size = 2 * size
 
+def circleSort(stdscr, array, low, high):
+        swapped = False
+
+        if low == high:
+            return swapped
+
+        left = low
+        right = high
+
+        while left < right:
+            if array[left] > array[right]:
+                array[left], array[right] = array[right], array[left]
+                swapped = True
+            drawArray(stdscr, array, 'index', left, right)
+
+            left += 1
+            right -= 1
+
+        if left == right and array[left] > array[right + 1]:
+            array[left], array[right + 1] = array[right + 1], array[left]
+            swapped = True
+        drawArray(stdscr, array, 'index', left, right)
+
+        mid = low + int((high - low) / 2)
+        left_swap = circleSort(stdscr, array, low, mid)
+        right_swap = circleSort(stdscr, array, mid + 1, high)
+
+        return swapped or left_swap or right_swap
+
 # function gives error if terminal is too small
 def displayTermError(stdscr, termRequired, termCurrent, message, needed):
     stdscr.addstr(0, 0, str(message))
+
     stdscr.addstr(2, 0, f"required {needed}: {str(termRequired)} cells")
     stdscr.addstr(3, 0, f"terminal {needed}: {str(termCurrent)} cells")
+
     stdscr.addstr(5, 0, "please resize your terminal and try again")
+
     stdscr.addstr(7, 0, "press any key to exit")
 
     stdscr.getch()
@@ -726,7 +768,7 @@ def run_sortty(stdscr):
         # draw the array before sorting
         if not options['noAnimation']:
             for i in range(arraySize):
-                drawArray(stdscr, array, i, 'start')
+                drawArray(stdscr, array, 'start', i)
 
         while True:
             # creates new algorithm
@@ -744,10 +786,10 @@ def run_sortty(stdscr):
                 temp = random.randint(0, arraySize - 1)
                 array[i], array[temp] = array[temp], array[i]
                 if not options['noAnimation']:
-                    drawArray(stdscr, array, 0, 'shuffle')
+                    drawArray(stdscr, array, 'shuffle')
 
             if options['noAnimation']:
-                drawArray(stdscr, array, 0, None)
+                drawArray(stdscr, array)
 
             # waits before sorting
             time.sleep(1000 / 1000)
@@ -818,12 +860,17 @@ def run_sortty(stdscr):
                 case 'tim':
                     timSort(stdscr, array, 16, arraySize)
 
+                case 'circle':
+                    notSorted = True
+                    while notSorted:
+                        notSorted = circleSort(stdscr, array, 0, arraySize - 1)
+
             if not forever:
                 # ends performance timer
                 endTime = time.perf_counter()
 
             # draws array final time
-            drawArray(stdscr, array, 0, None)
+            drawArray(stdscr, array)
 
             # if forever is false, stop running loop
             if not forever:
@@ -832,7 +879,7 @@ def run_sortty(stdscr):
         # fills array after sorting
         if not options['noFill']:
             for i in range(arraySize):
-                drawArray(stdscr, array, i, 'fill')
+                drawArray(stdscr, array, 'fill', i)
 
         if options['info'] and termHeight > 15 and termWidth > 35:
             # shows sorting info
@@ -946,7 +993,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     parser.add_argument(
         '-bch', '--bar_character',
         help='changes character for the bars when sorting, does nothing if --text is not used',
-        default='@',
+        default='#',
         type=str,
     )
     parser.add_argument(
@@ -958,7 +1005,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     parser.add_argument(
         '-fch', '--fill_character',
         help='changes character that fills the array after sorting, does nothing if --text is not used',
-        default='#',
+        default='@',
         type=str,
     )
     parser.add_argument(
