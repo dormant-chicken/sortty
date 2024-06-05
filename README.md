@@ -5,8 +5,10 @@ sortty - sorting algorithms in the terminal
 ## Gallery
 
 ![quicksort3](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort3.png)
-![quicksort2](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort2.png)
-![heapsort1](https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort1.png)
+
+<img src="https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort1.png" width="500"> <img src="https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort2.png" width="500">
+
+![quicksort3](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort4.png)
 
 <br>
 
