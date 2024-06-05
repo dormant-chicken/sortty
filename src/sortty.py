@@ -129,7 +129,7 @@ def drawArray(stdscr, array, index, mode):
 def getColor(color):
     match color:
         # default (white and reverse mean the same thing, no need to make another color pair)
-        case 'none':
+        case None:
             return curses.A_REVERSE
         # if color is specified
         case 'red':
@@ -156,7 +156,7 @@ def bogoSort(stdscr, array, n):
                 break
         if not sorted:
             random.shuffle(array)
-            drawArray(stdscr, array, 0, 'none')
+            drawArray(stdscr, array, 0, None)
 
 def bubbleSort(stdscr, array, n):
     sorted = False
@@ -262,11 +262,11 @@ def gnomeSort(stdscr, array, n):
 
         if array[i] >= array[i - 1]:
             i += 1
-            drawArray(stdscr, array, i, 'index')
         else:
             array[i], array[i - 1] = array[i - 1], array[i]
             i -= 1
-            drawArray(stdscr, array, i, 'index')
+
+        drawArray(stdscr, array, i, 'index')
 
 def heapSort(stdscr, array, n):
     for i in range(n//2 - 1, -1, -1):
@@ -549,7 +549,7 @@ def beadSort(stdscr, array, n):
                 sum += beads[i][j]
             array[i] = sum
 
-        drawArray(stdscr, array, 0, 'none')
+        drawArray(stdscr, array, 0, None)
 
 def stoogeSort(stdscr, array, start, end):
     if start >= end:
@@ -664,7 +664,7 @@ def run_sortty(stdscr):
         forever = False
 
     # if not filled, makes the array size and range the highest possible that can fit on the screen
-    if options['size'] == None:
+    if options['size'] is None:
         fillScreen = True
         arraySize = int(termWidth / options['barSize']) - 2
         arrayRange = termHeight - 2
@@ -747,7 +747,7 @@ def run_sortty(stdscr):
                     drawArray(stdscr, array, 0, 'shuffle')
 
             if options['noAnimation']:
-                drawArray(stdscr, array, 0, 'none')
+                drawArray(stdscr, array, 0, None)
 
             # waits before sorting
             time.sleep(1000 / 1000)
@@ -823,7 +823,7 @@ def run_sortty(stdscr):
                 endTime = time.perf_counter()
 
             # draws array final time
-            drawArray(stdscr, array, 0, 'none')
+            drawArray(stdscr, array, 0, None)
 
             # if forever is false, stop running loop
             if not forever:
@@ -928,7 +928,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     parser.add_argument(
         '-bc', '--bar_color',
         help='changes color of bars when sorting, does nothing if --text is used',
-        default='none',
+        default=None,
         choices=colors
     )
     parser.add_argument(
