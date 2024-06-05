@@ -6,7 +6,7 @@ sortty - sorting algorithms in the terminal
 
 ![quicksort3](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort3.png)
 
-<img src="https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort1.png" width=50% style=“float:right”> <img src="https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort2.png" width=49% style=“float:right”>
+<img src="https://github.com/dormant-chicken/sortty/blob/main/assets/heapsort1.png" width=49%> <img src="https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort2.png" width=49%>
 
 ![quicksort3](https://github.com/dormant-chicken/sortty/blob/main/assets/quicksort4.png)
 
