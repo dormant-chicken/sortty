@@ -39,7 +39,7 @@ sortty - sorting algorithms in the terminal
 ## Features
 
 - Draws every step of a specified sorting algorithm quickly using ncurses
-- Currently has 19 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
+- Currently has 21 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
 - Auto-adjusts if terminal is resized
 - Detects if terminal is too small for the specified array size / array range
 - Animation before shuffling array
@@ -237,7 +237,7 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [--size or -s] if not specified, size will be depending from the screen size, otherwise you can do HEIGTHxWIDTH, for example 30x20
 
-Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake bead stooge inplace_merge
+Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake bead stooge inplace_merge tim circle
 
 If you want custom options different from the default ones, do so like this example:
 
