@@ -201,15 +201,16 @@ After trying sortty, you can still install it (shown in the [last step of instal
 
 <br>
 
-`sortty.py [-h] [-f] [-i] [-nf] [-ni] [-b BAR_SIZE] [-w WAIT_TIME] [-a ALGORITHM] [-bc --bar_color] [-ic --index_color] [-fc --fill_color] [-bch --bar_character] [-ich --index_character] [-fch --fill_character] [-s HEIGHTxWIDTH] [-v]`
-
 Example command:
 
 ```
 sortty
 ```
 
-Since only the name of the program is run, and there are no arguments, these are the defaults:
+Use these arguments to change how the program behaves:
+
+```
+[-h --help] shows help message
 
 [-t --text] add this to make the program use text-only mode instead of using fancy bars
 
@@ -219,37 +220,40 @@ Since only the name of the program is run, and there are no arguments, these are
 
 [-ni --no_index] when used, does not show the index as a red bar if (or as a '@' character if --text is enabled) when sorting
 
-[--bar_size or -b] is 1, meaning the program will display the bars with a width of 1 terminal characters
+[-na --no_animation] when used, does not show fill and shuffle animation before sorting
 
-[--wait_time or -w] is 75, meaning the program wlll wait 75ms before refreshing the screen
+[-b --bar_size] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
-[--algorithm or -a] is quick, meaning the program will use the quicksort algorithm to sort the array
+[-w --wait] is 75, meaning the program wlll wait 75ms before refreshing the screen
 
-[-bc or --bar_color] changes color of bars when sorting, does nothing if --text is used
+[-a --algorithm] is quick, meaning the program will use the quicksort algorithm to sort the array
 
-[-ic or --index_color] changes color of index pointer when sorting, does nothing if --text is used
+[-bc --bar_color] changes color of bars when sorting, does nothing if --text is used
 
-[-fc or --fill_color] changes color that fills the array after sorting, does nothing if --text is used
+[-ic --index_color] changes color of index pointer when sorting, does nothing if --text is used
 
-[-bch or --bar_character] changes character for the bars when sorting, does nothing if --text is not used
+[-fc --fill_color] changes color that fills the array after sorting, does nothing if --text is used
 
-[-ich or --index_character] changes character for the index pointer when sorting, does nothing if --text is not used
+[-bch --bar_character] changes character for the bars when sorting, does nothing if --text is not used
 
-[-fch or --fill_character] changes character that fills the array after sorting, does nothing if --text is not used
+[-ich --index_character] changes character for the index pointer when sorting, does nothing if --text is not used
 
-[--size or -s] if not specified, size will be depending from the screen size, otherwise you can do HEIGTHxWIDTH, for example 30x20
+[-fch --fill_character] changes character that fills the array after sorting, does nothing if --text is not used
+
+[-s --size] if not specified, size will be depending from the screen size, otherwise you can do HEIGTHxWIDTH, for example 30x20
+
+[-v --version] print version and quit
+```
 
 Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake bead stooge inplace_merge tim circle
 
-If you want custom options different from the default ones, do so like this example:
+Here is another example command, but with arguments:
 
 ```
 sortty --algorithm insertion --text --bar_character o
 ```
 
 The command above runs sortty with the insertion sort algorithm, sets text-only mode to true, and makes the program use an 'o' character instead of the default '#' character for the bars
-
-More options are available above in the usage part
 
 Note: you can set the algorithm to 'forever' like this:
 
