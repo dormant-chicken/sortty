@@ -46,7 +46,7 @@ import art
 import sys
 import os
 
-def drawArray(stdscr, array, *args):
+def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
     # check for terminal resize
     resize = stdscr.getch()
 
@@ -60,11 +60,11 @@ def drawArray(stdscr, array, *args):
 
     barSize = options['barSize']
 
+    mode = None
+
     # get mode
     if len(args) > 0:
         mode = args[0]
-    else:
-        mode = None
 
     # draws the array onto the screen
     for i in range(len(array)):
@@ -136,7 +136,7 @@ def drawArray(stdscr, array, *args):
     else:
         time.sleep(options['waitDelay'] / 1000)
 
-def getColor(color):
+def getColor(color: str):
     match color:
         # default (white and reverse mean the same thing, no need to make another color pair)
         case None:
@@ -155,7 +155,7 @@ def getColor(color):
         case 'yellow':
             return curses.color_pair(6)
 
-def bogoSort(stdscr, array, n):
+def bogoSort(stdscr, array: list[int], n: int) -> None:
     sorted = False
 
     while not sorted:
@@ -168,7 +168,7 @@ def bogoSort(stdscr, array, n):
             random.shuffle(array)
             drawArray(stdscr, array)
 
-def bubbleSort(stdscr, array, n):
+def bubbleSort(stdscr, array: list[int], n: int) -> None:
     sorted = False
 
     while not sorted:
@@ -179,7 +179,7 @@ def bubbleSort(stdscr, array, n):
                 array[i], array[i + 1] = array[i + 1], array[i]
             drawArray(stdscr, array, 'index', i + 1)
 
-def merge(stdscr, array, left, mid, right):
+def merge(stdscr, array: list[int], left: int, mid: int, right: int) -> None:
     leftLen = mid - left + 1
     rightLen = right - mid
 
@@ -217,7 +217,7 @@ def merge(stdscr, array, left, mid, right):
         j += 1
         k += 1
 
-def mergeSort(stdscr, array, begin, end):
+def mergeSort(stdscr, array: list[int], begin: int, end: int) -> None:
     if begin >= end:
         return
 
@@ -229,7 +229,7 @@ def mergeSort(stdscr, array, begin, end):
 
     merge(stdscr, array, begin, mid, end)
 
-def insertionSort(stdscr, array, left, right):
+def insertionSort(stdscr, array: list[int], left: int, right: int) -> None:
     for i in range(left + 1, right):
         j = i
         drawArray(stdscr, array, 'index', j)
@@ -239,14 +239,14 @@ def insertionSort(stdscr, array, left, right):
             j -= 1
             drawArray(stdscr, array, 'index', j)
 
-def quickSort(stdscr, array, left, right):
+def quickSort(stdscr, array, left, right) -> None:
     if left < right:
         partitionPos = partition(stdscr, array, left, right)
         quickSort(stdscr, array, left, partitionPos - 1)
         quickSort(stdscr, array, partitionPos + 1, right)
 
 # used by quicksort function
-def partition(stdscr, array, left, right):
+def partition(stdscr, array: list[int], left: int, right: int) -> int:
     i = left
     j = right - 1
     pivot = array[right]
@@ -262,9 +262,10 @@ def partition(stdscr, array, left, right):
 
     if array[i] > pivot:
         array[i], array[right] = array[right], array[i]
+
     return i
 
-def gnomeSort(stdscr, array, n):
+def gnomeSort(stdscr, array: list[int], n: int) -> None:
     i = 0
     while i < n:
         if i == 0:
@@ -278,7 +279,7 @@ def gnomeSort(stdscr, array, n):
 
         drawArray(stdscr, array, 'index', i)
 
-def heapSort(stdscr, array, n):
+def heapSort(stdscr, array: list[int], n: int) -> None:
     for i in range(n//2 - 1, -1, -1):
         heapify(stdscr, array, n, i)
 
@@ -288,7 +289,7 @@ def heapSort(stdscr, array, n):
         heapify(stdscr, array, i, 0)
 
 # needed for heapsort
-def heapify(stdscr, array, n, i):
+def heapify(stdscr, array: list[int], n: int, i: int) -> None:
     largest = i
     l = 2 * i + 1
     r = 2 * i + 2
@@ -305,7 +306,7 @@ def heapify(stdscr, array, n, i):
 
         heapify(stdscr, array, n, largest)
 
-def cocktailSort(stdscr, array, n):
+def cocktailSort(stdscr, array: list[int], n: int) -> None:
     swapped = True
     start = 0
     end = n - 1
@@ -334,7 +335,7 @@ def cocktailSort(stdscr, array, n):
 
         start += 1
 
-def selectionSort(stdscr, array, n):
+def selectionSort(stdscr, array: list[int], n: int) -> None:
     for i in range(n):
         minIdx = i
 
@@ -347,7 +348,7 @@ def selectionSort(stdscr, array, n):
         array[i], array[minIdx] = array[minIdx], array[i]
         drawArray(stdscr, array, 'index', minIdx)
 
-def shellSort(stdscr, array, n):
+def shellSort(stdscr, array: list[int], n: int) -> None:
     gap = int(n / 2)
 
     while gap > 0:
@@ -371,7 +372,7 @@ def shellSort(stdscr, array, n):
         # cuts gap size in half
         gap = int(gap / 2)
 
-def oddevenSort(stdscr, array, n):
+def oddevenSort(stdscr, array: list[int], n: int) -> None:
     sorted = False
 
     while not sorted:
@@ -391,7 +392,7 @@ def oddevenSort(stdscr, array, n):
                 sorted = False
                 drawArray(stdscr, array, 'index', i)
 
-def combSort(stdscr, array, n):
+def combSort(stdscr, array: list[int], n: int) -> None:
     gap = n
 
     swapped = True
@@ -408,20 +409,20 @@ def combSort(stdscr, array, n):
                 drawArray(stdscr, array, 'index', i)
 
 # needed for combsort function
-def getNextGap(gap):
+def getNextGap(gap: int) -> int:
     gap = int(gap / 1.3)
-
     if gap < 1:
         return 1
+
     return gap
 
-def bingoSort(stdscr, array, n):
+def bingoSort(stdscr, array: list[int], n: int) -> None:
     # smallest element in array
     bingo = min(array)
 
-    # largest element from
-    largest = max(array)
-    nextBingo = largest
+    # largest element in array
+    arrayMax = max(array)
+    nextBingo = arrayMax
     nextPos = 0
 
     while bingo < nextBingo:
@@ -438,18 +439,18 @@ def bingoSort(stdscr, array, n):
                 nextBingo = array[i]
 
         bingo = nextBingo
-        nextBingo = largest
+        nextBingo = arrayMax
 
-def radixSort(stdscr, array, n):
-    maxArray = max(array)
+def radixSort(stdscr, array: list[int], n: int) -> None:
+    arrayMax = max(array)
 
     exp = 1
-    while maxArray / exp >= 1:
+    while arrayMax / exp >= 1:
         countingSort(stdscr, array, exp, n)
         exp *= 10
 
 # needed for radixsort function
-def countingSort(stdscr, array, exp, n):
+def countingSort(stdscr, array: list[int], exp: int, n: int) -> None:
     output = [0] * (n)
 
     count = [0] * (10)
@@ -475,7 +476,7 @@ def countingSort(stdscr, array, exp, n):
         array[i] = output[i]
         drawArray(stdscr, array, 'index', i)
 
-def pigeonholeSort(stdscr, array, n):
+def pigeonholeSort(stdscr, array: list[int], n: int) -> None:
     arrayMin = min(array)
     arrayMax = max(array)
     arrayRange = arrayMax - arrayMin + 1
@@ -499,19 +500,19 @@ def pigeonholeSort(stdscr, array, n):
             i += 1
             drawArray(stdscr, array, 'index', i)
 
-def pancakeSort(stdscr, array, n):
+def pancakeSort(stdscr, array: list[int], n: int) -> None:
     current = n
     while current > 1:
         # finds max element in array
-        max = 0
+        arrayMax = 0
 
         for i in range(current):
-            if array[i] > array[max]:
-                max = i
+            if array[i] > array[arrayMax]:
+                arrayMax = i
 
-        if max != (current - 1):
+        if arrayMax != (current - 1):
             # flips once to bring max to first element of array
-            pancakeFlip(stdscr, array, max)
+            pancakeFlip(stdscr, array, arrayMax)
 
             # flips again to bring max element next to current
             pancakeFlip(stdscr, array, current - 1)
@@ -519,21 +520,21 @@ def pancakeSort(stdscr, array, n):
         current -= 1
 
 # needed for pancakesort function
-def pancakeFlip(stdscr, array, i):
+def pancakeFlip(stdscr, array: list[int], n: int) -> None:
     # swaps elements until specified part of array is flipped
     start = 0
 
-    while start < i:
-        array[start], array[i] = array[i], array[start]
+    while start < n:
+        array[start], array[n] = array[n], array[start]
         start += 1
-        i -= 1
-        drawArray(stdscr, array, 'index', i)
+        n -= 1
+        drawArray(stdscr, array, 'index', n)
 
-def beadSort(stdscr, array, n):
-    maximum = max(array)
+def beadSort(stdscr, array: list[int], n: int) -> None:
+    arrayMax = max(array)
 
     # declare beads
-    beads = [[0 for i in range(maximum)] for j in range(n)]
+    beads = [[0 for i in range(arrayMax)] for j in range(n)]
 
     # mark beads
     for i in range(n):
@@ -541,7 +542,7 @@ def beadSort(stdscr, array, n):
             beads[i][j] = 1
 
     # move beads down
-    for j in range(maximum):
+    for j in range(arrayMax):
         sum = 0
 
         # sort
@@ -555,13 +556,13 @@ def beadSort(stdscr, array, n):
         # compile into main array and draw
         for i in range(n):
             sum = 0
-            for j in range(maximum):
+            for j in range(arrayMax):
                 sum += beads[i][j]
             array[i] = sum
 
         drawArray(stdscr, array)
 
-def stoogeSort(stdscr, array, start, end):
+def stoogeSort(stdscr, array: list[int], start: int, end: int) -> None:
     if start >= end:
         return
 
@@ -580,7 +581,7 @@ def stoogeSort(stdscr, array, start, end):
         # call recursively on first 2/3 of array again
         stoogeSort(stdscr, array, start, end - third)
 
-def inPlaceMergeSort(stdscr, array, start, end):
+def inPlaceMergeSort(stdscr, array: list[int], start: int, end: int) -> None:
     if start == end:
         return
 
@@ -594,7 +595,7 @@ def inPlaceMergeSort(stdscr, array, start, end):
     inPlaceMerge(stdscr, array, start, end)
 
 # needed by inPlaceMergeSort function
-def inPlaceMerge(stdscr, array, start, end):
+def inPlaceMerge(stdscr, array: list[int], start: int, end: int) -> None:
     middle = getMiddle(end - start + 1)
 
     while middle > 0:
@@ -609,13 +610,13 @@ def inPlaceMerge(stdscr, array, start, end):
         middle = getMiddle(middle)
 
 # needed by inPlaceMergeSort function
-def getMiddle(length):
+def getMiddle(length: int) -> int:
     if length <= 1:
         return 0
 
     return math.ceil(length / 2)
 
-def timSort(stdscr, arr, minMerge, n):
+def timSort(stdscr, array: list[int], minMerge: int, n: int) -> None:
     r = 0
     temp = n
 
@@ -626,7 +627,7 @@ def timSort(stdscr, arr, minMerge, n):
 
     for start in range(0, n, minRun):
         end = min(start + minRun - 1, n - 1)
-        insertionSort(stdscr, arr, start, end + 1)
+        insertionSort(stdscr, array, start, end + 1)
 
     size = minRun
     while size < n:
@@ -636,11 +637,11 @@ def timSort(stdscr, arr, minMerge, n):
             right = min((left + 2 * size - 1), (n - 1))
 
             if mid < right:
-                merge(stdscr, arr, left, mid, right)
+                merge(stdscr, array, left, mid, right)
 
         size = 2 * size
 
-def circleSort(stdscr, array, low, high):
+def circleSort(stdscr, array: list[int], low: int, high: int) -> bool:
         swapped = False
 
         if low == high:
@@ -670,7 +671,7 @@ def circleSort(stdscr, array, low, high):
         return swapped or left_swap or right_swap
 
 # function gives error if terminal is too small
-def displayTermError(stdscr, termRequired, termCurrent, message, needed):
+def displayTermError(stdscr, termRequired: int, termCurrent: int, message: str, needed: str) -> None:
     stdscr.addstr(0, 0, str(message))
 
     stdscr.addstr(2, 0, f"required {needed}: {str(termRequired)} cells")
@@ -684,9 +685,9 @@ def displayTermError(stdscr, termRequired, termCurrent, message, needed):
     curses.endwin()
 
 # check length of character given
-def isSingleChar(char):
+def isSingleChar(char: str) -> None:
     if len(char) != 1:
-        raise ValueError('character given is too long, only use a single character')
+        raise ValueError('character given is too long, please only use a single character')
 
 def run_sortty(stdscr):
     global options
@@ -701,9 +702,9 @@ def run_sortty(stdscr):
 
     # checks if user wants to sort forever
     if options['algorithm'] == 'forever':
-        forever = True
+        sortForever = True
     else:
-        forever = False
+        sortForever = False
 
     # if not filled, makes the array size and range the highest possible that can fit on the screen
     if options['size'] is None:
@@ -772,7 +773,7 @@ def run_sortty(stdscr):
 
         while True:
             # creates new algorithm
-            if forever:
+            if sortForever:
                 algorithm = algorithms[random.randint(1, len(algorithms) - 1)]
             else:
                 algorithm = options['algorithm']
@@ -794,7 +795,7 @@ def run_sortty(stdscr):
             # waits before sorting
             time.sleep(1000 / 1000)
 
-            if not forever:
+            if not sortForever:
                 # starts performance timer
                 startTime = time.perf_counter()
 
@@ -865,7 +866,7 @@ def run_sortty(stdscr):
                     while notSorted:
                         notSorted = circleSort(stdscr, array, 0, arraySize - 1)
 
-            if not forever:
+            if not sortForever:
                 # ends performance timer
                 endTime = time.perf_counter()
 
@@ -873,7 +874,7 @@ def run_sortty(stdscr):
             drawArray(stdscr, array)
 
             # if forever is false, stop running loop
-            if not forever:
+            if not sortForever:
                 break
 
         # fills array after sorting
