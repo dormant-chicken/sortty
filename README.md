@@ -182,13 +182,19 @@ The command above also changes your directory to the parent directory of sortty/
 
 ## Trying sortty without installing
 
-If you just want to try sortty without installing, the script has support for that
+If you just want to try sortty without installing, the program has support for that
 
-Just get the files by using git to clone this repostory (shown in the [latest git](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#latest-git) tab) or get the latest stable release and decompress it (shown in the [stable release](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#stable-release) tab). Then, run this command to go into the sortty/src/ directory that you just got:
+Just get the files by using git to clone this repostory (shown in the [latest git](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#latest-git) tab) or get the latest stable release and decompress it (shown in the [stable release](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#stable-release) tab). Then, run this command to go into the sortty directory and make the program executable:
 
 ```
 cd sortty/
-python3 src/sortty.py
+chmod +x src/sortty.py
+```
+
+Then, run this to execute the program:
+
+```
+src/sortty.py
 ```
 
 <br>
