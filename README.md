@@ -176,7 +176,7 @@ cd ..
 rm -rvf sortty/
 ```
 
-The command above also changes your directory to the parent directory of sortty/ with 'cd ..', which is the directory that it is located in, so that it can remove the directory
+This command also changes your directory to the parent directory of sortty/ with 'cd ..' so that it can remove the installed files
 
 <br>
 
