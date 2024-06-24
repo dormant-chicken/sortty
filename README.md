@@ -116,8 +116,6 @@ git clone https://github.com/dormant-chicken/sortty
 
 ### Stable release
 
-<br>
-
 If you want the stable release, install the dependencies above and use wget to get the tar.gz file from the releases page:
 
 ```
