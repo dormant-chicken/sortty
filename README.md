@@ -228,7 +228,7 @@ Use these arguments to change how the program behaves:
 
 [-na --no_animation] when used, does not show fill and shuffle animation before sorting
 
-[-b --bar_size] is 1, meaning the program will display the bars with a width of 1 terminal characters
+[-bs --bar_size] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
 [-d --delay] is 75, meaning the program wlll wait 75ms before refreshing the screen
 
