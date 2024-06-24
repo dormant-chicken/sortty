@@ -136,11 +136,19 @@ tar -xzvf sortty.tar.gz
 
 <br>
 
+If you want to use a file manager instead, right click on the tar.gz file and click extract or extract here
+
+<br>
+
 You can remove the tar.gz file if you want to:
 
 ```
 rm sortty.tar.gz
 ```
+
+<br>
+
+You can also remove it in your file manager, but rest of the instructions will need the terminal
 
 <br>
 
