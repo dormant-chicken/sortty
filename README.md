@@ -82,10 +82,6 @@ These pip dependencies are also needed:
 
 `art`
 
-<br>
-
-Some of the package dependencies are most likely preinstalled, but it is still good to check.
-
 Arch:
 ```
 sudo pacman -S python ncurses git
@@ -118,14 +114,7 @@ After installing the needed dependencies, clone this repository to get the very 
 git clone https://github.com/dormant-chicken/sortty
 ```
 
-<br>
-
 ### Stable release
-
-<br>
-
-> [!WARNING]
-> I recommend using the newest stable release, as the older ones might have a few small bugs
 
 <br>
 
@@ -159,7 +148,7 @@ rm sortty.tar.gz
 
 ## Last step of install
 
-Finally, change your directory into sortty/, make install.sh executable, and run install.sh:
+Finally, change your directory into sortty/, make installation script executable, and run it:
 
 ```
 cd sortty/
@@ -176,7 +165,7 @@ cd ..
 rm -rvf sortty/
 ```
 
-This command also changes your directory to the parent directory of sortty/ with 'cd ..' so that it can remove the installed files
+This command also changes your directory to the parent directory of sortty/ with 'cd ..' so that it can remove the installation files
 
 <br>
 
