@@ -966,7 +966,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         action='store_true',
     )
     parser.add_argument(
-        '-b', '--bar_size',
+        '-bs', '--bar_size',
         help='default is 1, meaning the program will display the bars with a width of 1 terminal character',
         default=1,
         type=int,
