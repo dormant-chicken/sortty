@@ -33,7 +33,9 @@ colors = (
     'blue',
     'cyan',
     'magenta',
-    'yellow'
+    'yellow',
+    'white',
+    'transparent'
     )
 
 # 'art' this is for the fancy ascii art, instead of an external program
@@ -60,6 +62,7 @@ def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
 
     barSize = options['barSize']
 
+    # available modes: fill, start, index, shuffle
     mode = None
 
     # get mode
@@ -127,20 +130,18 @@ def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
     # refresh screen and wait specified time
     stdscr.refresh()
 
-    if mode == 'fill':
-        time.sleep(((500 / len(array)) * barSize) / 1000)
-    elif mode == 'shuffle':
-        time.sleep(((600 / len(array)) * barSize) / 1000)
-    elif mode == 'start':
-        time.sleep(((300 / len(array)) * barSize) / 1000)
-    else:
-        time.sleep(options['waitDelay'] / 1000)
+    match mode:
+        case 'fill':
+            time.sleep(((1000 / len(array)) * barSize) / 1000)
+        case 'shuffle':
+            time.sleep(((1200 / len(array)) * barSize) / 1000)
+        case 'start':
+            time.sleep(((600 / len(array)) * barSize) / 1000)
+        case default:
+            time.sleep(options['delay'] / 1000)
 
 def getColor(color: str):
     match color:
-        # default (white and reverse mean the same thing, no need to make another color pair)
-        case None:
-            return curses.A_REVERSE
         # if color is specified
         case 'red':
             return curses.color_pair(1)
@@ -154,6 +155,11 @@ def getColor(color: str):
             return curses.color_pair(5)
         case 'yellow':
             return curses.color_pair(6)
+        # white and reverse mean the same thing, no need to make another color pair
+        case 'white':
+            return curses.A_REVERSE
+        case 'transparent':
+            return None
 
 def bogoSort(stdscr, array: list[int], n: int) -> None:
     sorted = False
@@ -641,7 +647,13 @@ def timSort(stdscr, array: list[int], minMerge: int, n: int) -> None:
 
         size = 2 * size
 
-def circleSort(stdscr, array: list[int], low: int, high: int) -> bool:
+def circleSort(stdscr, array: list[int], arraySize: int) -> None:
+    notSorted = True
+    while notSorted:
+        notSorted = circle(stdscr, array, 0, arraySize - 1)
+
+# needed by circleSort function
+def circle(stdscr, array: list[int], low: int, high: int) -> bool:
         swapped = False
 
         if low == high:
@@ -665,8 +677,8 @@ def circleSort(stdscr, array: list[int], low: int, high: int) -> bool:
         drawArray(stdscr, array, 'index', left, right)
 
         mid = low + int((high - low) / 2)
-        left_swap = circleSort(stdscr, array, low, mid)
-        right_swap = circleSort(stdscr, array, mid + 1, high)
+        left_swap = circle(stdscr, array, low, mid)
+        right_swap = circle(stdscr, array, mid + 1, high)
 
         return swapped or left_swap or right_swap
 
@@ -862,9 +874,7 @@ def run_sortty(stdscr):
                     timSort(stdscr, array, 16, arraySize)
 
                 case 'circle':
-                    notSorted = True
-                    while notSorted:
-                        notSorted = circleSort(stdscr, array, 0, arraySize - 1)
+                    circleSort(stdscr, array, arraySize)
 
             if not sortForever:
                 # ends performance timer
@@ -892,7 +902,7 @@ def run_sortty(stdscr):
             stdscr.addstr(5, 0, f"array size: {arraySize}")
             stdscr.addstr(6, 0, f"array range: {arrayRange}")
             stdscr.addstr(7, 0, f"sorting time: {round(endTime - startTime, 3)} second(s)")
-            stdscr.addstr(8, 0, f"delay: {options['waitDelay']} millisecond(s)")
+            stdscr.addstr(8, 0, f"delay: {options['delay']} millisecond(s)")
             stdscr.addstr(9, 0, f"bar size: {options['barSize']}")
             stdscr.addstr(10, 0, f"fill screen: {str(fillScreen).lower()}")
             stdscr.addstr(11, 0, f"text-only mode: {str(options['textOnly']).lower()}")
@@ -962,7 +972,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         type=int,
     )
     parser.add_argument(
-        '-w', '--wait',
+        '-d', '--delay',
         help='default is 75, meaning the program wlll wait 75ms before refreshing the screen',
         default=75,
         type=int,
@@ -976,7 +986,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     parser.add_argument(
         '-bc', '--bar_color',
         help='changes color of bars when sorting, does nothing if --text is used',
-        default=None,
+        default='white',
         choices=colors
     )
     parser.add_argument(
@@ -1006,7 +1016,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     parser.add_argument(
         '-fch', '--fill_character',
         help='changes character that fills the array after sorting, does nothing if --text is not used',
-        default='@',
+        default='$',
         type=str,
     )
     parser.add_argument(
@@ -1031,7 +1041,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         noIndex = args.no_index,
         noAnimation = args.no_animation,
         barSize = args.bar_size,
-        waitDelay = args.wait,
+        delay = args.delay,
         algorithm = args.algorithm,
         barColor = args.bar_color,
         indexColor = args.index_color,
