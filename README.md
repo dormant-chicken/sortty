@@ -230,7 +230,7 @@ Use these arguments to change how the program behaves:
 
 [-b --bar_size] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
-[-w --wait] is 75, meaning the program wlll wait 75ms before refreshing the screen
+[-d --delay] is 75, meaning the program wlll wait 75ms before refreshing the screen
 
 [-a --algorithm] is quick, meaning the program will use the quicksort algorithm to sort the array
 
@@ -252,6 +252,8 @@ Use these arguments to change how the program behaves:
 ```
 
 Available algorithms: bogo bubble merge insertion quick gnome heap cocktail selection shell oddeven comb bingo radix pigeonhole pancake bead stooge inplace_merge tim circle
+
+Available colors for bars: red green blue cyan magenta yellow white transparent
 
 Here is another example command, but with arguments:
 
