@@ -129,10 +129,12 @@ def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
     # refresh screen and wait specified time
     stdscr.refresh()
 
-    # available modes: fill, start, index
+    # available modes: fill, start, index, shuffle
     match mode:
-        case 'fill' | 'start':
+        case 'fill' | 'shuffle':
             time.sleep(((1000 / len(array)) * barSize) / 1000)
+        case 'start':
+            time.sleep(((600 / len(array)) * barSize) / 1000)
         case default:
             time.sleep(options['delay'] / 1000)
 
@@ -795,7 +797,7 @@ def run_sortty(stdscr):
                 temp = random.randint(0, arraySize - 1)
                 array[i], array[temp] = array[temp], array[i]
                 if not options['noAnimation']:
-                    drawArray(stdscr, array)
+                    drawArray(stdscr, array, 'shuffle')
 
             if options['noAnimation']:
                 drawArray(stdscr, array)
