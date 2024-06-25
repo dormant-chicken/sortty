@@ -14,7 +14,7 @@ sortty - sorting algorithms in the terminal
 
 ## Table of contents
 
-* [Features](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#features)
+* [Main Features](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#main-features)
 
 * [AUR](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#aur)
 
@@ -38,24 +38,18 @@ sortty - sorting algorithms in the terminal
 
 <br>
 
-## Features
+## Main Features
 
 - Draws every step of a specified sorting algorithm quickly using ncurses
-- Currently has 21 built-in sorting algorithms (specified in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README)
+- Currently has 21 built-in sorting algorithms
 - Auto-adjusts if terminal is resized
 - Detects if terminal is too small for the specified array size / array range
 - Animation before shuffling array
 - Animation during shuffling of array
 - Shows index when sorting array
 - Animation that fills the array green after shuffling array
-- #### Options to:
-- Change array heigth and width
-- Fill the entire terminal / TTY with the array or not
-- Change the delay (how fast or slow the algorithm sorts the array)
-- Change what algorithm to use
-- Change size of bars (increasing this can improve performance)
-- Use fancy bars or text-only mode (shown in the gallery)
-- Sort arrays forever with random algorithms
+
+More features are in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README
 
 <br>
 
@@ -78,10 +72,6 @@ These dependencies are needed:
 
 `python ncurses git`
 
-These pip dependencies are also needed:
-
-`art`
-
 Arch:
 ```
 sudo pacman -S python ncurses git
@@ -97,11 +87,6 @@ Debian:
 sudo apt install python3 libncurses5 libncurses6 libncurses-dev git
 ```
 
-You can install the pip dependencies with
-
-```
-pip install art
-```
 <br>
 
 ## Installation
@@ -225,9 +210,11 @@ Use these arguments to change how the program behaves:
 
 [-bs --bar_size] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
-[-d --delay] is 75, meaning the program wlll wait 75ms before refreshing the screen
+[-d --delay] is 75, meaning the program will wait 75ms before refreshing the screen
 
-[-a --algorithm] is quick, meaning the program will use the quicksort algorithm to sort the array
+[-ad --animation_delay] if not specified, the program will wait wait a dynamic amount of time based on the size of the array before refreshing animations
+
+[-a --algorithm] is 'quick', meaning the program will use the quicksort algorithm to sort the array
 
 [-bc --bar_color] changes color of bars when sorting, does nothing if --text is used
 
