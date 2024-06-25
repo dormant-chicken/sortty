@@ -38,13 +38,20 @@ colors = (
     'transparent'
     )
 
-# 'art' this is for the fancy ascii art, instead of an external program
+logo = '''
+                   _    _          
+ ___   ___   _ __ | |_ | |_  _   _ 
+/ __| / _ \ | '__|| __|| __|| | | |
+\__ \| (_) || |   | |_ | |_ | |_| |
+|___/ \___/ |_|    \__| \__| \__, |
+                             |___/ 
+'''
+
 import argparse
 import curses
 import random
 import time
 import math
-import art
 import sys
 import os
 
@@ -131,10 +138,13 @@ def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
 
     # available modes: fill, start, index, shuffle
     match mode:
-        case 'fill' | 'shuffle':
-            time.sleep(((1000 / len(array)) * barSize) / 1000)
-        case 'start':
-            time.sleep(((600 / len(array)) * barSize) / 1000)
+        case 'fill' | 'shuffle' | 'start':
+            if options['animationDelay'] is None:
+                # dynamic option if not specified
+                time.sleep(((1000 / len(array)) * barSize) / 1000)
+            else:
+                time.sleep(options['animationDelay'] / 1000)
+
         case default:
             time.sleep(options['delay'] / 1000)
 
@@ -766,10 +776,10 @@ def run_sortty(stdscr):
 
     # quits program if terminal height too small
     if not fillScreen and (arrayRange > termHeight):
-        displayTermError(stdscr, arrayRange, termHeight, "terminal height too small for array range!", "height")
+        displayTermError(stdscr, arrayRange, termHeight, 'terminal height too small for array range!', 'height')
 
     elif not fillScreen and (arraySize > termWidth):
-        displayTermError(stdscr, arraySize, termWidth, "terminal width too small for array size!", "width")
+        displayTermError(stdscr, arraySize, termWidth, 'terminal width too small for array size!', 'width')
 
     # otherwise, start main script
     else:
@@ -927,7 +937,7 @@ def sortty(**options):
 # edit print message function to make it show ascii art
 class ArgumentParser(argparse.ArgumentParser):
     def print_help(self):
-        print(art.text2art('sortty'))
+        print(logo)
         return super(ArgumentParser, self).print_help()
 
 def main():
@@ -971,8 +981,14 @@ Setting it to forever makes the program shuffles the array sorts the array with 
     )
     parser.add_argument(
         '-d', '--delay',
-        help='default is 75, meaning the program wlll wait 75ms before refreshing the screen',
+        help='default is 75, meaning the program will wait 75ms before refreshing the screen',
         default=75,
+        type=int,
+    )
+    parser.add_argument(
+        '-ad', '--animation_delay',
+        help='if not specified, the program will wait wait a dynamic amount of time based on the size of the array before refreshing animations',
+        default=None,
         type=int,
     )
     parser.add_argument(
@@ -1040,6 +1056,7 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         noAnimation = args.no_animation,
         barSize = args.bar_size,
         delay = args.delay,
+        animationDelay = args.animation_delay,
         algorithm = args.algorithm,
         barColor = args.bar_color,
         indexColor = args.index_color,
