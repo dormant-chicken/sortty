@@ -68,9 +68,11 @@ If you don't want to install sortty manually, sortty is available on the AUR [he
 
 ## Dependencies
 
-These dependencies are needed:
+These dependencies are needed along with their recommended versions:
 
-`python ncurses git`
+* `python` 3.11 or later
+* `ncurses` 6.0 or later
+* `git` with git clone function
 
 Arch:
 ```
