@@ -84,7 +84,7 @@ sudo dnf install python ncurses ncurses-devel git
 
 Debian:
 ```
-sudo apt install python3 libncurses5 libncurses6 libncurses-dev git
+sudo apt install python3 libncurses6 libncurses-dev git
 ```
 
 <br>
