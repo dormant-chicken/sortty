@@ -48,6 +48,7 @@ sortty - sorting algorithms in the terminal
 - Animation during shuffling of array
 - Shows index when sorting array
 - Animation that fills the array green after shuffling array
+- Plays sound depending on index when sorting
 
 More features are in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README
 
