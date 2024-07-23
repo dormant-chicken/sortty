@@ -2,6 +2,24 @@
 
 version = 'v1.9-git'
 
+import argparse
+import curses
+import random
+import time
+import math
+import sys
+import os
+import pysine
+
+logo = '''
+                   _    _          
+ ___   ___   _ __ | |_ | |_  _   _ 
+/ __| / _ \ | '__|| __|| __|| | | |
+\__ \| (_) || |   | |_ | |_ | |_| |
+|___/ \___/ |_|    \__| \__| \__, |
+                             |___/ 
+'''
+
 # edit this list to add algorithms
 algorithms = (
     'bogo',
@@ -37,23 +55,6 @@ colors = (
     'white',
     'transparent'
     )
-
-logo = '''
-                   _    _          
- ___   ___   _ __ | |_ | |_  _   _ 
-/ __| / _ \ | '__|| __|| __|| | | |
-\__ \| (_) || |   | |_ | |_ | |_| |
-|___/ \___/ |_|    \__| \__| \__, |
-                             |___/ 
-'''
-
-import argparse
-import curses
-import random
-import time
-import math
-import sys
-import os
 
 def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
     # check for terminal resize
@@ -136,12 +137,20 @@ def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
     # refresh screen and wait specified time
     stdscr.refresh()
 
+    # play sound
+    if options['sound']:
+        match mode:
+            case 'fill' | 'shuffle' | 'index':
+                # in gnome sort, the index goes over the length of the array and causes an error, this checks if the index given is too high
+                if args[1] < len(array):
+                    pysine.sine(frequency=float(array[args[1]] * options['soundPitch']), duration=0.05)
+
     # available modes: fill, start, index, shuffle
     match mode:
         case 'fill' | 'shuffle' | 'start':
             if options['animationDelay'] is None:
                 # dynamic option if not specified
-                time.sleep(((1000 / len(array)) * barSize) / 1000)
+                time.sleep(800 / len(array) / 1000)
             else:
                 time.sleep(options['animationDelay'] / 1000)
 
@@ -357,6 +366,7 @@ def selectionSort(stdscr, array: list[int], n: int) -> None:
         for j in range(i + 1, n):
             if array[minIdx] > array[j]:
                 minIdx = j
+            drawArray(stdscr, array, 'index', j)
 
         # swap
         array[i], array[minIdx] = array[minIdx], array[i]
@@ -443,6 +453,8 @@ def bingoSort(stdscr, array: list[int], n: int) -> None:
         # keep track of element to put in correct position
         startPos = nextPos
         for i in range(startPos, n):
+            drawArray(stdscr, array, 'index', i)
+
             if array[i] == bingo:
                 array[i], array[nextPos] = array[nextPos], array[i]
                 nextPos += 1
@@ -542,7 +554,7 @@ def pancakeFlip(stdscr, array: list[int], n: int) -> None:
         array[start], array[n] = array[n], array[start]
         start += 1
         n -= 1
-        drawArray(stdscr, array, 'index', n)
+        drawArray(stdscr, array, 'index', start, n)
 
 def beadSort(stdscr, array: list[int], n: int) -> None:
     arrayMax = max(array)
@@ -599,7 +611,7 @@ def inPlaceMergeSort(stdscr, array: list[int], start: int, end: int) -> None:
     if start == end:
         return
 
-    middle = math.floor((start + end) / 2)
+    middle = int((start + end) / 2)
 
     # call recursively on left subarray
     inPlaceMergeSort(stdscr, array, start, middle)
@@ -694,12 +706,12 @@ def circle(stdscr, array: list[int], low: int, high: int) -> bool:
 def displayTermError(stdscr, termRequired: int, termCurrent: int, message: str, needed: str) -> None:
     stdscr.addstr(0, 0, str(message))
 
-    stdscr.addstr(2, 0, f"required {needed}: {str(termRequired)} cells")
-    stdscr.addstr(3, 0, f"terminal {needed}: {str(termCurrent)} cells")
+    stdscr.addstr(2, 0, f'required {needed}: {str(termRequired)} cells')
+    stdscr.addstr(3, 0, f'terminal {needed}: {str(termCurrent)} cells')
 
-    stdscr.addstr(5, 0, "please resize your terminal and try again")
+    stdscr.addstr(5, 0, 'please resize your terminal and try again')
 
-    stdscr.addstr(7, 0, "press any key to exit")
+    stdscr.addstr(7, 0, 'press any key to exit')
 
     stdscr.getch()
     curses.endwin()
@@ -709,7 +721,7 @@ def isSingleChar(char: str) -> None:
     if len(char) != 1:
         raise ValueError('character given is too long, please only use a single character')
 
-def run_sortty(stdscr):
+def runSortty(stdscr):
     global options
     global termHeight
     global termWidth
@@ -757,7 +769,7 @@ def run_sortty(stdscr):
         array.append(math.ceil(barHeight))
 
     # finds correct position to start drawing
-    startX = math.floor(termWidth / 2) - math.floor((arraySize * options['barSize']) / 2)
+    startX = int(termWidth / 2) - int((arraySize * options['barSize']) / 2)
 
     # curses initialization
     curses.initscr()
@@ -807,7 +819,7 @@ def run_sortty(stdscr):
                 temp = random.randint(0, arraySize - 1)
                 array[i], array[temp] = array[temp], array[i]
                 if not options['noAnimation']:
-                    drawArray(stdscr, array, 'shuffle')
+                    drawArray(stdscr, array, 'shuffle', i)
 
             if options['noAnimation']:
                 drawArray(stdscr, array)
@@ -902,20 +914,20 @@ def run_sortty(stdscr):
 
         if options['info'] and termHeight > 15 and termWidth > 35:
             # shows sorting info
-            stdscr.addstr(0, 0, "Array sorted!")
+            stdscr.addstr(0, 0, 'Array sorted!')
 
-            stdscr.addstr(2, 0, "Sorting information:")
+            stdscr.addstr(2, 0, 'Sorting information:')
 
-            stdscr.addstr(4, 0, f"sorting algorithm: {options['algorithm']} sort")
-            stdscr.addstr(5, 0, f"array size: {arraySize}")
-            stdscr.addstr(6, 0, f"array range: {arrayRange}")
-            stdscr.addstr(7, 0, f"sorting time: {round(endTime - startTime, 3)} second(s)")
-            stdscr.addstr(8, 0, f"delay: {options['delay']} millisecond(s)")
-            stdscr.addstr(9, 0, f"bar size: {options['barSize']}")
-            stdscr.addstr(10, 0, f"fill screen: {str(fillScreen).lower()}")
-            stdscr.addstr(11, 0, f"text-only mode: {str(options['textOnly']).lower()}")
+            stdscr.addstr(4, 0, f'sorting algorithm: {options["algorithm"]} sort')
+            stdscr.addstr(5, 0, f'array size: {arraySize}')
+            stdscr.addstr(6, 0, f'array range: {arrayRange}')
+            stdscr.addstr(7, 0, f'sorting time: {round(endTime - startTime, 3)} second(s)')
+            stdscr.addstr(8, 0, f'delay: {options["delay"]} millisecond(s)')
+            stdscr.addstr(9, 0, f'bar size: {options["barSize"]}')
+            stdscr.addstr(10, 0, f'fill screen: {str(fillScreen).lower()}')
+            stdscr.addstr(11, 0, f'text-only mode: {str(options["textOnly"]).lower()}')
 
-            stdscr.addstr(13, 0, "Press any key to exit")
+            stdscr.addstr(13, 0, 'Press any key to exit')
 
         # moves cursor to bottom right of screen
         stdscr.move(termHeight - 1, termWidth - 1)
@@ -926,12 +938,16 @@ def run_sortty(stdscr):
 
         curses.endwin()
 
+        # clear terminal to get rid of audio logs
+        os.system('clear')
+
 def sortty(**options):
     try:
         globals()['options'] = options
-        curses.wrapper(run_sortty)
-    # this way you can use ctrl+c to quit without showing an error
+        curses.wrapper(runSortty)
+    # clear screen and exit when pressing ctrl + c
     except KeyboardInterrupt:
+        os.system('clear')
         sys.exit(0)
 
 # edit print message function to make it show ascii art
@@ -943,8 +959,8 @@ class ArgumentParser(argparse.ArgumentParser):
 def main():
     parser = ArgumentParser(
         epilog='''Note: you can set the algorithm to 'forever' like this:
-sortty --algorithm forever
-Setting it to forever makes the program shuffles the array sorts the array with a random algorithm forever (excluding bogo sort)'''
+\'sortty --algorithm forever\'
+Setting it to forever makes the program shuffle the array and sort it with a random algorithm forever (excluding bogo sort)'''
     )
 
     # every command-line argument with help message and default values
@@ -974,15 +990,26 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         action='store_true',
     )
     parser.add_argument(
+        '-so', '--sound',
+        help='plays sound depending on current index',
+        action='store_true',
+    )
+    parser.add_argument(
+        '-sp', '--sound_pitch',
+        help='default is 30, increasing it will increase the pitch depending on current index, does nothing if --sound is not used',
+        default='30',
+        type=int,
+    ) 
+    parser.add_argument(
         '-bs', '--bar_size',
-        help='default is 1, meaning the program will display the bars with a width of 1 terminal character',
-        default=1,
+        help='default is 2, increasing it will lower the size of the bars based on your terminal',
+        default=2,
         type=int,
     )
     parser.add_argument(
         '-d', '--delay',
-        help='default is 75, meaning the program will wait 75ms before refreshing the screen',
-        default=75,
+        help='default is 50, meaning the program will wait 50ms before refreshing the screen',
+        default=50,
         type=int,
     )
     parser.add_argument(
@@ -1045,7 +1072,14 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         action='version',
         version=version
     )
-    args = parser.parse_args()
+
+    # clears audio logs
+    try:
+        args = parser.parse_args()
+    except:
+        os.system('clear')
+        args = parser.parse_args()
+        sys.exit(0)
 
     # finally, call the function to run sortty
     sortty(
@@ -1054,7 +1088,9 @@ Setting it to forever makes the program shuffles the array sorts the array with 
         noFill = args.no_fill,
         noIndex = args.no_index,
         noAnimation = args.no_animation,
-        barSize = args.bar_size,
+        sound = args.sound,
+        soundPitch = args.sound_pitch,
+	barSize = args.bar_size,
         delay = args.delay,
         animationDelay = args.animation_delay,
         algorithm = args.algorithm,
