@@ -73,20 +73,33 @@ These dependencies are needed along with their recommended versions:
 * `python` 3.11 or later
 * `ncurses` 6.0 or later
 * `git` with git clone function
+* `portaudio` 19 or later
+
+These pip dependencies are also needed:
+
+* `pysine`
 
 Arch:
 ```
-sudo pacman -S python ncurses git
+sudo pacman -S python ncurses git portaudio
 ```
 
 Fedora:
 ```
-sudo dnf install python ncurses ncurses-devel git
+sudo dnf install python ncurses ncurses-devel git portaudio
 ```
 
 Debian:
 ```
-sudo apt install python3 libncurses6 libncurses-dev git
+sudo apt install python3 libncurses6 libncurses-dev git portaudio19-dev
+```
+
+<br>
+
+To install pip dependencies:
+
+```
+pip install pysine
 ```
 
 <br>
@@ -210,6 +223,10 @@ Use these arguments to change how the program behaves:
 
 [-na --no_animation] when used, does not show fill and shuffle animation before sorting
 
+[-so --sound] plays sound depending on current index
+
+[-sp --sound_pitch] default is 30, increasing it will increase the pitch depending on current index, does nothing if --sound is not used
+
 [-bs --bar_size] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
 [-d --delay] is 75, meaning the program will wait 75ms before refreshing the screen
@@ -253,13 +270,13 @@ Note: you can set the algorithm to 'forever' like this:
 sortty --algorithm forever
 ```
 
-Setting it to forever makes the program shuffle the array and sort the array forever, with a different random algorithm every time (excluding bogo sort)
+Setting it to forever makes the program shuffle the array and sort it with a random algorithm forever (excluding bogo sort)
 
 <br>
 
 ## Uninstalling
 
-Run this command to remove the sortty binaries:
+Run this command to remove the program:
 
 ```
 rm ~/.local/bin/sortty
