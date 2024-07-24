@@ -224,9 +224,9 @@ Use these arguments to change how the program behaves:
 
 [-na --no_animation] when used, does not show fill and shuffle animation before sorting
 
-[-so --sound] plays sound depending on current index
+[-ns --no_sound] disables playing sound depending on current index
 
-[-sp --sound_pitch] default is 30, increasing it will increase the pitch depending on current index, does nothing if --sound is not used
+[-sp --sound_pitch] default is 30, increasing it will increase the pitch depending on current index, does nothing if --no_sound is used
 
 [-bs --bar_size] is 1, meaning the program will display the bars with a width of 1 terminal characters
 
