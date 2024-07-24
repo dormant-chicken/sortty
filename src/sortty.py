@@ -138,7 +138,7 @@ def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
     stdscr.refresh()
 
     # play sound
-    if options['sound']:
+    if not options['noSound']:
         match mode:
             case 'fill' | 'shuffle' | 'index':
                 # in gnome sort, the index goes over the length of the array and causes an error, this checks if the index given is too high
@@ -715,6 +715,8 @@ def displayTermError(stdscr, termRequired: int, termCurrent: int, message: str, 
 
     stdscr.getch()
     curses.endwin()
+    os.system('clear')
+    sys.exit(0)
 
 # check length of character given
 def isSingleChar(char: str) -> None:
@@ -790,156 +792,157 @@ def runSortty(stdscr):
     if not fillScreen and (arrayRange > termHeight):
         displayTermError(stdscr, arrayRange, termHeight, 'terminal height too small for array range!', 'height')
 
-    elif not fillScreen and (arraySize > termWidth):
+    if not fillScreen and (arraySize > termWidth):
         displayTermError(stdscr, arraySize, termWidth, 'terminal width too small for array size!', 'width')
 
     # otherwise, start main script
-    else:
-        # set delay for input
-        stdscr.timeout(1)
+    # set delay for input
+    stdscr.timeout(1)
 
-        # draw the array before sorting
+    # draw the array before sorting
+    if not options['noAnimation']:
+        for i in range(arraySize):
+            drawArray(stdscr, array, 'start', i)
+
+    # not using --algorithm forever will break this loop
+    while True:
+        # creates new algorithm
+        if sortForever:
+            algorithm = algorithms[random.randint(1, len(algorithms) - 1)]
+        else:
+            algorithm = options['algorithm']
+
+        # waits before shuffle
         if not options['noAnimation']:
-            for i in range(arraySize):
-                drawArray(stdscr, array, 'start', i)
+            time.sleep(750 / 1000)
 
-        while True:
-            # creates new algorithm
-            if sortForever:
-                algorithm = algorithms[random.randint(1, len(algorithms) - 1)]
-            else:
-                algorithm = options['algorithm']
-
-            # waits before shuffle
+        # shuffle array by swapping index with random element
+        for i in range(arraySize):
+            temp = random.randint(0, arraySize - 1)
+            array[i], array[temp] = array[temp], array[i]
             if not options['noAnimation']:
-                time.sleep(750 / 1000)
+                drawArray(stdscr, array, 'shuffle', i)
 
-            # shuffle array by swapping index with random element
-            for i in range(arraySize):
-                temp = random.randint(0, arraySize - 1)
-                array[i], array[temp] = array[temp], array[i]
-                if not options['noAnimation']:
-                    drawArray(stdscr, array, 'shuffle', i)
-
-            if options['noAnimation']:
-                drawArray(stdscr, array)
-
-            # waits before sorting
-            time.sleep(1000 / 1000)
-
-            if not sortForever:
-                # starts performance timer
-                startTime = time.perf_counter()
-
-            # sorting algorithms
-            match algorithm:
-                case 'bogo':
-                    bogoSort(stdscr, array, arraySize)
-
-                case 'bubble':
-                    bubbleSort(stdscr, array, arraySize)
-
-                case 'merge':
-                    mergeSort(stdscr, array, 0, arraySize - 1)
-
-                case 'insertion':
-                    insertionSort(stdscr, array, 0, arraySize)
-
-                case 'quick':
-                    quickSort(stdscr, array, 0, arraySize - 1)
-
-                case 'gnome':
-                    gnomeSort(stdscr, array, arraySize)
-
-                case 'heap':
-                    heapSort(stdscr, array, arraySize)
-
-                case 'cocktail':
-                    cocktailSort(stdscr, array, arraySize)
-
-                case 'selection':
-                    selectionSort(stdscr, array, arraySize)
-
-                case 'shell':
-                    shellSort(stdscr, array, arraySize)
-
-                case 'oddeven':
-                    oddevenSort(stdscr, array, arraySize)
-
-                case 'comb':
-                    combSort(stdscr, array, arraySize)
-
-                case 'bingo':
-                    bingoSort(stdscr, array, arraySize)
-
-                case 'radix':
-                    radixSort(stdscr, array, arraySize)
-
-                case 'pigeonhole':
-                    pigeonholeSort(stdscr, array, arraySize)
-
-                case 'pancake':
-                    pancakeSort(stdscr, array, arraySize)
-
-                case 'bead':
-                    beadSort(stdscr, array, arraySize)
-
-                case 'stooge':
-                    stoogeSort(stdscr, array, 0, arraySize - 1)
-
-                case 'inplace_merge':
-                    inPlaceMergeSort(stdscr, array, 0, arraySize - 1)
-
-                case 'tim':
-                    timSort(stdscr, array, 16, arraySize)
-
-                case 'circle':
-                    circleSort(stdscr, array, arraySize)
-
-            if not sortForever:
-                # ends performance timer
-                endTime = time.perf_counter()
-
-            # draws array final time
+        if options['noAnimation']:
             drawArray(stdscr, array)
 
-            # if forever is false, stop running loop
-            if not sortForever:
-                break
+        # waits before sorting
+        time.sleep(1000 / 1000)
 
-        # fills array after sorting
-        if not options['noFill']:
-            for i in range(arraySize):
-                drawArray(stdscr, array, 'fill', i)
+        if not sortForever:
+            # starts performance timer
+            startTime = time.perf_counter()
 
-        if options['info'] and termHeight > 15 and termWidth > 35:
-            # shows sorting info
-            stdscr.addstr(0, 0, 'Array sorted!')
+        # sorting algorithms
+        match algorithm:
+            case 'bogo':
+                bogoSort(stdscr, array, arraySize)
 
-            stdscr.addstr(2, 0, 'Sorting information:')
+            case 'bubble':
+                bubbleSort(stdscr, array, arraySize)
 
-            stdscr.addstr(4, 0, f'sorting algorithm: {options["algorithm"]} sort')
-            stdscr.addstr(5, 0, f'array size: {arraySize}')
-            stdscr.addstr(6, 0, f'array range: {arrayRange}')
-            stdscr.addstr(7, 0, f'sorting time: {round(endTime - startTime, 3)} second(s)')
-            stdscr.addstr(8, 0, f'delay: {options["delay"]} millisecond(s)')
-            stdscr.addstr(9, 0, f'bar size: {options["barSize"]}')
-            stdscr.addstr(10, 0, f'fill screen: {str(fillScreen).lower()}')
-            stdscr.addstr(11, 0, f'text-only mode: {str(options["textOnly"]).lower()}')
+            case 'merge':
+                mergeSort(stdscr, array, 0, arraySize - 1)
 
-            stdscr.addstr(13, 0, 'Press any key to exit')
+            case 'insertion':
+                insertionSort(stdscr, array, 0, arraySize)
 
-        # moves cursor to bottom right of screen
-        stdscr.move(termHeight - 1, termWidth - 1)
+            case 'quick':
+                quickSort(stdscr, array, 0, arraySize - 1)
 
-        # waits for key press and stops program
-        stdscr.timeout(-1)
-        stdscr.getch()
+            case 'gnome':
+                gnomeSort(stdscr, array, arraySize)
 
-        curses.endwin()
+            case 'heap':
+                heapSort(stdscr, array, arraySize)
 
-        # clear terminal to get rid of audio logs
-        os.system('clear')
+            case 'cocktail':
+                cocktailSort(stdscr, array, arraySize)
+
+            case 'selection':
+                selectionSort(stdscr, array, arraySize)
+
+            case 'shell':
+                shellSort(stdscr, array, arraySize)
+
+            case 'oddeven':
+                oddevenSort(stdscr, array, arraySize)
+
+            case 'comb':
+                combSort(stdscr, array, arraySize)
+
+            case 'bingo':
+                bingoSort(stdscr, array, arraySize)
+
+            case 'radix':
+                radixSort(stdscr, array, arraySize)
+
+            case 'pigeonhole':
+                pigeonholeSort(stdscr, array, arraySize)
+
+            case 'pancake':
+                pancakeSort(stdscr, array, arraySize)
+
+            case 'bead':
+                beadSort(stdscr, array, arraySize)
+
+            case 'stooge':
+                stoogeSort(stdscr, array, 0, arraySize - 1)
+
+            case 'inplace_merge':
+                inPlaceMergeSort(stdscr, array, 0, arraySize - 1)
+
+            case 'tim':
+                timSort(stdscr, array, 16, arraySize)
+
+            case 'circle':
+                circleSort(stdscr, array, arraySize)
+
+        if not sortForever:
+            # ends performance timer
+            endTime = time.perf_counter()
+
+        # draws array final time
+        drawArray(stdscr, array)
+
+        # if forever is false, stop running loop
+        if not sortForever:
+            break
+
+    # fills array after sorting
+    if not options['noFill']:
+        for i in range(arraySize):
+            drawArray(stdscr, array, 'fill', i)
+
+    # show info if terminal is big enough
+    if options['info'] and termHeight > 15 and termWidth > 35:
+        # shows sorting info
+        stdscr.addstr(0, 0, 'Array sorted!')
+
+        stdscr.addstr(2, 0, 'Sorting information:')
+
+        stdscr.addstr(4, 0, f'sorting algorithm: {options["algorithm"]} sort')
+        stdscr.addstr(5, 0, f'array size: {arraySize}')
+        stdscr.addstr(6, 0, f'array range: {arrayRange}')
+        stdscr.addstr(7, 0, f'sorting time: {round(endTime - startTime, 3)} second(s)')
+        stdscr.addstr(8, 0, f'delay: {options["delay"]} millisecond(s)')
+        stdscr.addstr(9, 0, f'bar size: {options["barSize"]}')
+        stdscr.addstr(10, 0, f'fill screen: {str(fillScreen).lower()}')
+        stdscr.addstr(11, 0, f'text-only mode: {str(options["textOnly"]).lower()}')
+
+        stdscr.addstr(13, 0, 'Press any key to exit')
+
+    # moves cursor to bottom right of screen
+    stdscr.move(termHeight - 1, termWidth - 1)
+
+    # waits for key press and stops program
+    stdscr.timeout(-1)
+    stdscr.getch()
+
+    curses.endwin()
+
+    # clear terminal to get rid of audio logs
+    os.system('clear')
 
 def sortty(**options):
     try:
@@ -990,13 +993,13 @@ Setting it to forever makes the program shuffle the array and sort it with a ran
         action='store_true',
     )
     parser.add_argument(
-        '-so', '--sound',
-        help='plays sound depending on current index',
+        '-ns', '--no_sound',
+        help='disables playing sound depending on current index',
         action='store_true',
     )
     parser.add_argument(
         '-sp', '--sound_pitch',
-        help='default is 30, increasing it will increase the pitch depending on current index, does nothing if --sound is not used',
+        help='default is 30, increasing it will increase the pitch depending on current index, does nothing if --no_sound is used',
         default='30',
         type=int,
     ) 
@@ -1088,7 +1091,7 @@ Setting it to forever makes the program shuffle the array and sort it with a ran
         noFill = args.no_fill,
         noIndex = args.no_index,
         noAnimation = args.no_animation,
-        sound = args.sound,
+        noSound = args.no_sound,
         soundPitch = args.sound_pitch,
 	barSize = args.bar_size,
         delay = args.delay,
