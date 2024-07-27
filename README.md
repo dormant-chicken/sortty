@@ -69,12 +69,13 @@ If you don't want to install sortty manually, sortty is available on the AUR [he
 
 ## Dependencies
 
-These dependencies are needed along with their recommended versions:
+These dependencies are needed:
 
-* `python` 3.11 or later
-* `ncurses` 6.0 or later
-* `git` with git clone function
-* `portaudio` 19 or later
+* `python`
+* `ncurses`
+* `git`
+* `portaudio`
+* `pip`
 
 These pip dependencies are also needed:
 
