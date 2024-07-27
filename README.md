@@ -82,17 +82,27 @@ These pip dependencies are also needed:
 
 Arch:
 ```
-sudo pacman -S python ncurses git portaudio
+sudo pacman -S python ncurses git portaudio python-pip
 ```
 
 Fedora:
 ```
-sudo dnf install python ncurses ncurses-devel git portaudio
+sudo dnf install python ncurses ncurses-devel git portaudio python3-pip
 ```
 
 Debian:
 ```
-sudo apt install python3 libncurses6 libncurses-dev git portaudio19-dev
+sudo apt install python3 libncurses6 libncurses-dev git portaudio19-dev python3-pip
+```
+
+Gentoo:
+```
+sudo emerge --ask dev-lang/python sys-libs/ncurses dev-vcs/git media-libs/portaudio dev-python/pip
+```
+
+openSUSE:
+```
+sudo zypper install python3 ncurses git portaudio python3-pip
 ```
 
 <br>
