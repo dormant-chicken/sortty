@@ -40,14 +40,10 @@ sortty - sorting algorithms in the terminal
 
 ## Main Features
 
-- Draws every step of a specified sorting algorithm quickly using ncurses
 - Currently has 21 built-in sorting algorithms
 - Auto-adjusts if terminal is resized
-- Detects if terminal is too small for the specified array size / array range
-- Animation before shuffling array
-- Animation during shuffling of array
-- Shows index when sorting array
-- Animation that fills the array green after shuffling array
+- Animations before and after sorting array
+- Shows index while sorting array
 - Plays sound depending on index when sorting
 
 More features are in the [usage](https://github.com/dormant-chicken/sortty?tab=readme-ov-file#usage) tab of the README
