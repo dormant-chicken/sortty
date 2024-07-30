@@ -157,26 +157,18 @@ def drawArray(stdscr, array: list[int], *args: list[str, int]) -> None:
 		case default:
 			time.sleep(options['delay'] / 1000)
 
+# dictionary of colors
 def getColor(color: str):
 	match color:
-		# if color is specified
-		case 'red':
-			return curses.color_pair(1)
-		case 'green':
-			return curses.color_pair(2)
-		case 'blue':
-			return curses.color_pair(3)
-		case 'cyan':
-			return curses.color_pair(4)
-		case 'magenta':
-			return curses.color_pair(5)
-		case 'yellow':
-			return curses.color_pair(6)
+		case 'red':			return curses.color_pair(1)
+		case 'green':		return curses.color_pair(2)
+		case 'blue':		return curses.color_pair(3)
+		case 'cyan':		return curses.color_pair(4)
+		case 'magenta':		return curses.color_pair(5)
+		case 'yellow':		return curses.color_pair(6)
 		# white and reverse mean the same thing, no need to make another color pair
-		case 'white':
-			return curses.A_REVERSE
-		case 'transparent':
-			return None
+		case 'white':		return curses.A_REVERSE
+		case 'transparent':	return None
 
 def bogoSort(stdscr, array: list[int], n: int) -> None:
 	sorted = False
@@ -755,9 +747,8 @@ def runSortty(stdscr):
 			raise ValueError('Invalid size format: use HEIGTHxWIDTH')
 
 	# check length of characters given
-	isSingleChar(options['barCharacter'])
-	isSingleChar(options['indexCharacter'])
-	isSingleChar(options['fillCharacter'])
+	for i in ('barCharacter', 'indexCharacter', 'fillCharacter'):
+		isSingleChar(options[i])
 
 	# array declaration
 	array = []
@@ -780,13 +771,9 @@ def runSortty(stdscr):
 	stdscr.timeout(-1)
 	stdscr.clear()
 
-	# color pairs for ncurses
-	curses.init_pair(1, curses.COLOR_RED, curses.COLOR_RED)
-	curses.init_pair(2, curses.COLOR_GREEN, curses.COLOR_GREEN)
-	curses.init_pair(3, curses.COLOR_BLUE, curses.COLOR_BLUE)
-	curses.init_pair(4, curses.COLOR_CYAN, curses.COLOR_CYAN)
-	curses.init_pair(5, curses.COLOR_MAGENTA, curses.COLOR_MAGENTA)
-	curses.init_pair(6, curses.COLOR_YELLOW, curses.COLOR_YELLOW)
+	# initialize color pairs for ncurses
+	for count, pair in enumerate((curses.COLOR_RED, curses.COLOR_GREEN, curses.COLOR_BLUE, curses.COLOR_CYAN, curses.COLOR_MAGENTA, curses.COLOR_YELLOW)):
+		curses.init_pair(count + 1, pair, pair)
 
 	# quits program if terminal height too small
 	if not fillScreen and (arrayRange > termHeight):
@@ -829,77 +816,36 @@ def runSortty(stdscr):
 		# waits before sorting
 		time.sleep(1000 / 1000)
 
+		# starts performance timer
 		if not sortForever:
-			# starts performance timer
 			startTime = time.perf_counter()
 
 		# sorting algorithms
 		match algorithm:
-			case 'bogo':
-				bogoSort(stdscr, array, arraySize)
+			case 'bogo':			bogoSort		(stdscr, array, arraySize)
+			case 'bubble':			bubbleSort		(stdscr, array, arraySize)
+			case 'merge':			mergeSort		(stdscr, array, 0, arraySize - 1)
+			case 'insertion':		insertionSort	(stdscr, array, 0, arraySize)
+			case 'quick':			quickSort		(stdscr, array, 0, arraySize - 1)
+			case 'gnome':			gnomeSort		(stdscr, array, arraySize)
+			case 'heap':			heapSort		(stdscr, array, arraySize)
+			case 'cocktail':		cocktailSort	(stdscr, array, arraySize)
+			case 'selection':		selectionSort	(stdscr, array, arraySize)
+			case 'shell':			shellSort		(stdscr, array, arraySize)
+			case 'oddeven':			oddevenSort		(stdscr, array, arraySize)
+			case 'comb':			combSort		(stdscr, array, arraySize)
+			case 'bingo':			bingoSort		(stdscr, array, arraySize)
+			case 'radix':			radixSort		(stdscr, array, arraySize)
+			case 'pigeonhole':		pigeonholeSort	(stdscr, array, arraySize)
+			case 'pancake':			pancakeSort		(stdscr, array, arraySize)
+			case 'bead':			beadSort		(stdscr, array, arraySize)
+			case 'stooge':			stoogeSort		(stdscr, array, 0, arraySize - 1)
+			case 'inplace_merge':	inPlaceMergeSort(stdscr, array, 0, arraySize - 1)
+			case 'tim':				timSort			(stdscr, array, 16, arraySize)
+			case 'circle':			circleSort		(stdscr, array, arraySize)
 
-			case 'bubble':
-				bubbleSort(stdscr, array, arraySize)
-
-			case 'merge':
-				mergeSort(stdscr, array, 0, arraySize - 1)
-
-			case 'insertion':
-				insertionSort(stdscr, array, 0, arraySize)
-
-			case 'quick':
-				quickSort(stdscr, array, 0, arraySize - 1)
-
-			case 'gnome':
-				gnomeSort(stdscr, array, arraySize)
-
-			case 'heap':
-				heapSort(stdscr, array, arraySize)
-
-			case 'cocktail':
-				cocktailSort(stdscr, array, arraySize)
-
-			case 'selection':
-				selectionSort(stdscr, array, arraySize)
-
-			case 'shell':
-				shellSort(stdscr, array, arraySize)
-
-			case 'oddeven':
-				oddevenSort(stdscr, array, arraySize)
-
-			case 'comb':
-				combSort(stdscr, array, arraySize)
-
-			case 'bingo':
-				bingoSort(stdscr, array, arraySize)
-
-			case 'radix':
-				radixSort(stdscr, array, arraySize)
-
-			case 'pigeonhole':
-				pigeonholeSort(stdscr, array, arraySize)
-
-			case 'pancake':
-				pancakeSort(stdscr, array, arraySize)
-
-			case 'bead':
-				beadSort(stdscr, array, arraySize)
-
-			case 'stooge':
-				stoogeSort(stdscr, array, 0, arraySize - 1)
-
-			case 'inplace_merge':
-				inPlaceMergeSort(stdscr, array, 0, arraySize - 1)
-
-			case 'tim':
-				timSort(stdscr, array, 16, arraySize)
-
-			case 'circle':
-				circleSort(stdscr, array, arraySize)
-
+		# ends performance timer
 		if not sortForever:
-			# ends performance timer
 			endTime = time.perf_counter()
 
 		# draws array final time
